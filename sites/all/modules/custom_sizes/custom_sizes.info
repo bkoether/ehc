@@ -1,0 +1,6 @@
+; $Id$
+name = EHC Custom Sizes
+description = loads your previous custom sizes into a new EHC Form
+package = EHC Remittance
+core = 6.x
+version = 6.x-0.1

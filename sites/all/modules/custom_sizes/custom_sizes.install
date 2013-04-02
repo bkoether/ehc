@@ -1,0 +1,45 @@
+<?php
+// function custom_sizes_schema() {
+//   $schema = array();
+// 
+//   $schema['user_custom_sizes'] = array(
+//     'description' => t('Stores custom sizes by user'),
+//     'fields' => array(
+//       'MYCOLUMN1' => array(
+//         'description' => t('MY UNIQUE IDENTIFIER'),
+//         'type' => 'serial',
+//         'unsigned' => true,
+//         'not null' => true,
+//       ),
+//       'MYVARCHAR' => array(
+//         'description' => t('MY VAR CHAR'),
+//         'type' => 'varchar',
+//         'length' => 32,
+//         'not null' => true,
+//       ),
+//       'MYTIMESTAMP' => array( // see: user install created
+//         'description' => t('MY TIMESTAMP'),
+//         'type' => 'int',
+//         'not null' => true,
+//       ),
+//     ),
+//     'indexes' => array(
+//       'MYVARCHAR' => array('MYVARCHAR'),
+//     ),
+//     'primary key' => array('MYCOLUMN1'),
+//     'unique keys' => array(
+//       'MYCOLUMN1' => array('MYCOLUMN1),
+//     ),
+//   );        
+//        
+//   return $schema;
+// 
+// }
+// 
+// function custom_sizes_install() {
+//   drupal_install_schema('custom_sizes');
+// }
+// 
+// function custom_sizes_uninstall() {
+//   drupal_uninstall_schema('custom_sizes');
+// }

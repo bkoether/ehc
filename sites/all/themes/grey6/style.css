@@ -1,0 +1,1024 @@
+/*
+ * Style Sheet
+ */
+
+/*CSS3 font for headings*/
+@font-face {
+    font-family: 'FuturaCondensed';
+    src: url('futureconmd-webfont.eot');
+    src: url('futureconmd-webfont.eot?#iefix') format('embedded-opentype'),
+         url('futureconmd-webfont.woff') format('woff'),
+         url('futureconmd-webfont.ttf') format('truetype'),
+         url('futureconmd-webfont.svg#FuturaCondensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+  background-color: #C6C2B7;
+	font-family:Verdana, Helvetica, sans-serif;
+	font-size:11px;
+	text-align:center;
+	margin:0;
+	padding:0;
+	color:#666;
+	line-height:1.4em;
+	width:100%;
+	overflow-x: hidden:
+}
+
+#ctr {
+	width: 795px;
+	text-align:left;
+	margin:0 auto;
+}
+
+#header{
+  position: relative;
+  top: 15px;
+}
+
+.header-img {
+  background-repeat: no-repeat;
+  height: 148px;
+  text-decoration: none;
+  width: 767px;
+	background-image:url('http://usedoilrecycling.com/_images/common/header.jpg');
+	margin-left:2px;
+	margin-bottom:8px;
+}
+
+#shadow{
+  background-image:url('header-shadow.png');
+  height: 156px;
+  width: 769px;
+  margin-left: 14px;
+}
+
+.location{
+  margin-left:15px;
+  height: 35px;
+  left: 140px;
+  position: relative;
+  top: 102px;
+  width: 300px;
+  background-repeat:no-repeat;
+}
+
+#BC{background-image:url('http://usedoilrecycling.com/_images/common/bc.gif');}
+#AB{background-image:url('http://usedoilrecycling.com/_images/common/ab.gif');}
+#MN{background-image:url('http://usedoilrecycling.com/_images/common/mb.gif');}
+#SK{background-image:url('http://usedoilrecycling.com/_images/common/sk.gif');}
+#UOMA{background-image:url('http://usedoilrecycling.com/_images/common/uoma.gif');}
+
+.user_name,
+.user_uid{
+  font-size:11px;
+  color:#333;
+  margin-left:0px;
+  margin-right:10px;
+}
+
+#user-profile-webform{
+  margin-left:12px;
+  margin-right:12px;
+  border-bottom:1px solid #d3cec6;
+  padding-bottom:9px;
+  padding-top:5px;
+}
+
+.user_uid{left:200px;position:relative;}
+
+#column_left {
+	width:195px;
+	float:left;
+	margin:10px 0 0 8px;
+}
+
+/*#center > span,
+#center > h2,
+#center > div
+{margin-left:6px !important;}*/
+
+#center {
+	float: left;
+  margin: 0;
+  padding:20px 0;
+  width: 570px;
+  overflow:hidden;
+}
+
+/*#center > h2, #center #node-3{
+  margin-left:10px;
+  margin-right:10px;
+}*/
+
+#center h2{
+	font: normal normal normal 22px FuturaCondensed, Arial, sans-serif;
+	text-transform:uppercase;
+  margin:9px 12px 26px 12px;
+  color:#000;
+}
+
+.webform-results-per-page, 
+.sticky-table,
+.webform-confirmation {
+	margin:0 12px;
+}
+
+.sticky-table td {
+	padding:3px;
+}
+
+.block-menu{margin:0px !important;margin-top:10px !important;}
+
+
+.profile, .block, .node, .admin, .help {
+	margin:12px;
+}
+
+.links {
+	display:none;
+}
+
+#block-block-2,
+#block-block-3 {
+	margin:70px 7px 0 7px;
+	border-top:1px solid #e8e4df;
+	padding:7px 8px;
+	}
+
+a	{
+	color:#333;
+	text-decoration:none;
+}
+
+a.active, a:hover {
+	color:#000 !important;
+	text-decoration:none;
+}
+
+#block-block-3 .content p a {
+	background: none repeat scroll 0 0 #FFFFFF;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+  color: red;
+  display: block;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+table {
+	font-size:11px;
+}
+
+.marker, .form-required {
+	color:#ffae00;
+}
+
+a.active, a.active-trail {
+	font-weight:bold;
+}
+
+#logo-floater {
+	width:400px;
+	float:left;
+	height:75px;
+}
+
+.nav {
+	clear:both;
+	border:1px dotted #ccc;
+	padding:10px;
+}
+
+.primary-links {
+	font-size:120%;
+
+}
+
+ul.links li {
+	padding:10px;
+}
+
+ul.menu li{margin:0px !important;}
+
+#block-menu-menu-global ul.menu li {
+	display:inline;
+	list-style-type:none;
+	
+}
+
+#block-menu-menu-global{
+	margin:10px 0 0 0;
+	border:1px dotted #ccc;
+	width:450px;
+	float:right;
+}
+
+.block-menu h2 {
+display:none;
+}
+
+ul.menu:after {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;
+	
+}
+
+ul.primary li.active a {
+    background-color: #e8e4df;
+    border-color: #BBBBBB #BBBBBB #e8e4df;
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+#footer {
+	clear:both;
+}
+
+.messages {
+	margin:2em;
+	padding:1em;
+	border:1px solid #666;
+	background-color:#fff;
+}
+
+/*ul.tabs {
+	display:none;
+}*/
+
+.block-user {
+	margin-top:100px;
+	border:1px solid #999;
+	background-color:#fff;
+	padding:10px;
+	text-align:left;
+}
+
+.block-user ul li {
+	list-style:none;
+	text-align:left;
+}
+
+
+#block-block-1 {
+	border:1px solid #999;
+	background-color:#f1f1f1;
+	padding:10px;
+}
+
+.block h2 {
+	font-size:10pt;
+}
+
+/* H Tag IE set - chrome */
+
+h2, h3, h4 {
+	line-height:15px;
+	font-size:11px;
+	font-family: Verdana, Helvetica, sans-serif;
+	margin:0;
+}
+
+h6 {
+	display:inline-block;
+	margin:30px 0 15px;
+	text-align:right;
+	font-weight:bold;
+	font-size:10px;
+	text-transform:uppercase;
+	color:#000;
+}
+
+#quantity-header {
+	width:332px;
+	float:left;
+}
+#rate-header {
+	width:97px;
+	float:left;
+}
+#remittance-header {
+	width:100px;
+	float:right;
+	margin-right:15px;
+}
+
+#webform-component-column-header {
+	clear:both;
+}
+
+/*	form styles */
+
+#webform-component-containers--containers,
+#webform-component-oils--oil,
+#webform-component-filters--filters
+{margin-bottom:3px;}
+
+.webform-client-form .form-submit{
+  float:right;
+  background:url('submit.png') no-repeat 0 -37px;
+  border:0;
+  height:37px;
+  width:116px;
+  text-indent:9999px;
+	overflow:hidden;
+	cursor:pointer;
+}
+
+.webform-client-form .submit-disabled {
+	background:url('submit.png') no-repeat 0 0 !important;
+	cursor:help !important;
+}
+
+.form-item {
+	clear:both;
+  margin-top:0;
+  margin-bottom:0;
+}
+
+.field-suffix,
+.form-item span{
+  color:#010101;
+}
+
+.node .form-item label{
+  display: inline-block;
+  color:#010101;
+  width: 171px;
+  font-weight:400;
+}
+
+.form-checkboxes, .form-radios {
+	margin:0;
+}
+
+.form-radios .form-item {
+	display:inline-block;
+}
+.node .form-radios .form-item label,
+.node .form-checkboxes .form-item label {
+	width:auto;
+}
+
+
+label a{
+  color:#1a4f96!important;
+}
+
+.form-item .description {
+	color:#666;
+	font-size:9px;
+}
+
+div.error {
+	border:0;
+	background-color:#ff6100;
+	color:#fff;
+}
+
+.form-item input.error, .form-item textarea.error, .form-item select.error {
+border:1px solid #ff6100;
+}
+
+#node-3 .field-prefix {
+display: none;
+}
+
+#webform-component-totals .field-prefix {
+display: inline;
+}
+
+.field-suffix {
+	display:inline-block;
+	text-align:right;
+}
+
+/* ADDITIONAL FORM ITEMS */
+
+.webform-component-fieldset-custom-set{
+  margin-left:0px !important;
+  padding-left: 0px !important;
+  padding-top: 6px;
+}
+
+.webform-component-fieldset-custom-set .field-suffix{
+  margin-left: 5px;
+  color:#101010 !important;
+}
+
+.add-new-fieldset{
+  height:31px;
+  margin:3px -5px;
+  padding-left: 2px;
+  padding-right:0px;
+  background-color:#ed1f24;
+  -moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.add-new-item-button{
+  width:61px;
+  height:19px;
+  border:1px solid #dd191e !important;
+  background-color:#ed1f24 !important;
+  background-image:none !important;
+  color:#fff !important;
+  font-size:9px;
+  font-weight:bold;
+  text-transform:uppercase;
+	float:right;
+	cursor:pointer;
+}
+
+.add-new-item-desc{
+  color:#fff;
+}
+
+.liter-size-input{
+  text-align:left !important;
+  padding-left:0;
+  font-weight: 400;
+  font-size:11px;
+  margin-left:0;
+  font-family: Verdana, Helvetica, sans-serif;
+  width: 175px;
+  background-image:none !important;
+  border:0px !important;background-color:#e2ddd7 !important;
+}
+
+.liter-size-input-input{
+  margin-left:0;
+  font-family: Verdana, Helvetica, sans-serif;
+  width: 60px;
+  text-align:left !important;
+  margin-left:3px;
+  margin-right:4px;
+  background-color:#fff;
+  background-image:none !important;
+  border:1px solid #90292c !important;
+}
+
+.number-of-entries{
+  width: 123px;
+  margin:1px 5px 0 0;
+  padding-right: 3px;
+}
+
+.each-rate{
+  margin-right: 3px;
+  width: 81px;
+  height:16px;
+  margin-left:0;
+  background-image:none !important;
+  border:0px !important;background-color:#e2ddd7 !important;
+}
+
+.total-remittance{
+	float:right;
+	margin-right:9px;
+	width:80px;
+}
+
+.new-item-span{
+  color: #010101;
+  font-family: Verdana, Helvetica, sans-serif;
+  font-size:11px;
+  line-height:15px;
+  margin:0;
+  padding:0;
+}
+
+a.customDel {
+  background: url("_images/trash.png") no-repeat scroll 0 2px transparent;
+	display:block;
+  float: left;
+  height: 16px;
+  margin-left: -15px;
+  overflow: hidden;
+  position: relative;
+  text-indent: -9999px;
+  width: 15px;
+}
+
+/* CONTENT */
+
+#center-content{
+  margin-top:-10px;
+}
+
+#center-content:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+#center{
+  background-color:#E8E4DF;
+}
+
+/* CONTENT - WEB FORM */
+
+.form_footnotes{
+  padding-left:5px;
+}
+
+.form_footnotes h4{font-weight:bold;margin-bottom:1px;}
+.form_footnotes p{margin-top:1px;}
+
+sup{
+  color: #010101 !important;
+  font-size:83%;
+  font-weight:normal;
+  line-height:0.5em;
+}
+
+.webform-component-fieldset .description p{
+  color:#010101;
+  font-size:11px;
+}
+
+.content fieldset{border:0px;}
+
+.content legend{padding:5px;}
+
+.webform-component-fieldset h3{
+  font-weight:bold;
+  color:#010101;
+  display:inline;
+  margin-bottom:3px;
+	font-size:11px;
+}
+
+.webform-component-fieldset h4{
+  display:inline;
+}
+
+.webform-component-fieldset legend{display:none;}
+
+.webform-component-fieldset,
+#webform-component--another-size,
+#webform-component--another-antifreeze-size {
+  background-color:#e2ddd7;
+  padding-left:35px;
+  padding-top:10px;
+  padding-bottom: 8px;
+  margin:2px 0;
+}
+
+.custom-size-fieldset,
+.webform-component-fieldset .webform-component-fieldset{
+  border-bottom:1px solid #d3cec6;
+  background-color:transparent;
+  padding:0;
+  margin:0;
+  margin-bottom: 1px;
+}
+
+.node .form-text{width:75px;}
+
+#edit-submitted-oils-total-litres,
+#edit-submitted-filters-less-than-8-inches,
+#edit-submitted-filters-greater-than-8-inches,
+#edit-submitted-filters-sump-type,
+#edit-submitted-containers-size-wrapper-2-1-liter,
+#edit-submitted-containers-size-wrapper-500-ml,
+#edit-submitted-containers-size-wrapper-3-4-liter,
+#edit-submitted-containers-size-wrapper-4-10-liter,
+#edit-submitted-containers-size-wrapper-5-18-942-liter,
+#edit-submitted-containers-size-wrapper-6-20-liter,
+#edit-submitted-containers-size-wrapper-0947-l-0947-liter,
+#edit-submitted-containers-size-wrapper-3788-l-3788-liter,
+#edit-submitted-containers-size-wrapper-5-l-5-liter,
+#edit-submitted-oils-oil-fieldset-total-litres,
+#edit-submitted-filters-filters-8-fieldset-less-than-8-inches,
+#edit-submitted-filters-filters--8-fieldset-greater-than-8-inches,
+#edit-submitted-filters-filters-sump-fieldset-sump-type,
+
+#edit-submitted-liquid-concentrate-fieldset-concentrate-total-litres,
+#edit-submitted-liquid-premix-fieldset-premix-total-litres,
+#edit-submitted-containers-size-wrapper-150-ml-150-ml,
+#edit-submitted-containers-size-wrapper-1000-ml-1-litre,
+#edit-submitted-containers-size-wrapper-1500-ml-1500-ml,
+#edit-submitted-containers-size-wrapper-1890-ml-189-litre,
+#edit-submitted-containers-size-wrapper-2000-ml-2-litre,
+#edit-submitted-containers-size-wrapper-3788-ml-3788-litre,
+#edit-submitted-containers-size-wrapper-4000-ml-4-litre,
+#edit-submitted-containers-size-wrapper-5-l-5-litre,
+#edit-submitted-containers-size-wrapper-7560-ml-756-litre,
+#edit-submitted-containers-size-wrapper-9460-ml-946-litre,
+#edit-submitted-containers-size-wrapper-10000-ml-10-litre,
+#edit-submitted-containers-size-wrapper-15000-ml-15-litre,
+#edit-submitted-containers-size-wrapper-18900-ml-18-942-litre,
+#edit-submitted-containers-size-wrapper-20000-ml-20-litre,
+
+
+#edit-submitted-glycol-concentrate-fieldset-concentrate-total-litres,
+#edit-submitted-glycol-premix-fieldset-premix-total-litres,
+
+#edit-submitted-glycol-containers-antifreeze-wrapper-1000-ml-1000-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-1500-ml-1500-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-1890-ml-1890-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-3780-ml-3780-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-4000-ml-4000-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-5000-ml-5000-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-9460ml-9460-ml,
+#edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml
+{
+	width:123px;
+	padding-right:3px;
+}
+
+#edit-submitted-oils-total-litres-remittance,
+#edit-submitted-filters-less-than-8-inches-remittance,
+#edit-submitted-filters-greater-than-8-inches-remittance,
+#edit-submitted-filters-sump-type-remittance,
+#edit-submitted-containers-size-wrapper-2-1-liter-remittance,
+#edit-submitted-containers-size-wrapper-500-ml-remittance,
+#edit-submitted-containers-size-wrapper-3-4-liter-remittance,
+#edit-submitted-containers-size-wrapper-4-10-liter-remittance,
+#edit-submitted-containers-size-wrapper-5-18-942-liter-remittance,
+#edit-submitted-containers-size-wrapper-6-20-liter-remittance,
+#edit-submitted-oils-oil-fieldset-total-litres-remittance,
+#edit-submitted-containers-size-wrapper-0947-l-0947-liter-remittance,
+#edit-submitted-containers-size-wrapper-3788-l-3788-liter-remittance,
+#edit-submitted-containers-size-wrapper-5-l-5-liter-remittance,
+#edit-submitted-filters-filters-8-fieldset-less-than-8-inches-remittance,
+#edit-submitted-filters-filters--8-fieldset-greater-than-8-inches-remittance,
+#edit-submitted-filters-filters-sump-fieldset-sump-type-remittance,
+
+#edit-submitted-liquid-concentrate-fieldset-concentrate-total-litres-remittance,
+#edit-submitted-liquid-premix-fieldset-premix-total-litres-remittance,
+#edit-submitted-containers-size-wrapper-150-ml-150-ml-remittance,
+#edit-submitted-containers-size-wrapper-1000-ml-1-litre-remittance,
+#edit-submitted-containers-size-wrapper-1500-ml-1500-ml-remittance,
+#edit-submitted-containers-size-wrapper-1890-ml-189-litre-remittance,
+#edit-submitted-containers-size-wrapper-2000-ml-2-litre-remittance,
+#edit-submitted-containers-size-wrapper-3788-ml-3788-litre-remittance,
+#edit-submitted-containers-size-wrapper-4000-ml-4-litre-remittance,
+#edit-submitted-containers-size-wrapper-5-l-5-litre-remittance,
+#edit-submitted-containers-size-wrapper-7560-ml-756-litre-remittance,
+#edit-submitted-containers-size-wrapper-9460-ml-946-litre-remittance,
+#edit-submitted-containers-size-wrapper-10000-ml-10-litre-remittance,
+#edit-submitted-containers-size-wrapper-15000-ml-15-litre-remittance,
+#edit-submitted-containers-size-wrapper-18900-ml-18-942-litre-remittance,
+#edit-submitted-containers-size-wrapper-20000-ml-20-litre-remittance,
+
+#edit-submitted-glycol-concentrate-fieldset-concentrate-total-litres-remittance,
+#edit-submitted-glycol-premix-fieldset-premix-total-litres-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-1000-ml-1000-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-1500-ml-1500-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-1890-ml-1890-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-3780-ml-3780-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-4000-ml-4000-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-5000-ml-5000-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-9460ml-9460-ml-remittance,
+#edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml-remittance
+{
+	width:97px;
+	background-color:transparent !important;
+}
+
+
+
+/**
+ *
+ *	Date Formatting
+ */
+
+
+.webform-component-textfield{
+  float:left;
+  margin-right:5px;
+  margin-bottom:2px;
+  margin-top: 1px;
+}
+
+.webform-component-date select{
+  background-color:#e7e4df;
+	width:65px;
+	border:1px solid #8a8885;
+}
+
+.webform-component-date option{ 
+	background-color:#e7e4df;
+	color:#010101;
+}
+
+.webform-component-date{
+	width:238px;
+	float:left;
+}
+
+#edit-submitted-start-date-year,
+#edit-submitted-end-date-year
+{width:60px;}
+
+#edit-submitted-start-date-day,
+#edit-submitted-end-date-day
+{width:50px;}
+
+#webform-component-start-date label,
+#webform-component-end-date label {
+	text-transform:uppercase;
+	color:#808080;
+	font-weight:bold;
+	font-size:87%;
+}
+
+/**
+ *
+ *	Oil formatting
+ */
+
+
+#edit-submitted-oils-oil-fieldset-total-litres-wrapper label {
+	font-weight:bold;
+
+}
+
+.node input {
+  text-align:right;
+  background:url('box-top-shadow.png') repeat-x #e7e4df;
+  border:1px solid #8a8885;
+}
+
+.node textarea {
+  background:url('box-top-shadow.png') repeat-x #e7e4df;
+  border:1px solid #8a8885;
+}
+
+input:focus,
+textarea:focus {
+  background-image:none;
+  background-color:#fff;
+}
+
+.readonly, 
+.node input.form-checkbox,
+.node input.form-radio,
+.node input.webform-calendar {
+  background-image:none !important;
+  border:0px !important;
+	background-color:transparent !important;
+}
+
+.webform-component p{
+  margin-left:0;
+  color:#e2ddd7;
+  border-bottom:1px solid #d3cec6;
+  padding-bottom:4px;
+  margin-right: 7px;
+}
+
+.webform-component p a{
+  display:inline-block;
+  width:135px;
+  background-image:url('box-top-shadow.png');
+  background-repeat:repeat-x;
+  border:1px solid #8a8885;
+  font-size:10px;
+  padding-top:2px;
+  padding-bottom:2px;
+  text-align:center;
+  font-weight:200;
+}
+
+#webform-component-totals{
+  width:376px;
+  float:right;
+  background-color:#e8e4df;
+}
+
+#webform-component-totals input{
+background-color:#e8e4df;
+}
+
+#webform-component-totals label{
+  text-align:right;
+  display:inline-block;
+  width:266px;
+}
+
+#webform-component-totals span{
+  display:inline-block;
+  width:15px;
+}
+
+#webform-component-totals legend{visibility:hidden;}
+
+#webform-component-totals input#edit-submitted-totals-tax-rate{
+width: 25px !important;
+text-align:left !important;
+background-color:#e8e4df;
+}
+
+#edit-submitted-totals-tax-rate-wrapper input
+{width:150px !important;}
+
+#edit-submitted-totals-tax-rate-wrapper label
+{width:180px !important;}
+
+
+
+#webform-component-totals .form-text{width: 97px;}
+/*#edit-submitted-totals-tax {width:175px !important;}*/
+#edit-submitted-totals-total {font-weight:bold;}
+
+#webform-component-totals--tax-rate{margin-right:0px !important;}
+
+#edit-submitted-totals-tax-rate-wrapper{display:none;}
+
+#edit-submitted-totals-total-wrapper label{
+	font-weight:bold;
+}
+
+#webform-component-totals--subtotal,
+#webform-component-totals--tax-applicable-sales,
+#webform-component-totals--tax-rate,
+#webform-component-totals--tax,
+#webform-component-totals--interest-admin-fees,
+#webform-component-totals--total
+{border-bottom:1px solid #d3cec6;}
+
+
+
+#webform-component--another-size,
+#webform-component--another-antifreeze-size {
+  background-color:#e2ddd7;
+	padding-bottom:3px;
+  margin-top: -11px;
+  padding-left:35px;
+  }
+
+#webform-component--another-size p,
+#webform-component--another-antifreeze-size p {
+	margin-top:0;
+	border-bottom:0;
+}
+
+.content #webform-component-oils {
+	background:url('icons.png') no-repeat 8px 3px #E2DDD7;
+}
+.content #webform-component-liquid,
+.content #webform-component-glycol {
+	background:url('icons.png') no-repeat -1641px 3px #E2DDD7;
+}
+.content #webform-component-filters {
+	background:url('icons.png') no-repeat -548px 6px #E2DDD7;
+}
+.content #webform-component-containers {
+	background:url('icons.png') no-repeat -1095px 0 #E2DDD7;
+}
+#node-8 .content #webform-component-containers,
+#webform-component-glycol-containers {
+	background:url('icons.png') no-repeat -2195px 0 #e2ddd7;
+}
+
+
+/*	Hide Province chooser, user email */
+#webform-component-province,
+#webform-component-useremail,
+#webform-component-totals--tax-applicable-sales {
+	display:none;
+}
+
+body.total-override #webform-component-totals--tax-applicable-sales {
+	display:block;
+}
+
+/* MENUS */
+
+.block ul{padding:0;}
+
+ul.menu .leaf{
+  list-style-position:inside;
+  list-style-type:none;
+  list-style-image:none;
+  padding:0px !important;
+}
+
+ul.menu .leaf a{
+  display:block;
+  width:161px;
+  padding:7px;
+  border-left: 6px solid #E8E4DF;
+  border-bottom: 1px solid #b4b0a2;
+  color: #515142;  
+	margin-left:7px;
+}
+
+ul.menu .leaf a:hover{
+  display:block;
+  width:161px;
+  padding:7px;
+  border-left: 6px solid #808080;
+  color: #515142;
+  
+}
+
+ul.menu .leaf a.active{
+  background-image:url('nav_selected.gif');
+  background-repeat:repeat-y;
+  background-position: 1px 0;
+  border-left-color: #FFE400;
+  font-weight:400;
+  color:#006d46;
+  display:block;
+  width:161px;
+  padding:7px;
+}
+
+/* REMIT SUBMITTION */
+
+.table-ctr{padding:12px;border:1px solid #ccc;margin:12px;}
+
+.remit-table{width:500px;}
+
+.remit-table, .webform-submission-navigation{
+  margin:12px;
+}
+
+.remit-table tbody td, .remit-table tfoot td{text-align:right;border-bottom:1px solid #CCC;}
+
+.webform-submission-previous{float:left;}
+
+.submission-info{
+  margin:12px;
+}
+
+/**
+ *	Profile view 
+**/
+
+.profile dl {
+	margin:0px;
+}
+
+.profile dd {
+	margin:0;
+}
+
+.profile h3,
+.profile dt {
+	display:none;
+}
+
+dd.profile-profile_company_name {
+	font-weight:bold;
+}
+
+#user-login,
+#user-pass {
+	margin:12px;
+}
+
+#user-login input[type='text'],
+#user-login input[type='password'],
+#user-pass input[type='text'],
+#user-pass input[type='password'] {
+	border:1px solid #ccc;
+}
+
+.views-exposed-widgets,
+.view-header {
+	margin: 12px;
+}
+
+#edit-uid,
+#edit-company {
+	width:150px;
+	background:url('box-top-shadow.png') repeat-x #e7e4df;
+  border:1px solid #8a8885;
+}
+
+#edit-uid-wrapper .description {
+	display:none;
+}
+
+/**
+ *	terms and conditions
+**/
+
+.node dl dt {
+	font-size:120%;
+	font-weight:bold;
+	margin-top:12px;
+}
+.node dl dt:hover {
+	color:#000;
+	cursor:pointer;
+}
+.node dl dd {
+	margin:0 0 12px 0;
+}

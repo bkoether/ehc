@@ -1,0 +1,123 @@
+<?php
+
+function remittance_menu() {
+
+  $items = array();
+
+  $items['admin/settings/remittance'] = array(
+    'title' => 'Remittance Rate Settings',
+    'description' => 'Per Province Rates & Taxes',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('remittance_admin'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+   );
+
+  return $items;
+}
+
+function remittance_admin() {
+	$provinces = array(
+		'BC' => 'British Columbia',
+		'AB' => 'Alberta',
+		//'ON' => 'Ontario',
+		//'QC' => 'Quebec',
+		'MB' => 'Manitoba',
+		'SK' => 'Saskatchewan',
+		//'NS' => 'Nova Scotia',
+		//'NB' => 'New Brunswick',
+		//'NL' => 'Newfoundland And Labrador',
+		//'PE' => 'Prince Edward Island',
+		//'NT' => 'Northwest Territories',
+		//'YT' => 'Yukon',
+		//'NU' => 'Nunavut',
+	);
+	$charges = array(
+		'PST' => 0.075,
+		'GST' => 0.05,
+		'HST' => 0.125,
+		'Oil' => 0.05,
+		'Oil Containers' => 0.05,
+		'Oil Filter <= 8in' => 0.08,
+		'Oil Filter > 8in' => 0.08,
+		'Oil Filter Sump' => 0.10,
+		'Glycol Concentrate' => 0.50,
+		'Glycol Premix' => 0.50,
+		'Glycol Containers' => 0.50,
+
+	);
+	$form = array();
+  
+	foreach ($provinces as $short => $long) {
+		$form[$short] = array(
+			'#type' => 'fieldset',
+			'#title' => $long,
+		);
+		foreach ($charges as $type => $rate) {
+			if ($short == 'BC' AND ($type == 'GST' OR $type == 'PST')) {
+				continue;
+			} else if ($type == 'HST' AND $short != 'BC') {
+				continue;
+			}
+			$name = $type;
+			$type = str_replace(" ", "-", $type);
+			$type = str_replace("(", "-", $type);
+			$type = str_replace(")", "-", $type);
+			$type = str_replace(".", "-", $type);
+			$form[$short][$short . "_" . $type] = array(
+				'#type' => 'textfield',
+				'#title' => t($short . " " . $name . " Rate"),
+				'#default_value' => variable_get($short . "_" . $type, $rate),
+				'#size' => 20,
+				'#maxlength' => 20,		
+			);
+		}
+	}
+
+	return system_settings_form($form);
+}
+
+function remittance_form_alter(&$form, &$form_state, $form_id) {
+	if ($form_id == "webform_client_form_3") {
+		// Add the submit handler after the existing Webform submit handler,
+		// but before the second Webform handler. Pop off the first one and add
+		// ours second.
+		$first = array_shift($form['#submit']);
+		array_unshift($form['#submit'], $first, 'remittance_php_client_submit');
+	}
+}
+
+function remittance_php_client_submit($form, &$form_state) {
+	foreach ($form_state['values']['submitted'] as $key => $value) {
+		if (is_array($value)) {
+			$newValue = "";
+			foreach ($value as $nKey => $nValue) {
+				$newValue .= $nValue.";";
+			}
+			$form_state['values']['submitted'][$key] = $newValue;
+		}
+	}
+}
+
+
+
+
+/**
+*	email alter to add the admin's for each province in as additional emails
+*	
+* Implementation of hook_mail_alter().
+**/ 
+
+function sitename_overrides_mail_alter(&$message) {
+  /* Replace to: aliases defined in _modulename_mail_aliases(). */
+	drupal_set_message($message);
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+name = Recycling Remittance Module
+description = "EHC Remittance Form Submissions"
+package = EHC Remittance
+php = 5.2
+core = 6.x
+
+; Information added by Acquia.com packaging script
+version = "6.x-1.10"
+core = "6.x"
+project = "spiros_recycling_remittance"
+
