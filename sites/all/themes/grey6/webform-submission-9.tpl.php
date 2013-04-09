@@ -18,7 +18,9 @@
 
 $bulk_rate = $submission->data[41][value][0];
 
-setlocale(LC_MONETARY, 'en_US');
+//setlocale(LC_MONETARY, 'en_US');
+setlocale(LC_MONETARY, 'en_US.UTF-8');
+
 
 //calculate the other sizes
 //base this from the stored "rate" for 1L containers
@@ -53,34 +55,47 @@ profile_load_profile($submission);
 $company_name = $submission->profile_company_name;
 
 // the association stuff
-
-
+$tax_prefix = 'GST';
+// Get the rate sheet
+$rs = remittance_json_data($submission->data[79]['value'][0], $submission->data[73]['value'][0], $submission->data[107]['value'][0], FALSE);
+if ($rs['hst'] || $rs['pst'] || $rs['gst']) {
+  if ($rs['hst']) {
+    $tax_prefix = 'HST';
+  }
+  else if($submission->profile_pst_applicable && !$rs['hst']) {
+    $tax_prefix = 'GST + PST';
+  }
+}
+// Fallback to defaults if there is no rate sheet avaibale.
+else if ($submission->data[79]['value'][0] == 'BC') {
+  $tax_prefix = 'HST';
+}
 
 switch($submission->data[79][value][0]){
-	case 'SK':
-	$title = 		"Saskatchewan Association for Resource Recovery Corp.";
-	$remitto = 	"Make cheque payable to: KPMG in trust for SARRC<br><strong>KPMG</strong><br>#600 128 4th Avenue South<br>Saskatoon, SK S7K 1M8";
-	$taxreg = 	"GST (#89176 3542 RT)";
-	$assphone = "ph: 1 (306) 934-6200 fx: 1 (306) 934-6233 email: <a href='mailto:lglubis@kpmg.ca'>lglubis@kpmg.ca</a>";
-	break;
-	case 'MB':
-	$title = 		'Manitoba Association for Resource Recovery Corp.';
-	$remitto = 	"Make cheque payable to: KPMG in trust for MARRC<br><strong>KPMG</strong><br>Attention: Linda Weseen<br>Suite 2000, One Lombard Place<br>Winnipeg, MB R3B 0X3";
-	$taxreg = 	"GST (#88264 5989 RT)";	
-	$assphone = "1 (204) 957-2273";
-	break;
-	case 'AB':
-	$title = 		'Alberta Used Oil Management Association';
-	$remitto = 	"<strong>Alberta Used Oil Management Association</strong><br>Administration Office<br>Suite 1008, 10080 Jasper Ave. NW<br>Edmonton, AB T5J 1V9";
-	$taxreg = 	"GST (#140327479RT)";
-	$assphone = "1 (866) 414-1510";
-	break;
-	case 'BC':
-	$title = 		'British Columbia Used Oil Management Association';
-	$remitto = 	"<strong>British Columbia Used Oil Management Association</strong><br>Administration Office<br>Suite 1008, 10080 Jasper Ave. NW<br>Edmonton, AB T5J 1V9";
-	$taxreg = 	"HST (#89254 4701 RT)";
-	$assphone = "1 (866) 254-0555";
-	break;		
+  case 'SK':
+    $title = 		"Saskatchewan Association for Resource Recovery Corp.";
+    $remitto = 	"Make cheque payable to: KPMG in trust for SARRC<br><strong>KPMG</strong><br>#600 128 4th Avenue South<br>Saskatoon, SK S7K 1M8";
+    $taxreg = 	$tax_prefix . " (#89176 3542 RT)";
+    $assphone = "ph: 1 (306) 934-6200 fx: 1 (306) 934-6233 email: <a href='mailto:lglubis@kpmg.ca'>lglubis@kpmg.ca</a>";
+    break;
+  case 'MB':
+    $title = 		'Manitoba Association for Resource Recovery Corp.';
+    $remitto = 	"Make cheque payable to: KPMG in trust for MARRC<br><strong>KPMG</strong><br>Attention: Linda Weseen<br>Suite 2000, One Lombard Place<br>Winnipeg, MB R3B 0X3";
+    $taxreg = 	$tax_prefix . " (#88264 5989 RT)";
+    $assphone = "1 (204) 957-2273";
+    break;
+  case 'AB':
+    $title = 		'Alberta Used Oil Management Association';
+    $remitto = 	"<strong>Alberta Used Oil Management Association</strong><br>Administration Office<br>Suite 1008, 10080 Jasper Ave. NW<br>Edmonton, AB T5J 1V9";
+    $taxreg = 	$tax_prefix . " (#140327479RT)";
+    $assphone = "1 (866) 414-1510";
+    break;
+  case 'BC':
+    $title = 		'British Columbia Used Oil Management Association';
+    $remitto = 	"<strong>British Columbia Used Oil Management Association</strong><br>Administration Office<br>Suite 1008, 10080 Jasper Ave. NW<br>Edmonton, AB T5J 1V9";
+    $taxreg = 	$tax_prefix . " (#89254 4701 RT)";
+    $assphone = "1 (866) 254-0555";
+    break;
 }
 
  ?>
@@ -97,19 +112,19 @@ switch($submission->data[79][value][0]){
 		<td valign="top"><?php print $submission->name;?></td>
 	</tr>
 	<tr><td colspan="3">&nbsp;</td></tr>
-	<tr valign="top">	
+	<tr valign="top">
 		<td colspan="2" style="padding-bottom:20px">Period:<br/><strong><?php print $submission->data[73][value][0];?>
 		to <?php print $submission->data[107][value][0];?></strong></td>
 		<td colspan="1" style="padding-bottom:20px">Payment by:<br /><strong><?php print $submission->data[116][value][0];?></strong></td>
-	</tr>		
+	</tr>
 </thead>
 <thead>
 	<tr style="padding-top:5px">
 	<th>Oil</th>
 	<th>Litres Sold</th>
 	<th>Remittance</th>
-	</tr>	
-</thead>	
+	</tr>
+</thead>
 <tbody>
 	<tr>
 		<th>&nbsp;</th>
@@ -120,7 +135,7 @@ switch($submission->data[79][value][0]){
 		<th>&nbsp;</th>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-	</tr>	
+	</tr>
 </tbody>
 
 <thead>
@@ -128,8 +143,8 @@ switch($submission->data[79][value][0]){
 	<th>Oil Container Size</th>
 	<th>Units Sold (in litres)</th>
 	<th>Remittance</th>
-	</tr>	
-</thead>	
+	</tr>
+</thead>
 <tbody>
 	<tr>
 		<th>500 ml</th>
@@ -140,7 +155,7 @@ switch($submission->data[79][value][0]){
 		<th>947 ml</th>
 		<td><?php print cleannum($submission->data[119][value][0]) * 0.947;?></td>
 		<td><?php print $submission->data[121][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th>1 Litre</th>
 		<td><?php print cleannum($submission->data[80][value][0]) * 1;?></td>
@@ -180,12 +195,12 @@ switch($submission->data[79][value][0]){
 		<th>Other Sizes <!-- sizes: <?php print $submission->data[96][value][0] . " quantity:" . $submission->data[106][value][0];?> --></th>
 		<td><?php print $oil_in_litres;?></td>
 		<td><?php print money_format('%!i',$oil_other_totals);?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th>&nbsp;</th>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-	</tr>	
+	</tr>
 </tbody>
 
 <thead>
@@ -193,13 +208,23 @@ switch($submission->data[79][value][0]){
 	<th>Oil Filters</th>
 	<th>Units Sold</th>
 	<th>Remittance</th>
-	</tr>	
-</thead>	
+	</tr>
+</thead>
 <tbody>
 	<tr>
-		<th>Under 8 inches (203mm)</th>
-		<td><?php print $submission->data[4][value][0];?></td>
-		<td><?php print $submission->data[13][value][0];?></td>
+		<?php
+		$filter_small_qty =  $submission->data[4][value][0];
+		$filter_small_val = $submission->data[13][value][0];
+		if ($submission->data[6][value][0]) {
+			$qty_sum = (int)str_replace(',', '', $filter_small_qty) + (int)str_replace(',', '', $submission->data[6][value][0]);
+			$qty_val = (float)str_replace(',', '', $filter_small_val) + (float)str_replace(',', '', $submission->data[15][value][0]);
+			$filter_small_qty = number_format($qty_sum);
+			$filter_small_val = money_format('%!i', $qty_val);
+		}
+		?>
+		<th>Under 8 inches (203mm) and all sump type filter</th>
+		<td><?php print $filter_small_qty;?></td>
+		<td><?php print $filter_small_val;?></td>
 	</tr>
 	<tr>
 		<th>8 inches (203mm) and over</th>
@@ -207,15 +232,10 @@ switch($submission->data[79][value][0]){
 		<td><?php print $submission->data[14][value][0];?></td>
 	</tr>
 	<tr>
-		<th>Sump type</th>
-		<td><?php print $submission->data[6][value][0];?></td>
-		<td><?php print $submission->data[15][value][0];?></td>
-	</tr>
-	<tr>
 		<th>&nbsp;</th>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-	</tr>		
+	</tr>
 </tbody>
 
 <thead>
@@ -223,8 +243,8 @@ switch($submission->data[79][value][0]){
 	<th>Antifreeze Liquid</th>
 	<th>Litres Sold</th>
 	<th>Remittance</th>
-	</tr>	
-</thead>	
+	</tr>
+</thead>
 <tbody>
 	<tr>
 		<th>Concentrate</th>
@@ -235,12 +255,12 @@ switch($submission->data[79][value][0]){
 		<th>Premix</th>
 		<td><?php print $submission->data[183][value][0];?></td>
 		<td><?php print $submission->data[185][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th>&nbsp;</th>
 		<td></td>
 		<td></td>
-	</tr>	
+	</tr>
 </tbody>
 
 <thead>
@@ -248,8 +268,8 @@ switch($submission->data[79][value][0]){
 	<th>Antifreeze Containers</th>
 	<th>Units Sold (in litres)</th>
 	<th>Remittance</th>
-	</tr>	
-</thead>	
+	</tr>
+</thead>
 <tbody>
 	<tr>
 		<th>1 Litre</th>
@@ -260,7 +280,7 @@ switch($submission->data[79][value][0]){
 		<th>1.5 Litre</th>
 		<td><?php print cleannum($submission->data[145][value][0]) * 1.5;?></td>
 		<td><?php print $submission->data[147][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th>1.89 Litre</th>
 		<td><?php print cleannum($submission->data[149][value][0]) * 1.89;?></td>
@@ -275,7 +295,7 @@ switch($submission->data[79][value][0]){
 		<th>4 Litre</th>
 		<td><?php print cleannum($submission->data[157][value][0]) * 4;?></td>
 		<td><?php print $submission->data[159][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th>5 Litre</th>
 		<td><?php print cleannum($submission->data[161][value][0]) * 5;?></td>
@@ -285,7 +305,7 @@ switch($submission->data[79][value][0]){
 		<th>9.46 Litre</th>
 		<td><?php print cleannum($submission->data[165][value][0]) * 9.46;?></td>
 		<td><?php print $submission->data[167][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th>18.942 Litre</th>
 		<td><?php print cleannum($submission->data[169][value][0]) * 18.942;?></td>
@@ -295,7 +315,7 @@ switch($submission->data[79][value][0]){
 		<th>Other Sizes  <!-- sizes: <?php print $submission->data[187][value][0] . " quantity:" . $submission->data[190][value][0];?> --></th>
 		<td><?php print $glycol_in_litres;?></td>
 		<td><?php print money_format('%!i',$glycol_other_totals);?></td>
-	</tr>	
+	</tr>
 </tbody>
 
 <tfoot>
@@ -308,7 +328,7 @@ switch($submission->data[79][value][0]){
 		<td colspan="2">Tax applicable sales</td>
 		<td><?php print $submission->data[135][value][0];?></td>
 	</tr>
-<?php endif;?>		
+<?php endif;?>
 	<tr>
 		<td colspan="2"><?php print $taxreg;?></td>
 		<td><?php print $submission->data[69][value][0];?></td>
@@ -316,11 +336,11 @@ switch($submission->data[79][value][0]){
 	<tr>
 		<td colspan="2">Interest and admin charges</td>
 		<td><?php print $submission->data[136][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<td colspan="2">Total</td>
 		<td><?php print $submission->data[72][value][0];?></td>
-	</tr>	
+	</tr>
 	<tr>
 		<th colspan="3">Comments:<br><span style="font-weight:normal"><?php print $submission->data[137][value][0];?></span></th>
 	</tr>

@@ -23,7 +23,7 @@ function remittance_menu() {
   return $items;
 }
 
-function remittance_json_data($province, $start_date, $end_date) {
+function remittance_json_data($province, $start_date, $end_date, $json = TRUE) {
 	$start_ts = strtotime($start_date);
 	$end_ts = strtotime($end_date);
 
@@ -64,8 +64,13 @@ function remittance_json_data($province, $start_date, $end_date) {
 			'end' => $end_date,
 		);
 	}
+  if ($json) {
+    drupal_json($charges);
+  }
+  else {
+    return $charges;
+  }
 
-	drupal_json($charges);
 }
 
 

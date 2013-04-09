@@ -886,10 +886,11 @@ background-color:#e8e4df;
 }
 
 
-/*	Hide Province chooser, user email */
+/*	Hide Province chooser, user email and sump type */
 #webform-component-province,
 #webform-component-useremail,
-#webform-component-totals--tax-applicable-sales {
+#webform-component-totals--tax-applicable-sales,
+#webform-component-filters--filters-sump-fieldset{
 	display:none;
 }
 

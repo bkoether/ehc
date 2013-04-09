@@ -14,8 +14,8 @@ function grey6_preprocess_node(&$vars, $hook) {
 }
 
 //	watchdog('debug',$variable);
-	
-	
+
+
 /**
  * Theme the headers when sending an email from webform.
  *
@@ -34,9 +34,9 @@ function grey6_preprocess_node(&$vars, $hook) {
  *   the values set in the webform configuration.
  */
 function grey6_webform_mail_headers($node, $submission, $email) {
-	
+
 	//drupal_set_message(print_r($submission));
-	
+
 	switch($submission->data[79]['value'][0]){
 		case 'AB':
 			$admin_email = 'AUOMAremittance@usedoilrecycling.ca'; //andrew+AB@mellenger.com
@@ -47,10 +47,10 @@ function grey6_webform_mail_headers($node, $submission, $email) {
 		case 'SK':
 			// mat leave $admin_email = 'lglubis@kpmg.ca';
 			$admin_email = 'krwhite@kpmg.ca';
-		break;	
+		break;
 		case 'MB':
 			$admin_email = 'lweseen@kpmg.ca'; //
-		break;		
+		break;
 		default:
 			$admin_email = 'andrew.mellenger@greyvancouver.com';
 		break;
@@ -60,16 +60,16 @@ function grey6_webform_mail_headers($node, $submission, $email) {
     	//$admin_email = 'andrew@mellenger.com';
 		$admin_email = 'marty@michetti.com';
 	}
-	
-	
+
+
   $headers = array(
     'X-Mailer' => 'EHC Remittance Form (PHP/' . phpversion() . ')',
-		'BCC' => $admin_email,
+//		'BCC' => $admin_email,
 		'Reply-To' => $admin_email,
 		'Return-Path' => $admin_email
   );
   return $headers;
-}	
+}
 
 
 

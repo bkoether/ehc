@@ -1,11 +1,11 @@
 Drupal.behaviors.readonly = function(context){
-    
+
 	$('input[readonly]').addClass('readonly').focus(function(){
 		$(this).blur();
 	});
 
 }
- 
+
 Drupal.behaviors.noColons = function(context){
     $('form label[class!="option"]').each(
         function() {
@@ -17,23 +17,23 @@ Drupal.behaviors.noColons = function(context){
 
 //set tab index for the page
 Drupal.behaviors.indexSet = function(context){
-	
+
 	var tabindex = 1;
 		$('.node input, .node select').each(function() {
 			if ($(this).attr('type') != "hidden" && !$(this).attr('readonly')) {
-				
+
 				//console.log( $(this).attr('readonly') );
 				$(this).attr("tabindex", tabindex);
 				tabindex++;
 			}
 		});
-	
+
 }
 
 
 //disable form submit
 Drupal.behaviors.submitCheck = function(context){
-	
+
 	$('.node #edit-submit').click(function(){
 		var n = $(".node input:checked, .node input:radio:checked").length;
 		if(n == 3){
@@ -42,11 +42,11 @@ Drupal.behaviors.submitCheck = function(context){
 			return false;
 		}
 	});
-	
+
 	$(".node input:checkbox, .node input:radio").click(function(){
 		checkCheckboxCheck();
 	});
-	
+
 	checkCheckboxCheck();
 
 }
@@ -55,19 +55,19 @@ Drupal.behaviors.addOne = function(context){
 	if($("#edit-submitted-oils-oil-fieldset-total-litres-wrapper").length != 0){
 		$("#edit-submitted-oils-oil-fieldset-total-litres-wrapper").find('label').html('Oil<sup>1</sup>');
 	}
-	
+
 }
-    
+
 Drupal.behaviors.defLists = function(context){
 	if($(".node dl dt").length != 0){
 		$(".node dl dd").hide();
-		
+
 		$(".node dl dt").click(function(){
 			$(this).next('dd').slideToggle();
 		});
-		
+
 	}
-	
+
 }
 
 /**
@@ -77,9 +77,9 @@ Drupal.behaviors.defLists = function(context){
 
 Drupal.behaviors.filterWatch = function(context){
 	$("#edit-submitted-filters-filters-8-fieldset-less-than-8-inches, #edit-submitted-filters-filters--8-fieldset-greater-than-8-inches, #edit-submitted-filters-filters-sump-fieldset-sump-type").change(function(){
-		
+
 		$(this).val( Math.round( $(this).cleannum().val() ) );
-	
+
 	});
 }
 
@@ -103,7 +103,7 @@ function checkCheckboxCheck() {
  * 	trying to make it work for oil and glycol
  */
 function do_hidden_update(type) {
-	
+
 	//the parent container, assume oil if type is not set
 	var parentCtr = $("#webform-component-containers");
 	//the fields
@@ -111,7 +111,7 @@ function do_hidden_update(type) {
 	var containersField = $("#edit-submitted-custom-size-number-of-cans-bottles");
 	var rateField = $("#edit-submitted-custom-size-rate");
 	var totalField = $("#edit-submitted-custom-size-remittance");
-	
+
 	if(type == 'glycol'){
 		//the parent container
 		parentCtr = $("#webform-component-glycol-containers");
@@ -121,7 +121,7 @@ function do_hidden_update(type) {
 		rateField = $("#edit-submitted-custom-size-rate-glycol");
 		totalField = $("#edit-submitted-custom-size-remittance-glycol");
 	}
-	
+
 	var customField = $(".custom-size-fieldset").length;
 
 	/* Cycle through all the 4 custom field entries and create a delimited string and then insert into hidden form values */
@@ -154,7 +154,7 @@ function do_hidden_update(type) {
 
 //calculate totals
 function do_totals() {
-	
+
 	//
 	// calculate subtotal
 	//
@@ -164,7 +164,7 @@ function do_totals() {
 		$("#" + fieldsArray[field] + "-remittance").cleannum();
 
 		//add to subtotal variable
-		if ($("#" + fieldsArray[field] + "-remittance").val() != '' || typeof parseFloat($("#" + fieldsArray[field] + "-remittance").val()) !== 'undefined') {		
+		if ($("#" + fieldsArray[field] + "-remittance").val() != '' || typeof parseFloat($("#" + fieldsArray[field] + "-remittance").val()) !== 'undefined') {
 			//try{console.log("decomma'd: "+ fieldsArray[field] + " - " + $("#" + fieldsArray[field] + "-remittance").val() + " " + isNaN($("#" + fieldsArray[field] + "-remittance").val()) );}catch(e){}
 			subTotal = parseFloat(subTotal) + parseFloat($("#" + fieldsArray[field] + "-remittance").val());
 			//console.log("parsed:" + parseFloat($("#" + fieldsArray[field] + "-remittance").val()) );
@@ -183,17 +183,17 @@ function do_totals() {
 	//
 	//	calculate tax
 	//
-	
+
 	//check if override is allowed
 	var override = ($('body.total-override').length > 0)? true : false;
-	
-	var taxCharged = 0;	
+
+	var taxCharged = 0;
 	if(override){
 		var apptax = ($('#edit-submitted-totals-tax-applicable-sales').cleannum().val() == "")? 0 : parseFloat($('#edit-submitted-totals-tax-applicable-sales').cleannum().val());
 		taxCharged =  apptax * parseFloat($("#edit-submitted-totals-tax-rate").val());
-	}else{	
+	}else{
 		taxCharged = subTotal * parseFloat($("#edit-submitted-totals-tax-rate").val());
-	}	
+	}
 	if (check_decimals(taxCharged, 2, 9999)) {
 		taxCharged = roundNumber(taxCharged, 2);
 	}
@@ -208,10 +208,10 @@ function do_totals() {
 	}
 	total = numberToFixed(total, 2);
 	$("#edit-submitted-totals-total").val('$'+total).digits();
-	
+
 	//fix the others
 	$('#edit-submitted-totals-interest-admin-fees, #edit-submitted-totals-tax-applicable-sales').digits();
-	
+
 }
 
 function add_field(type){
@@ -220,12 +220,12 @@ function add_field(type){
 	if(!arguments){
 		var type = 'oil';
 	}
-	
+
 	var customField = getCustomField();
-	
+
 	var qt = "'";
 	var html = '<div id="custom-div-new-' + customField + '" class="add-new-fieldset"><fieldset class="webform-component-fieldset-custom-set"><input type="text" name="liter-size-' + customField + '" id="custom-field-' + customField + '-size" class="liter-size-input-input" /><span class="add-new-item-desc">Add numerical values in litres only (i.e. "15", "0.5").</span><input onclick="add_field_run(' + customField + ', ' + qt + type + qt + ');" type="button" value="add" class="add-new-item-button"/></fieldset></div>';
-	
+
 	if(type == 'glycol'){
 		$("#webform-component-glycol-containers").append(html);
 	}else{
@@ -240,11 +240,11 @@ function add_field(type){
 }
 
 function add_field_run(customField, type) {
-	
+
 	if(!type){
 		var type = 'oil';
 	}
-	
+
     $('#custom-field-' + customField + '-size').cleannum();
     var user_input = $('#custom-field-' + customField + '-size').attr('value');
     if (user_input > 0) {
@@ -273,33 +273,33 @@ function add_field_item(user_input, type) {
 	if(!type){
 		var type = 'oil';
 	}
-	
+
 	var customField = getCustomField();
-	
-	
+
+
 	//try{console.log(customField);}catch(e){}
 
-	var currentProvince = $("#edit-submitted-province-select-province").val();
-  	var currentPArray = pRates[currentProvince];
-	//oil is default
-  	var computed_input = user_input * currentPArray[4];
+    // var currentProvince = $("#edit-submitted-province-select-province").val();
+    // var currentPArray = pRates[currentProvince];
+	// oil is default
+  	var computed_input = user_input * Drupal.settings.currentRates.oil_containers;
 	//glycol
 	if(type == 'glycol'){
-		computed_input = user_input * currentPArray[10];
+		computed_input = user_input * Drupal.settings.currentRates.glycol_containers;
 	}
-	
-	
-	
+
+
+
 	var qt = "'";
 
 	var html = '<fieldset id="custom-div-' + customField + '" class="custom-size-fieldset webform-component-fieldset"><a href="#" onclick="return !remove_field(' + customField + ', ' + qt + type + qt + ')" class="customDel" title="click to remove the ' + user_input + ' Liter size">x</a><input readonly="readonly" type="text" value="' + user_input +' Litre" name="liter-size-' + customField + '" id="custom-field-' + customField + '-size" class="liter-size-input" /><input onblur="blur(' + qt + customField + qt + ')" type="text" value="" name="custom-field-' + customField + '-entries" id="custom-field-' + customField + '-entries" class="number-of-entries" /><input value="' + computed_input +'" readonly="readonly" type="text" readonly name="each-' + customField + '-rate" id="custom-field-' + customField + '-rate" class="each-rate" /><div style="display:inline;margin:1px 5px 2px 0"><span class="field-suffix">/ea</span></div><input value="0.00" readonly="readonly" type="text" readonly name="total-' + customField + '-remittance" id="custom-field-' + customField + '-remittance" class="total-remittance" /></fieldset>';
-	
+
 	if(type == 'glycol'){
 		$("#webform-component-glycol-containers").append(html);
 	}else{
 		$("#webform-component-containers").append(html);
-	}	
-	
+	}
+
 
 	//nice rates
 	$('#custom-field-' + customField + '-rate').niceRates();
@@ -315,11 +315,11 @@ function add_field_item(user_input, type) {
 	$("#custom-field-" + customField + "-size").change( function () {
 		var size = parseFloat($(this).val());
 		if (size > 0) {
-			var currentProvince = $("#edit-submitted-province-select-province").val();
-			var currentPArray = pRates[currentProvince];
-			var ratePer = currentPArray[4] * size;
+//			var currentProvince = $("#edit-submitted-province-select-province").val();
+//			var currentPArray = pRates[currentProvince];
+			var ratePer = Drupal.settings.currentRates.oil_containers * size;
 			if(type == 'glycol'){
-				ratePer = currentPArray[10] * size;
+				ratePer = currentPArray[10] * Drupal.settings.currentRates.glycol_containers;
 			}
 			$("#custom-field-" + customField + "-rate").val(ratePer).niceRates();
 		}
@@ -359,14 +359,14 @@ function add_field_item(user_input, type) {
  * serious code reduction here...
  */
 function getCustomField(type){
-	
+
 	//return $(".custom-size-fieldset").length;
-	
+
 	// 	var parentCtr = "#webform-component-containers";
 	// if(type == 'glycol'){
 	// 	parentCtr = "#webform-component-glycol-containers";
 	// }
-	
+
 	var customField = 0;
 	if( $(".custom-size-fieldset").size() >  0 ){
 		 var last = $(".custom-size-fieldset").size();
@@ -382,17 +382,17 @@ function getCustomField(type){
  *
  */
 function remove_field(num, type) {
-	
+
 	if(!type){
 		var type = 'oil';
 	}
-	
+
 	//remove the items from the array
 	for (var field in fieldsArray) {
 		if (fieldsArray[field] == "custom-field-" + num) {
 			fieldsArray.splice(field, 1);
 		}
-	}	
+	}
 	//remove the custom fields
 	$("#custom-div-" + num).remove();
 	//reset tab index
@@ -420,7 +420,7 @@ function makeWholeNum(val){
 	return Math.round(Number(val));
 }
 
-var numberToFixed = 
+var numberToFixed =
 (function() {
   return toFixedString;
 
@@ -432,7 +432,7 @@ var numberToFixed =
   function toUnsignedString(m, digits) {
     var t, s = Math.round(m * Math.pow(10, digits)) + "",
         start, end;
-    if (/\D/.test(s)) { 
+    if (/\D/.test(s)) {
       return "" + m;
     }
     s = padLeft(s, 1 + digits, "0");
@@ -443,7 +443,7 @@ var numberToFixed =
     }
     return start + end; // avoid "0."
   }
-  /** 
+  /**
    * @param {string} input: input value converted to string.
    * @param {number} size: desired length of output.
    * @param {string} ch: single character to prefix to s.
@@ -456,6 +456,31 @@ var numberToFixed =
     return s;
   }
 })();
+
+
+function checkSheetDates() {
+    var check = false;
+    // Check the start date
+    $('select[name*="start_date"]').each(function(){
+        if ($(this).val()) {
+            check = true;
+        }
+        else {
+            check = false;
+        }
+    });
+    if (check) {
+        $('select[name*="end_date"]').each(function(){
+            if ($(this).val()) {
+                check = true;
+            }
+            else {
+                check = false;
+            }
+        });
+    }
+    return check;
+}
 
 /**
  * So Console.log doesn't screw up IE anymore
