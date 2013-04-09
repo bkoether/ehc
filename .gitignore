@@ -6,3 +6,4 @@ cache/
 files/
 sites/*/files
 sites/*/private
+.idea

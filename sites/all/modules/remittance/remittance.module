@@ -13,8 +13,63 @@ function remittance_menu() {
     'type' => MENU_NORMAL_ITEM,
    );
 
+  $items['json/resource-sheet/%/%/%'] = array(
+  	'page callback' => 'remittance_json_data',
+  	'page arguments' => array(2,3,4),
+  	'access callback' => TRUE,
+  	'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
+
+function remittance_json_data($province, $start_date, $end_date) {
+	$start_ts = strtotime($start_date);
+	$end_ts = strtotime($end_date);
+
+	// $query = "SELECT n.nid AS nid, p.field_province_value AS province, d.field_start_date_value AS start_date
+	$query = "SELECT n.nid
+		FROM {node} n
+		LEFT JOIN {content_type_rate_sheet} p ON n.vid = p.vid
+		LEFT JOIN {content_type_rate_sheet} d ON n.vid = d.vid
+		WHERE n.type = '%s' AND n.status = %d AND p.field_province_value = '%s' AND d.field_start_date_value <= %d
+		ORDER BY d.field_start_date_value DESC
+		LIMIT 1";
+	$start_nid = db_result(db_query($query, 'rate_sheet', 1, $province, $start_ts));
+	$end_nid = db_result(db_query($query, 'rate_sheet', 1, $province, $end_ts));
+
+	// $data = array();
+	// If we have the same nid we are good to go
+	if ($start_nid == $end_nid) {
+		$sheet = node_load($start_nid);
+		$charges = array(
+			'pst' => (float) $sheet->field_pst[0]['value'],
+			'gst' => (float) $sheet->field_gst[0]['value'],
+			'hst' => (float) ($sheet->field_hst_selector[0]['value'] ? $sheet->field_hst[0]['value'] : 0),
+			'oil' => (float) $sheet->field_oil[0]['value'],
+			'oil_containers' => (float) $sheet->field_oil_containers[0]['value'],
+			'oil_filter_small' => (float) $sheet->field_oil_filter_small[0]['value'],
+			'oil_filter_large' => (float) $sheet->field_oil_filter_large[0]['value'],
+			'glycol_concentrate' => (float) $sheet->field_glycol_concentrate[0]['value'],
+			'glycol_premix' => (float) $sheet->field_glycol_premix[0]['value'],
+			'glycol_containers' => (float) $sheet->field_glycol_containers[0]['value']
+		);
+	}
+	else {
+		$end_sheet = node_load($end_nid);
+		$end_date = date('F j, Y', ($end_sheet->field_start_date[0]['value'] - 86400));
+		$charges = array(
+			'error' => 'true',
+			'start' => date('F j, Y', $start_ts),
+			'end' => $end_date,
+		);
+	}
+
+	drupal_json($charges);
+}
+
+
+// Old Functionality
 
 function remittance_admin() {
 	$provinces = array(
@@ -47,7 +102,7 @@ function remittance_admin() {
 
 	);
 	$form = array();
-  
+
 	foreach ($provinces as $short => $long) {
 		$form[$short] = array(
 			'#type' => 'fieldset',
@@ -69,7 +124,7 @@ function remittance_admin() {
 				'#title' => t($short . " " . $name . " Rate"),
 				'#default_value' => variable_get($short . "_" . $type, $rate),
 				'#size' => 20,
-				'#maxlength' => 20,		
+				'#maxlength' => 20,
 			);
 		}
 	}
@@ -104,9 +159,9 @@ function remittance_php_client_submit($form, &$form_state) {
 
 /**
 *	email alter to add the admin's for each province in as additional emails
-*	
+*
 * Implementation of hook_mail_alter().
-**/ 
+**/
 
 function sitename_overrides_mail_alter(&$message) {
   /* Replace to: aliases defined in _modulename_mail_aliases(). */

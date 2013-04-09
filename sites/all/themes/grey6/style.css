@@ -120,7 +120,7 @@ body{
   color:#000;
 }
 
-.webform-results-per-page, 
+.webform-results-per-page,
 .sticky-table,
 .webform-confirmation {
 	margin:0 12px;
@@ -208,7 +208,7 @@ ul.menu li{margin:0px !important;}
 #block-menu-menu-global ul.menu li {
 	display:inline;
 	list-style-type:none;
-	
+
 }
 
 #block-menu-menu-global{
@@ -223,12 +223,12 @@ display:none;
 }
 
 ul.menu:after {
-  content: "."; 
-  display: block; 
-  height: 0; 
-  clear: both; 
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
   visibility: hidden;
-	
+
 }
 
 ul.primary li.active a {
@@ -710,7 +710,7 @@ sup{
 	border:1px solid #8a8885;
 }
 
-.webform-component-date option{ 
+.webform-component-date option{
 	background-color:#e7e4df;
 	color:#010101;
 }
@@ -764,7 +764,7 @@ textarea:focus {
   background-color:#fff;
 }
 
-.readonly, 
+.readonly,
 .node input.form-checkbox,
 .node input.form-radio,
 .node input.webform-calendar {
@@ -893,6 +893,14 @@ background-color:#e8e4df;
 	display:none;
 }
 
+/* Error Message */
+.node-type-webform .error-warning{
+    padding: 10px;
+    border: 1px solid #C0A0A0;
+    margin: 0 15px;
+    background-color: #EEDADA;
+}
+
 body.total-override #webform-component-totals--tax-applicable-sales {
 	display:block;
 }
@@ -914,7 +922,7 @@ ul.menu .leaf a{
   padding:7px;
   border-left: 6px solid #E8E4DF;
   border-bottom: 1px solid #b4b0a2;
-  color: #515142;  
+  color: #515142;
 	margin-left:7px;
 }
 
@@ -924,7 +932,7 @@ ul.menu .leaf a:hover{
   padding:7px;
   border-left: 6px solid #808080;
   color: #515142;
-  
+
 }
 
 ul.menu .leaf a.active{
@@ -958,7 +966,7 @@ ul.menu .leaf a.active{
 }
 
 /**
- *	Profile view 
+ *	Profile view
 **/
 
 .profile dl {
