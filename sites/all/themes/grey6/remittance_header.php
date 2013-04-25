@@ -26,6 +26,8 @@ $provinces = array(
 ?>
 
 <script type="text/javascript" charset="utf-8">
+  var currentRates;
+
 	var fieldsArray = [];
 	// Fields for oil values standalone and combined form
 	<?php if ($nid == 3 || $nid == 9): ?>
@@ -105,7 +107,7 @@ $provinces = array(
 		var end = $('input[type="image"]').eq(1).val();
 
 		// Load rates
-		var url = location.origin + Drupal.settings.basePath + 'json/resource-sheet/' + currentProvince + '/' + start + '/' + end;
+		var url = location.protocol + '//' + location.host + Drupal.settings.basePath + 'json/resource-sheet/' + currentProvince + '/' + start + '/' + end;
 		$.get(url, function(data) {
 			currentRates = JSON.parse(data);
 			if (currentRates.error) {
@@ -231,56 +233,56 @@ $provinces = array(
 
 
 <script type="text/javascript" charset="utf-8">
+  Drupal.behaviors.changeListeners = function(context) {
+    if (jQuery.datepicker) {
+      jQuery.datepicker._defaults.onClose = function () {
+        checkReady();
+      };
+    }
 
-	$(document).ready( function () {
-		// Hide the form until a date is set
+    for (var field in fieldsArray) {
+      $("#" + fieldsArray[field]).change( function () {
+        var thisID = $(this).attr('id');
+
+        //clear out any non-numbers
+        $("#" + thisID).cleannum();
+        var total = $("#" + thisID).val() * $("#" + thisID + "-rate").val();
+        //add commas back
+        $("#" + thisID).digits();
+
+        if (check_decimals(total, 2, 9999)) {
+          total = roundNumber(total, 2);
+        }
+        total = numberToFixed(total, 2);
+        $("#" + thisID + "-remittance").val(total);
+
+        do_totals();
+        $("#" + thisID + "-remittance").digits();
+
+        saveFormState();
+      });
+    }
+
+    //the tax applicable sales and admin fees
+    $('#edit-submitted-totals-tax-applicable-sales, #edit-submitted-totals-interest-admin-fees').change(function(){
+      var total = $(this).cleannum().val();
+
+      do_totals();
+
+      if (check_decimals(total, 2, 9999)) {
+        total = roundNumber(total, 2);
+      }
+      total = numberToFixed(total, 2);
+
+      $(this).val(total).digits();
+    });
+  }
+
+
+  $(document).ready( function () {
+  	// Hide the form until a date is set
 		$('#webform-component-end-date').nextAll().hide();
-		checkReady();
-
-		jQuery.datepicker._defaults.onClose = function () {
-			checkReady();
-		};
-
-		for (var field in fieldsArray) {
-			$("#" + fieldsArray[field]).change( function () {
-				var thisID = $(this).attr('id');
-
-				//clear out any non-numbers
-				$("#" + thisID).cleannum();
-				var total = $("#" + thisID).val() * $("#" + thisID + "-rate").val();
-				//add commas back
-				$("#" + thisID).digits();
-
-				if (check_decimals(total, 2, 9999)) {
-					total = roundNumber(total, 2);
-				}
-				total = numberToFixed(total, 2);
-				$("#" + thisID + "-remittance").val(total);
-
-				do_totals();
-				$("#" + thisID + "-remittance").digits();
-			});
-		}
-
-		//the tax applicable sales and admin fees
-		$('#edit-submitted-totals-tax-applicable-sales, #edit-submitted-totals-interest-admin-fees').change(function(){
-			//console.log($(this).val());
-			var total = $(this).cleannum().val();
-			//console.log(total);
-
-			do_totals();
-
-			if (check_decimals(total, 2, 9999)) {
-				total = roundNumber(total, 2);
-			}
-			total = numberToFixed(total, 2);
-
-			$(this).val(total).digits();
-			//console.log(total);
-			//console.log($(this).val());
-		});
-
-
+    checkReady();
 	});
 </script>
 

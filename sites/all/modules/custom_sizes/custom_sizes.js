@@ -6,7 +6,10 @@
 
 Drupal.customSizes = {
   attach: function(){
-    if (!$('body').hasClass('cs_processed')) {
+    var sizeLen;
+    var sizeArr;
+    var body = $('body');
+    if (!$(body).hasClass('cs_processed')) {
 
       // if you are on a oil page
       if($("#webform-component-containers").length > 0){
@@ -14,8 +17,8 @@ Drupal.customSizes = {
         var osizes = Drupal.settings.custom_sizes.prev_sizes;
         //explode on the ;'s
         if(osizes){
-          var sizeArr = osizes.split(';');
-          var sizeLen = sizeArr.length;
+          sizeArr = osizes.split(';');
+          sizeLen = sizeArr.length;
           for(var i=0; i<sizeLen; i++){
             //add each custom size
             //console.log(sizeArr[i], 'oil');
@@ -30,8 +33,8 @@ Drupal.customSizes = {
         var gsizes = Drupal.settings.custom_sizes.prev_sizes_glycol;
         //explode on the ;'s
         if(gsizes){
-          var sizeArr = gsizes.split(';');
-          var sizeLen = sizeArr.length;
+          sizeArr = gsizes.split(';');
+          sizeLen = sizeArr.length;
           for(var i=0; i<sizeLen; i++){
             //add each custom size
             //console.log(sizeArr[i], 'glycol');
@@ -39,7 +42,7 @@ Drupal.customSizes = {
           }
         }
       }
-      $('body').addClass('cs_processed');
+      $(body).addClass('cs_processed');
     }
   }
 };

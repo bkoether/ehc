@@ -1031,3 +1031,14 @@ dd.profile-profile_company_name {
 .node dl dd {
 	margin:0 0 12px 0;
 }
+
+/* Previous Remittance View*/
+.view-remittance-history table{
+    width: 90%;
+    margin: 0 5%;
+}
+.view-remittance-history caption{
+    font-weight: bold;
+    font-size: 14px;
+    margin: 10px 0 0;
+}

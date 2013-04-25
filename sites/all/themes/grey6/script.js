@@ -37,6 +37,11 @@ Drupal.behaviors.submitCheck = function(context){
 	$('.node #edit-submit').click(function(){
 		var n = $(".node input:checked, .node input:radio:checked").length;
 		if(n == 3){
+      var fid = $('form.webform-client-form').attr('id');
+      localStorage.removeItem(fid + '_rs');
+      localStorage.removeItem(fid + '_values');
+      localStorage.removeItem(fid + '_html');
+
 			return true;
 		}else{
 			return false;
@@ -74,13 +79,73 @@ Drupal.behaviors.defLists = function(context){
  *	Round filters and maybe every container?
  *
  */
-
 Drupal.behaviors.filterWatch = function(context){
-	$("#edit-submitted-filters-filters-8-fieldset-less-than-8-inches, #edit-submitted-filters-filters--8-fieldset-greater-than-8-inches, #edit-submitted-filters-filters-sump-fieldset-sump-type").change(function(){
-
+//	$("#edit-submitted-filters-filters-8-fieldset-less-than-8-inches, #edit-submitted-filters-filters--8-fieldset-greater-than-8-inches, #edit-submitted-filters-filters-sump-fieldset-sump-type").change(function(){
+$('#webform-component-containers input, #webform-component-filters input, #webform-component-glycol-containers input').not('.readonly, .liter-size-input-input').change(function(){
 		$(this).val( Math.round( $(this).cleannum().val() ) );
-
 	});
+}
+
+/**
+ * Setup listeners.
+ */
+//Drupal.behaviors.changeListeners = function(context) {
+//  if (jQuery.datepicker) {
+//    jQuery.datepicker._defaults.onClose = function () {
+//      checkReady();
+//    };
+//  }
+//
+//  for (var field in fieldsArray) {
+//    $("#" + fieldsArray[field]).change( function () {
+//      var thisID = $(this).attr('id');
+//
+//      //clear out any non-numbers
+//      $("#" + thisID).cleannum();
+//      var total = $("#" + thisID).val() * $("#" + thisID + "-rate").val();
+//      //add commas back
+//      $("#" + thisID).digits();
+//
+//      if (check_decimals(total, 2, 9999)) {
+//        total = roundNumber(total, 2);
+//      }
+//      total = numberToFixed(total, 2);
+//      $("#" + thisID + "-remittance").val(total);
+//
+//      do_totals();
+//      $("#" + thisID + "-remittance").digits();
+//
+//      saveFormState();
+//    });
+//  }
+//
+//  //the tax applicable sales and admin fees
+//  $('#edit-submitted-totals-tax-applicable-sales, #edit-submitted-totals-interest-admin-fees').change(function(){
+//    var total = $(this).cleannum().val();
+//
+//    do_totals();
+//
+//    if (check_decimals(total, 2, 9999)) {
+//      total = roundNumber(total, 2);
+//    }
+//    total = numberToFixed(total, 2);
+//
+//    $(this).val(total).digits();
+//  });
+//}
+
+/**
+ * Check if there are values for an unsaved form.
+ */
+Drupal.behaviors.checkSavedForm = function(context) {
+  if (!$('body').hasClass('saved-form-processed')) {
+    $('body').addClass('saved-form-processed');
+    var fid = $('form.webform-client-form').attr('id');
+    var saved = localStorage.getItem(fid + '_values');
+    if (saved != null) {
+      getFormState();
+    }
+  }
 }
 
 
@@ -149,7 +214,6 @@ function do_hidden_update(type) {
 	});
 
 	do_totals();
-
 }
 
 //calculate totals
@@ -160,14 +224,15 @@ function do_totals() {
 	//
 	var subTotal = 0;
 	for (var field in fieldsArray) {
+//    console.log(field);
 		//take out commas
 		$("#" + fieldsArray[field] + "-remittance").cleannum();
 
 		//add to subtotal variable
-		if ($("#" + fieldsArray[field] + "-remittance").val() != '' || typeof parseFloat($("#" + fieldsArray[field] + "-remittance").val()) !== 'undefined') {
-			//try{console.log("decomma'd: "+ fieldsArray[field] + " - " + $("#" + fieldsArray[field] + "-remittance").val() + " " + isNaN($("#" + fieldsArray[field] + "-remittance").val()) );}catch(e){}
+		if ( ($("#" + fieldsArray[field] + "-remittance").val() != '' || typeof parseFloat($("#" + fieldsArray[field] + "-remittance").val()) !== 'undefined') && !isNaN($("#" + fieldsArray[field] + "-remittance").val()) ) {
+			// try{console.log("decomma'd: "+ fieldsArray[field] + " - " + $("#" + fieldsArray[field] + "-remittance").val() + " " + isNaN($("#" + fieldsArray[field] + "-remittance").val()) );}catch(e){}
 			subTotal = parseFloat(subTotal) + parseFloat($("#" + fieldsArray[field] + "-remittance").val());
-			//console.log("parsed:" + parseFloat($("#" + fieldsArray[field] + "-remittance").val()) );
+			// console.log("parsed:" + parseFloat($("#" + fieldsArray[field] + "-remittance").val()) );
 		}
 		//put commas back
 		$("#" + fieldsArray[field] + "-remittance").digits();
@@ -335,17 +400,16 @@ function add_field_item(user_input, type) {
 		$(this).digits();
 
 
-			if (check_decimals(total, 2, 9999)) {
-				total = roundNumber(total, 2);
-			}
+		if (check_decimals(total, 2, 9999)) {
+			total = roundNumber(total, 2);
+		}
 
-			total = numberToFixed(total, 2);
+		total = numberToFixed(total, 2);
 
-			$("#custom-field-" + customField + "-remittance").val(total);
+		$("#custom-field-" + customField + "-remittance").val(total);
 
-			do_hidden_update(type);
-
-
+		do_hidden_update(type);
+    saveFormState();
 	});
 
 
@@ -482,6 +546,46 @@ function checkSheetDates() {
     return check;
 }
 
+
+function saveFormState() {
+
+  var form = $('form.webform-client-form');
+  var fid = $(form).attr('id');
+  // First get the form values
+  sel = {};
+  $('[name^="custom-field"], [name^="submitted"], .custom-size-fieldset input[name^="total"]').each(function(){
+    sel[this.id] = $(this).val();
+  });
+
+  localStorage.setItem(fid + '_values', JSON.stringify(sel));
+
+  // Save the rate sheet
+  localStorage.setItem(fid + '_rs', JSON.stringify(currentRates));
+
+  // Save the html
+  var htm = $(form).html();
+  localStorage.setItem(fid + '_html', JSON.stringify(htm));
+}
+
+function getFormState() {
+  var form = $('form.webform-client-form');
+  var fid = $(form).attr('id');
+
+  // Load the rate sheet back in
+  currentRates = JSON.parse(localStorage.getItem(fid + '_rs'));
+  // Load the HTML back in
+  var htm = JSON.parse(localStorage.getItem(fid + '_html'));
+  $(form).html(htm);
+
+  // Load the values back in
+  var formValues = JSON.parse(localStorage.getItem(fid + '_values'));
+  // console.log(formValues);
+  for (var field in formValues) {
+//    console.log(formValues[field]);
+    $('#' + field).val(formValues[field]);
+  }
+  Drupal.attachBehaviors();
+}
 /**
  * So Console.log doesn't screw up IE anymore
  **/

@@ -1,1 +1,10 @@
-#column_left, .webform-submission-navigation{display:none;}
+#header,
+#column_left,
+ul.tabs,
+.webform-submission-navigation{
+    display:none;
+}
+#center{
+    float: none;
+    margin: 0 auto;
+}
