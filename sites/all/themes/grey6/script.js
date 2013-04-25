@@ -584,6 +584,8 @@ function getFormState() {
 //    console.log(formValues[field]);
     $('#' + field).val(formValues[field]);
   }
+  // We need to make sure the custom size feature is not triggered twice
+  $('body').addClass('cs_processed');
   Drupal.attachBehaviors();
 }
 /**
