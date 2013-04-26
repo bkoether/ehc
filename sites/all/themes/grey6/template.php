@@ -64,7 +64,7 @@ function grey6_webform_mail_headers($node, $submission, $email) {
 
   $headers = array(
     'X-Mailer' => 'EHC Remittance Form (PHP/' . phpversion() . ')',
-//		'BCC' => $admin_email,
+		'BCC' => $admin_email,
 		'Reply-To' => $admin_email,
 		'Return-Path' => $admin_email
   );

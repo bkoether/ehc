@@ -22,6 +22,9 @@ $provinces = array(
 	'NU' => 'Nunavt',
 	'ON' => 'Ontario',
 	'PE' => 'Prince Edward Island',
+  'QC' => 'Quebec',
+  'SK' => 'Saskatchewan',
+  'YT' => 'Yukon',
 );
 ?>
 
