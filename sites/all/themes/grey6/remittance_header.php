@@ -108,14 +108,22 @@ $provinces = array(
 		// Get start and end date
 		var start = $('input[type="image"]').eq(0).val();
 		var end = $('input[type="image"]').eq(1).val();
+    // the backup way
+    if(start == "" || start == undefined){
+      start = $('#edit-submitted-start-date-year').val() + "-" + $('#edit-submitted-start-date-month').val() + "-" + $('#edit-submitted-start-date-day').val();
+    }
+    if(end == "" || end == undefined){
+      end = $('#edit-submitted-end-date-year').val() + "-" + $('#edit-submitted-end-date-month').val() + "-" + $('#edit-submitted-end-date-day').val();
+    }
 
-		// Load rates
+
+    // Load rates
 		var url = location.protocol + '//' + location.host + Drupal.settings.basePath + 'json/resource-sheet/' + currentProvince + '/' + start + '/' + end;
 		$.get(url, function(data) {
 			currentRates = JSON.parse(data);
 			if (currentRates.error) {
 				$('#webform-component-end-date').nextAll().hide();
-				$('#center h2').after('<div class="error-warning">A rate adjustment has occurred during the time period you defined. Please submit your values from <em>' + currentRates.start + '</em> to <em>' + currentRates.end + '</em></div>');
+				$('#center h2').after('<div class="error-warning">A rate adjustment has occurred during the time period you defined. Please submit your values from <em>' + currentRates.start + '</em> to <em>' + currentRates.end + '</em> and then complete another submission for the remainder of the period.</div>');
 			}
 			else {
         // Add the results to the Drupal settings so that it can be accessed.
@@ -229,7 +237,7 @@ $provinces = array(
 
 	function checkReady() {
 		if (checkSheetDates()) {
-			setup_defaults()
+			setup_defaults();
 		}
 	}
 </script>
@@ -241,6 +249,11 @@ $provinces = array(
       jQuery.datepicker._defaults.onClose = function () {
         checkReady();
       };
+      $('.webform-component-date select').change(function(){
+        if($('#edit-submitted-start-date-year').val() != "" && $('#edit-submitted-start-date-month').val() != "" && $('#edit-submitted-start-date-day').val() != "" && $('#edit-submitted-end-date-year').val() != "" && $('#edit-submitted-end-date-month').val() != "" && $('#edit-submitted-end-date-day').val() != ""){
+          checkReady();
+        }
+      });
     }
 
     for (var field in fieldsArray) {
