@@ -55,6 +55,56 @@ function rate_sheets_fieldgroup_default_groups() {
     ),
   );
 
+  // Exported group: group_oem
+  $groups['rate_sheet-group_oem'] = array(
+    'group_type' => 'standard',
+    'type_name' => 'rate_sheet',
+    'group_name' => 'group_oem',
+    'label' => 'OEM',
+    'settings' => array(
+      'form' => array(
+        'style' => 'fieldset_collapsed',
+        'description' => '',
+      ),
+      'display' => array(
+        'description' => '',
+        'teaser' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'full' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        '4' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        '2' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        '3' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'token' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '1',
+    'fields' => array(
+      '0' => 'field_oem_automotive',
+      '1' => 'field_oem_utility',
+      '2' => 'field_oem_agricultural',
+      '3' => 'field_oem_construction',
+      '4' => 'field_oem_forestry',
+    ),
+  );
+
   // Exported group: group_oil
   $groups['rate_sheet-group_oil'] = array(
     'group_type' => 'standard',
@@ -158,6 +208,7 @@ function rate_sheets_fieldgroup_default_groups() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Glycol');
+  t('OEM');
   t('Oil');
   t('Tax Rates');
 

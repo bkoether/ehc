@@ -10,6 +10,7 @@ stylesheets[print][] = print.css
 
 scripts[] = script.js
 scripts[] = jquery.plugins.js
+ scripts[] = jquery.simpletip-1.3.1.min.js
 
 
 regions[left] = Left sidebar

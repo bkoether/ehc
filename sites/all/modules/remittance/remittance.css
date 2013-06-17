@@ -1,0 +1,12 @@
+.node-form .node-tablefield table,
+.group-oem table td .form-item{
+    width: 100%;
+}
+
+.node-form .node-tablefield .form-text{
+    width: 90%;
+}
+
+.group-oem .node-tablefield fieldset{
+    display: none;
+}

@@ -1042,3 +1042,27 @@ dd.profile-profile_company_name {
     font-size: 14px;
     margin: 10px 0 0;
 }
+
+/* Tooltips */
+
+.rh-oem-fieldset .info{
+    background: url("_images/information.png") no-repeat left center;
+    padding-left: 10px;
+}
+.rh-oem-fieldset .label{
+    width: 158px;
+    text-align: left;
+}
+.rh-oem-fieldset .rh-oem-field{
+    width: 128px;
+}
+.tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+    background-color: #e8e5e0;
+    border: 1px solid #333;
+    padding: 5px;
+}
