@@ -236,13 +236,14 @@ $provinces = array(
         // @TODO: Change this to node 9.
         <?php if ($nid == 9): ?>
           // Check if there are values in the construction array. If not, hide the form elements.
-          if (Object.keys(currentRates.oem.automotive).length) {
+          if (currentRates.oem == undefined) {
+            $('#webform-component-oem').hide();
+          }
+          else {
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
-          }
-          else {
-            $('#webform-component-oem').hide();
+
           }
         <?php endif; ?>
       }
