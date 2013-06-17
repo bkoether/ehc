@@ -231,7 +231,21 @@ $provinces = array(
 					$("#edit-submitted-totals-tax-rate").val(tax);
 					$("#edit-submitted-totals-tax-wrapper").find('label').text(label);
 				}
-			}
+
+        // Add OEMs only for the combined form.
+        // @TODO: Change this to node 9.
+        <?php if ($nid == 9): ?>
+          // Check if there are values in the construction array. If not, hide the form elements.
+          if (Object.keys(currentRates.oem.automotive).length) {
+            // Create the fields if this is a new form
+            oemFields.init($('body').hasClass('oem_processed'));
+            oemFields.attachListener();
+          }
+          else {
+            $('#webform-component-oem').hide();
+          }
+        <?php endif; ?>
+      }
 		}, "json");
 	}
 
@@ -240,10 +254,104 @@ $provinces = array(
 			setup_defaults();
 		}
 	}
+
+  var oemFields = {
+
+    init: function(skipHtml){
+      for (var cat in currentRates.oem) {
+        var currentCat = currentRates.oem[cat];
+        var container = $('#webform-component-oem--oem-' + cat);
+        for (var i in currentCat) {
+          fieldsArray.push( 'rh-oem-field-' + cat + '-' + i );
+          if (!skipHtml){
+            $(container).append(Drupal.theme('oemLine', currentCat[i], cat, i));
+          }
+        }
+      }
+      $('body').addClass('oem_processed');
+    },
+
+    attachListener: function() {
+      $('.rh-oem-fieldset .info').each(function(){
+        $(this).simpletip({
+          content: $(this).find('.tt').html(),
+          fixed: true,
+          position: 'bottom'
+        });
+      });
+
+      $('.rh-oem-field').blur(function(){
+        oemFields.calcLine($(this));
+      });
+    },
+
+    calcLine: function(field) {
+      var targetName = $(field).attr('name') + '-remittance';
+      var cat = $(field).attr('data-oem-cat');
+      var catPos = $(field).attr('data-oem-cat-id');
+      var newCount = $(field).val();
+      var newSum = numberToFixed(newCount * currentRates.oem[cat][catPos].rate, 2);
+      $('input[name="' + targetName + '"]').val(newSum).digits();
+      do_totals();
+      oemFields.catTotals(cat);
+      saveFormState();
+    },
+
+    catTotals : function(oemCat) {
+      var oemClass = '.rh-oem-fields-' + oemCat;
+      var oilTotal = 0;
+      var coolantTotal = 0;
+      var smallFilterTotal = 0;
+      var largeFilterTotal = 0;
+      var remittanceTotal = 0;
+      var lines = "";
+
+      $(oemClass).each(function(){
+        var lineId = $(this).attr('data-oem-cat-id');
+        var line = currentRates.oem[oemCat][lineId]['title'] + '|';
+
+        var lineCount = $(this).val();
+        var lineOil =  lineCount * currentRates.oem[oemCat][lineId]['oil'];
+        var lineCoolant = lineCount * currentRates.oem[oemCat][lineId]['coolant'];
+        var lineSmallFilter = lineCount * currentRates.oem[oemCat][lineId]['filter_s'];
+        var lineLargeFilter = lineCount * currentRates.oem[oemCat][lineId]['filter_l'];
+        var lineTotal = parseFloat($('#rh-oem-field-' + oemCat + '-' + lineId + '-remittance').val());
+
+        line = line + 'Qty:' + lineCount + '|Oil:' + lineOil + '|Coolant:' + lineCoolant + '|Small Filter:' + lineSmallFilter + '|Large Filter:' + lineLargeFilter + '|Total:' + lineTotal;
+        lines = lines + line + "\n";
+
+        oilTotal = oilTotal + lineOil;
+        coolantTotal = coolantTotal + lineCoolant;
+        smallFilterTotal = smallFilterTotal + lineSmallFilter;
+        largeFilterTotal = largeFilterTotal + lineLargeFilter;
+        remittanceTotal = numberToFixed(parseFloat(remittanceTotal) + lineTotal, 2);
+      });
+
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-oil').val(oilTotal);
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-coolant').val(coolantTotal);
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-filter-small').val(smallFilterTotal);
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-filter-large').val(largeFilterTotal);
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-total').val(remittanceTotal).digits();
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-lines').val(lines);
+    }
+  }
 </script>
 
 
 <script type="text/javascript" charset="utf-8">
+  Drupal.theme.prototype.oemLine = function(vals, cat, count) {
+    var id = cat + '-' + count;
+    var ret;
+    ret = '<fieldset class="rh-oem-fieldset webform-component-fieldset">';
+    ret += '<span class="info">&nbsp;<span style="display: none;" class="tt">Oil: '+vals.oil+' Litre, Coolant: '+vals.coolant+' Litre, Small Filter: '+vals.filter_s+', Large Filter: '+vals.filter_l+'<br>'+vals.info+'</span></span>';
+    ret += '<input readonly="readonly" class="readonly label" type="text" value="' + vals.title + '">';
+    ret += '<input value="" data-oem-cat="' + cat + '" data-oem-cat-id="' + count + '" class="rh-oem-field rh-oem-fields-' + cat + '" name="rh-oem-field-' + id + '" id="rh-oem-field-' + id + '">';
+    ret += '<span class="field-suffix" style="width: 87px;">$'+vals.rate+'/ea</span>';
+    ret += '<input value="0.00" readonly="readonly" type="text" name="rh-oem-field-' + id + '-remittance" id="rh-oem-field-' + id + '-remittance" class="readonly total-remittance">';
+    ret += '</fieldset>';
+    return ret;
+  }
+
   Drupal.behaviors.changeListeners = function(context) {
     if (jQuery.datepicker) {
       jQuery.datepicker._defaults.onClose = function () {
