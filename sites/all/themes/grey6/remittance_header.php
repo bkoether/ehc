@@ -239,14 +239,15 @@ $provinces = array(
         // @TODO: Change this to node 9.
         <?php if ($nid == 9): ?>
           // Check if there are values in the construction array. If not, hide the form elements.
-          if (currentRates.oem == undefined) {
-            $('#webform-component-oem').hide();
-          }
-          else {
+          if (typeof currentRates.oem.automotive[1].rate !== 'undefined' &&  currentRates.oem.automotive[1].rate.length > 0) {
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
             collapseFields.oem('closed');
+
+          }
+          else {
+            $('#webform-component-oem').hide();
 
           }
         <?php endif; ?>
@@ -267,9 +268,11 @@ $provinces = array(
         var currentCat = currentRates.oem[cat];
         var container = $('#webform-component-oem--oem-' + cat);
         for (var i in currentCat) {
-          fieldsArray.push( 'rh-oem-field-' + cat + '-' + i );
-          if (!skipHtml){
-            $(container).append(Drupal.theme('oemLine', currentCat[i], cat, i));
+          if (currentCat[i].rate.length > 0) {
+            fieldsArray.push( 'rh-oem-field-' + cat + '-' + i );
+            if (!skipHtml){
+              $(container).append(Drupal.theme('oemLine', currentCat[i], cat, i));
+            }
           }
         }
       }
