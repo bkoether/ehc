@@ -158,6 +158,7 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
+          collapseFields.oil('open');
 				<?php endif; ?>
 
 				// Antifreeze combined form
@@ -185,6 +186,7 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
+          collapseFields.glycol('closed');
 				<?php endif; ?>
 
 				// Antifreeze standalone values
@@ -215,6 +217,7 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
+          collapseFields.glycol('closed');
 				<?php endif; ?>
 
 				if (currentRates.hst != 0) {
@@ -243,6 +246,7 @@ $provinces = array(
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
+            collapseFields.oem('closed');
 
           }
         <?php endif; ?>
@@ -336,6 +340,92 @@ $provinces = array(
       $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-lines').val(lines);
     }
   }
+
+  var collapseFields = {
+    oil: function(currentClass){
+      if(!$('#field-toggle-oil').length){
+        $('#webform-component-oils').before('<h2 id="field-toggle-oil" class="field-toggle ' + currentClass + '">Oil<span>&ndash;</span></h2>');
+      }
+
+      var targets = $('#webform-component-oils, #webform-component-containers, #webform-component--another-size, #webform-component-filters');
+      var indicator = $('#field-toggle-oil span');
+
+      if (currentClass != 'open') {
+        collapseFields.animate('close', targets, indicator);
+        $('#field-toggle-oil').removeClass('open');
+      }
+
+      $('#field-toggle-oil').click(function(){
+        if ($(this).hasClass('open')) {
+          collapseFields.animate('close', targets, indicator);
+        }
+        else {
+          collapseFields.animate('open', targets, indicator);
+        }
+
+        $(this).toggleClass('open')
+      });
+    },
+
+    glycol: function(currentClass){
+      if(!$('#field-toggle-glycol').length){
+        $('#webform-component-glycol').before('<h2 id="field-toggle-glycol" class="field-toggle ' + currentClass + '">Antifreeze<span>&ndash;</span></h2>');
+      }
+      var indicator = $('#field-toggle-glycol span');
+      var targets = $('#webform-component-glycol, #webform-component-glycol-containers, #webform-component--another-antifreeze-size');
+      if (currentClass != 'open') {
+        collapseFields.animate('close', targets, indicator);
+        $('#field-toggle-glycol').removeClass('open');
+      }
+
+      $('#field-toggle-glycol').click(function(){
+        if ($(this).hasClass('open')) {
+          collapseFields.animate('close', targets, indicator);
+        }
+        else {
+          collapseFields.animate('open', targets, indicator);
+        }
+
+        $(this).toggleClass('open')
+      });
+
+    },
+
+    oem: function (currentClass){
+      var targets = $('#webform-component-oem');
+      if(!$('#field-toggle-oem').length){
+        $(targets).before('<h2 id="field-toggle-oem" class="field-toggle ' + currentClass + '">OEM<span>&ndash;</span></h2>');
+      }
+      var indicator = $('#field-toggle-oem span');
+
+      if (currentClass != 'open') {
+        collapseFields.animate('close', targets, indicator);
+        $('#field-toggle-oem').removeClass('open');
+      }
+
+      $('#field-toggle-oem').click(function(){
+        if ($(this).hasClass('open')) {
+          collapseFields.animate('close', targets, indicator);
+        }
+        else {
+          collapseFields.animate('open', targets, indicator);
+        }
+
+        $(this).toggleClass('open');
+      });
+    },
+
+    animate: function(op, targets, indicator){
+      if (op == 'open'){
+        $(targets).slideDown();
+        $(indicator).html('&ndash;');
+      }
+      else {
+        $(targets).slideUp();
+        $(indicator).html('+');
+      }
+    }
+  }
 </script>
 
 
@@ -344,8 +434,9 @@ $provinces = array(
     var id = cat + '-' + count;
     var ret;
     ret = '<fieldset class="rh-oem-fieldset webform-component-fieldset">';
-    ret += '<span class="info">&nbsp;<span style="display: none;" class="tt">Oil: '+vals.oil+' Litre, Coolant: '+vals.coolant+' Litre, Small Filter: '+vals.filter_s+', Large Filter: '+vals.filter_l+'<br>'+vals.info+'</span></span>';
+
     ret += '<input readonly="readonly" class="readonly label" type="text" value="' + vals.title + '">';
+    ret += '<span class="info">&nbsp;<span style="display: none;" class="tt">Oil: '+vals.oil+' Litre, Coolant: '+vals.coolant+' Litre, Small Filter: '+vals.filter_s+', Large Filter: '+vals.filter_l+'<br>'+vals.info+'</span></span>';
     ret += '<input value="" data-oem-cat="' + cat + '" data-oem-cat-id="' + count + '" class="rh-oem-field rh-oem-fields-' + cat + '" name="rh-oem-field-' + id + '" id="rh-oem-field-' + id + '">';
     ret += '<span class="field-suffix" style="width: 87px;">$'+vals.rate+'/ea</span>';
     ret += '<input value="0.00" readonly="readonly" type="text" name="rh-oem-field-' + id + '-remittance" id="rh-oem-field-' + id + '-remittance" class="readonly total-remittance">';

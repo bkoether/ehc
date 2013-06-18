@@ -553,7 +553,7 @@ function saveFormState() {
   var fid = $(form).attr('id');
   // First get the form values
   sel = {};
-  $('[name^="custom-field"], [name^="submitted"], .custom-size-fieldset input[name^="total"]').each(function(){
+  $('[name^="custom-field"], [name^="submitted"], input[name^="rh-oem"], .custom-size-fieldset input[name^="total"]').each(function(){
     sel[this.id] = $(this).val();
   });
 
@@ -586,6 +586,7 @@ function getFormState() {
   }
   // We need to make sure the custom size feature is not triggered twice
   $('body').addClass('cs_processed');
+  $('body').addClass('oem_processed');
   Drupal.attachBehaviors();
 }
 /**

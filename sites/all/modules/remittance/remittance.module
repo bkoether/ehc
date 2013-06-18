@@ -52,8 +52,17 @@ function remittance_json_data($province, $start_date, $end_date, $json = TRUE) {
 			'oil_filter_large' => (float) $sheet->field_oil_filter_large[0]['value'],
 			'glycol_concentrate' => (float) $sheet->field_glycol_concentrate[0]['value'],
 			'glycol_premix' => (float) $sheet->field_glycol_premix[0]['value'],
-			'glycol_containers' => (float) $sheet->field_glycol_containers[0]['value']
+			'glycol_containers' => (float) $sheet->field_glycol_containers[0]['value'],
 		);
+    if (isset($sheet->field_oem_utility)) {
+      $charges['oem'] = array(
+        'automotive' => remittance_prepare_oem($sheet->field_oem_automotive[0]['value']),
+        'forestry' => remittance_prepare_oem($sheet->field_oem_forestry[0]['value']),
+        'construction' => remittance_prepare_oem($sheet->field_oem_construction[0]['value']),
+        'agricultural' => remittance_prepare_oem($sheet->field_oem_agricultural[0]['value']),
+        'utility' => remittance_prepare_oem($sheet->field_oem_utility[0]['value']),
+      );
+    }
 	}
 	else {
 		$end_sheet = node_load($end_nid);
@@ -70,7 +79,46 @@ function remittance_json_data($province, $start_date, $end_date, $json = TRUE) {
   else {
     return $charges;
   }
+}
 
+/**
+ * Prepares the OEM data for easier use on the remittance forms.
+ */
+function remittance_prepare_oem($data) {
+  $table = unserialize($data);
+  $header = array();
+  $rows = array();
+  $return = array();
+
+  // Prepare the rows
+  foreach ($table as $cell_id => $cell) {
+    $id = explode('_', $cell_id);
+
+    // Only do something if it is a cell.
+    if ($id[0] == 'cell') {
+      if ($id[1] == 0) {
+        $header[] = $cell;
+      }
+      else {
+        $rows[$id[1]][] = $cell;
+      }
+    }
+
+    foreach ($rows as $rid => $row) {
+      $return[$rid]['title'] = $row[0];
+      $return[$rid]['oil'] = $row[1];
+      $return[$rid]['coolant'] = $row[2];
+      $return[$rid]['filter_s'] = $row[3];
+      $return[$rid]['filter_l'] = $row[4];
+      $return[$rid]['rate'] = $row[5];
+      $return[$rid]['info'] = $row[6];
+//      $return[$rid]['description'] = '<div class="oem-description"><div class="oem-values">';
+//      $return[$rid]['description'] .= "$row[1] $header[1] / $row[2] $header[2] / $row[3] $header[3] / $row[4] $header[4]</div>";
+//      $return[$rid]['description'] .= '<div class="add-info">'.$row[6].'</div></div>';
+    }
+  }
+
+  return $return;
 }
 
 
@@ -138,13 +186,18 @@ function remittance_admin() {
 }
 
 function remittance_form_alter(&$form, &$form_state, $form_id) {
-	if ($form_id == "webform_client_form_3") {
+
+  if ($form_id == "webform_client_form_3") {
 		// Add the submit handler after the existing Webform submit handler,
 		// but before the second Webform handler. Pop off the first one and add
 		// ours second.
 		$first = array_shift($form['#submit']);
 		array_unshift($form['#submit'], $first, 'remittance_php_client_submit');
 	}
+
+  elseif ($form_id == 'rate_sheet_node_form') {
+    drupal_add_css(drupal_get_path('module', 'remittance') . '/remittance.css', 'theme');
+  }
 }
 
 function remittance_php_client_submit($form, &$form_state) {
