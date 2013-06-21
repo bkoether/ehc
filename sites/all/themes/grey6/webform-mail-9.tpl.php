@@ -334,10 +334,16 @@ $totals = array(
   'total' => 0,
 );
 
+
+// Wee need to get the tree differently as we don't have the renderable array available.
+$page = 1;
+$oem_tree = array();
+_webform_components_tree_build($node->webform['components'], $oem_tree, 191, $page);
+
 $display_oem = FALSE;
 $rows = array();
-if (isset($renderable['oem'])) {
-  $categories = $renderable['oem']['#webform_component']['children'];
+if (!empty($oem_tree)) {
+  $categories = $oem_tree['children'];
   foreach ($categories as $category) {
 
     $row = array();
@@ -468,6 +474,3 @@ if (isset($renderable['oem'])) {
 
 
 <p style="margin:10px"><a href="%submission_url">view online</a></p>
-
-<pre><?php //print_r($submission);?></pre>
-<pre><?php //print_r($user);?></pre>

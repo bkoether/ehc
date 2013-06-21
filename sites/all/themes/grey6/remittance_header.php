@@ -123,7 +123,7 @@ $provinces = array(
 			currentRates = JSON.parse(data);
 			if (currentRates.error) {
 				$('#webform-component-end-date').nextAll().hide();
-				$('#center h2').after('<div class="error-warning">A rate adjustment has occurred during the time period you defined. Please submit your values from <em>' + currentRates.start + '</em> to <em>' + currentRates.end + '</em> and then complete another submission for the remainder of the period.</div>');
+				$('#center h2:first').after('<div class="error-warning">A rate adjustment has occurred during the time period you defined. Please submit your values from <em>' + currentRates.start + '</em> to <em>' + currentRates.end + '</em> and then complete another submission for the remainder of the period.</div>');
 			}
 			else {
         // Add the results to the Drupal settings so that it can be accessed.
@@ -236,10 +236,9 @@ $provinces = array(
 				}
 
         // Add OEMs only for the combined form.
-        // @TODO: Change this to node 9.
         <?php if ($nid == 9): ?>
           // Check if there are values in the construction array. If not, hide the form elements.
-          if (typeof currentRates.oem.automotive[1].rate !== 'undefined' &&  currentRates.oem.automotive[1].rate.length > 0) {
+          if (Object.keys(currentRates.oem.automotive).length > 0){ //typeof currentRates.oem.automotive[1].rate !== 'undefined'){ // &&  currentRates.oem.automotive[1].rate.length > 0) {
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
@@ -261,6 +260,7 @@ $provinces = array(
 		}
 	}
 
+  // Functions for the OEM fields
   var oemFields = {
 
     init: function(skipHtml){
@@ -344,6 +344,7 @@ $provinces = array(
     }
   }
 
+  // Functions for the collapsible fieldsets.
   var collapseFields = {
     oil: function(currentClass){
       if(!$('#field-toggle-oil').length){
@@ -356,6 +357,10 @@ $provinces = array(
       if (currentClass != 'open') {
         collapseFields.animate('close', targets, indicator);
         $('#field-toggle-oil').removeClass('open');
+      }
+      else {
+        collapseFields.animate('open', targets, indicator);
+        $('#field-toggle-oil').addClass('open');
       }
 
       $('#field-toggle-oil').click(function(){

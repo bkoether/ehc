@@ -456,6 +456,3 @@ if (isset($renderable['oem'])) {
 </tfoot>
 </table>
 </div>
-<!--
-<?php print_r($submission);?>
--->
