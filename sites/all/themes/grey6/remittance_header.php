@@ -276,7 +276,9 @@ $provinces = array(
           }
         }
       }
+
       $('body').addClass('oem_processed');
+      Drupal.behaviors.indexSet($('#webform-client-form-9'));
     },
 
     attachListener: function() {
