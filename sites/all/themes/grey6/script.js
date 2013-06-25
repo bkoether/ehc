@@ -141,6 +141,7 @@ Drupal.behaviors.checkSavedForm = function(context) {
   if (!$('body').hasClass('saved-form-processed')) {
     $('body').addClass('saved-form-processed');
     var fid = $('form.webform-client-form').attr('id');
+    fid = fid  + '_' + currentUser + '_' + currentVersion;
     var saved = localStorage.getItem(fid + '_values');
     if (saved != null) {
       getFormState();
@@ -550,7 +551,7 @@ function checkSheetDates() {
 function saveFormState() {
 
   var form = $('form.webform-client-form');
-  var fid = $(form).attr('id');
+  var fid = $(form).attr('id') + '_' + currentUser + '_' + currentVersion;
   // First get the form values
   sel = {};
   $('[name^="custom-field"], [name^="submitted"], input[name^="rh-oem"], .custom-size-fieldset input[name^="total"]').each(function(){
@@ -569,7 +570,7 @@ function saveFormState() {
 
 function getFormState() {
   var form = $('form.webform-client-form');
-  var fid = $(form).attr('id');
+  var fid = $(form).attr('id') + '_' + currentUser + '_' + currentVersion;
 
   // Load the rate sheet back in
   currentRates = JSON.parse(localStorage.getItem(fid + '_rs'));

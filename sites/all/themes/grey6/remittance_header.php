@@ -29,6 +29,13 @@ $provinces = array(
 ?>
 
 <script type="text/javascript" charset="utf-8">
+  // Set the current user id.
+  // NOTE: When major changes happen increment the currentVersion number in order to avoid
+  // conflicts with what is in local storage.
+  var currentUser = <?php echo $user->uid; ?>;
+  var currentVersion = '1';
+
+
   var currentRates;
 
 	var fieldsArray = [];
