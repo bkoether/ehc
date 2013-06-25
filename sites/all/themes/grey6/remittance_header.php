@@ -33,7 +33,7 @@ $provinces = array(
   // NOTE: When major changes happen increment the currentVersion number in order to avoid
   // conflicts with what is in local storage.
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '1';
+  var currentVersion = '2';
 
 
   var currentRates;
@@ -165,7 +165,7 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
-          collapseFields.oil('open');
+
 				<?php endif; ?>
 
 				// Antifreeze combined form
@@ -193,7 +193,6 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
-          collapseFields.glycol('closed');
 				<?php endif; ?>
 
 				// Antifreeze standalone values
@@ -224,7 +223,6 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
-          collapseFields.glycol('closed');
 				<?php endif; ?>
 
 				if (currentRates.hst != 0) {
@@ -249,6 +247,8 @@ $provinces = array(
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
+            collapseFields.oil('open');
+            collapseFields.glycol('closed');
             collapseFields.oem('closed');
 
           }
@@ -364,20 +364,20 @@ $provinces = array(
       var indicator = $('#field-toggle-oil span');
 
       if (currentClass != 'open') {
-        collapseFields.animate('close', targets, indicator);
+        collapseFields.showHide('close', targets, indicator);
         $('#field-toggle-oil').removeClass('open');
       }
       else {
-        collapseFields.animate('open', targets, indicator);
+        collapseFields.showHide('open', targets, indicator);
         $('#field-toggle-oil').addClass('open');
       }
 
       $('#field-toggle-oil').click(function(){
         if ($(this).hasClass('open')) {
-          collapseFields.animate('close', targets, indicator);
+          collapseFields.showHide('close', targets, indicator);
         }
         else {
-          collapseFields.animate('open', targets, indicator);
+          collapseFields.showHide('open', targets, indicator);
         }
 
         $(this).toggleClass('open')
@@ -391,19 +391,19 @@ $provinces = array(
       var indicator = $('#field-toggle-glycol span');
       var targets = $('#webform-component-glycol, #webform-component-glycol-containers, #webform-component--another-antifreeze-size');
       if (currentClass != 'open') {
-        collapseFields.animate('close', targets, indicator);
+        collapseFields.showHide('close', targets, indicator);
         $('#field-toggle-glycol').removeClass('open');
       }
 
       $('#field-toggle-glycol').click(function(){
         if ($(this).hasClass('open')) {
-          collapseFields.animate('close', targets, indicator);
+          collapseFields.showHide('close', targets, indicator);
         }
         else {
-          collapseFields.animate('open', targets, indicator);
+          collapseFields.showHide('open', targets, indicator);
         }
 
-        $(this).toggleClass('open')
+        $(this).toggleClass('open');
       });
 
     },
@@ -416,23 +416,23 @@ $provinces = array(
       var indicator = $('#field-toggle-oem span');
 
       if (currentClass != 'open') {
-        collapseFields.animate('close', targets, indicator);
+        collapseFields.showHide('close', targets, indicator);
         $('#field-toggle-oem').removeClass('open');
       }
 
       $('#field-toggle-oem').click(function(){
         if ($(this).hasClass('open')) {
-          collapseFields.animate('close', targets, indicator);
+          collapseFields.showHide('close', targets, indicator);
         }
         else {
-          collapseFields.animate('open', targets, indicator);
+          collapseFields.showHide('open', targets, indicator);
         }
 
         $(this).toggleClass('open');
       });
     },
 
-    animate: function(op, targets, indicator){
+    showHide: function(op, targets, indicator){
       if (op == 'open'){
         $(targets).slideDown();
         $(indicator).html('&ndash;');
