@@ -451,12 +451,15 @@ $provinces = array(
     var id = cat + '-' + count;
     var ret;
     ret = '<fieldset class="rh-oem-fieldset webform-component-fieldset">';
+    ret += '<div class="form-item">';
 
-    ret += '<input readonly="readonly" class="readonly label" type="text" value="' + vals.title + '">';
+    ret += '<label for="rh-oem-field-' + id + '">' + vals.title + '</label>';
+//    ret += '<input readonly="readonly" class="readonly label" type="text" value="' + vals.title + '">';
     ret += '<span class="info">&nbsp;<span style="display: none;" class="tt">Oil: '+vals.oil+' Litre, Coolant: '+vals.coolant+' Litre, Small Filter: '+vals.filter_s+', Large Filter: '+vals.filter_l+'<br>'+vals.info+'</span></span>';
     ret += '<input value="" data-oem-cat="' + cat + '" data-oem-cat-id="' + count + '" class="rh-oem-field rh-oem-fields-' + cat + '" name="rh-oem-field-' + id + '" id="rh-oem-field-' + id + '">';
     ret += '<span class="field-suffix" style="width: 87px;">$'+vals.rate+'/ea</span>';
     ret += '<input value="0.00" readonly="readonly" type="text" name="rh-oem-field-' + id + '-remittance" id="rh-oem-field-' + id + '-remittance" class="readonly total-remittance">';
+    ret += '</div>';
     ret += '</fieldset>';
     return ret;
   }

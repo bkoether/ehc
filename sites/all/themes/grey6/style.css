@@ -352,8 +352,8 @@ h6 {
 .node .form-item label{
   display: inline-block;
   color:#010101;
-  width: 171px;
-  font-weight:400;
+  width: 194px;
+  font-weight: normal;
 }
 
 .form-checkboxes, .form-radios {
@@ -685,7 +685,7 @@ sup{
 #edit-submitted-glycol-containers-antifreeze-wrapper-9460ml-9460-ml-remittance,
 #edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml-remittance
 {
-	width:97px;
+	width:70px;
 	background-color:transparent !important;
 }
 
@@ -1069,12 +1069,14 @@ dd.profile-profile_company_name {
     background: url("_images/information.png") no-repeat left center;
     padding-left: 10px;
 }
-.rh-oem-fieldset .label{
-    width: 158px;
+.rh-oem-fieldset .form-item label{
+    width: 220px;
     text-align: left;
+    font-weight: normal;
+    color: #010101;
 }
 .rh-oem-fieldset .rh-oem-field{
-    width: 128px;
+    width: 87px;
 }
 .tooltip {
     position: absolute;
