@@ -298,7 +298,9 @@ $provinces = array(
       });
 
       $('.rh-oem-field').blur(function(){
+        $(this).val( Math.round( $(this).cleannum().val() ) );
         oemFields.calcLine($(this));
+        $(this).digits();
       });
     },
 
