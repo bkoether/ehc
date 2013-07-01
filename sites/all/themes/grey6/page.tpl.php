@@ -51,6 +51,9 @@ if($user->profile_override_total == "1"){
     <!--[if lt IE 8]>
 			<script type="text/javascript" src="<?php print base_path() . path_to_theme(); ?>/json2.js"></script>
 		<![endif]-->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="<?php print base_path() . path_to_theme(); ?>/obj.js"></script>
+    <![endif]-->    
     <?php print $scripts ?>
   </head>
   <body class="<?php print $body_classes?>">

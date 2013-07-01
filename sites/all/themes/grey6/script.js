@@ -141,7 +141,7 @@ Drupal.behaviors.checkSavedForm = function(context) {
   if (!$('body').hasClass('saved-form-processed')) {
     $('body').addClass('saved-form-processed');
     var fid = $('form.webform-client-form').attr('id');
-    fid = fid  + '_' + currentUser + '_' + currentVersion;
+    fid = fid  + '_' + window.currentUser + '_' + window.currentVersion;
     var saved = localStorage.getItem(fid + '_values');
     if (saved != null) {
       getFormState();
