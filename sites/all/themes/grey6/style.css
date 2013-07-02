@@ -352,8 +352,8 @@ h6 {
 .node .form-item label{
   display: inline-block;
   color:#010101;
-  width: 171px;
-  font-weight:400;
+  width: 194px;
+  font-weight: normal;
 }
 
 .form-checkboxes, .form-radios {
@@ -450,7 +450,7 @@ display: inline;
   font-size:11px;
   margin-left:0;
   font-family: Verdana, Helvetica, sans-serif;
-  width: 175px;
+  width: 197px;
   background-image:none !important;
   border:0px !important;background-color:#e2ddd7 !important;
 }
@@ -485,7 +485,7 @@ display: inline;
 .total-remittance{
 	float:right;
 	margin-right:9px;
-	width:80px;
+	width:70px;
 }
 
 .new-item-span{
@@ -685,7 +685,7 @@ sup{
 #edit-submitted-glycol-containers-antifreeze-wrapper-9460ml-9460-ml-remittance,
 #edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml-remittance
 {
-	width:97px;
+	width:70px;
 	background-color:transparent !important;
 }
 
@@ -881,6 +881,7 @@ background-color:#e8e4df;
 	background:url('icons.png') no-repeat -1095px 0 #E2DDD7;
 }
 #node-8 .content #webform-component-containers,
+#node-21 .content #webform-component-containers,
 #webform-component-glycol-containers {
 	background:url('icons.png') no-repeat -2195px 0 #e2ddd7;
 }
@@ -1069,12 +1070,14 @@ dd.profile-profile_company_name {
     background: url("_images/information.png") no-repeat left center;
     padding-left: 10px;
 }
-.rh-oem-fieldset .label{
-    width: 158px;
+.rh-oem-fieldset .form-item label{
+    width: 220px;
     text-align: left;
+    font-weight: normal;
+    color: #010101;
 }
 .rh-oem-fieldset .rh-oem-field{
-    width: 128px;
+    width: 87px;
 }
 .tooltip {
     position: absolute;

@@ -77,7 +77,6 @@
 //      129 = 5 litre total
 //      134 = yes;
 
-setlocale(LC_MONETARY, 'en_US.UTF-8');
 
 
 //calculate the other sizes
@@ -104,11 +103,9 @@ $company_name = $user->profile_company_name;
 
 // the association stuff
 
-
-
 $tax_prefix = 'GST';
 // Get the rate sheet
-$rs = remittance_json_data($submission->data[79]['value'][0], $submission->data[73]['value'][0], $submission->data[107]['value'][0], 1, FALSE);
+$rs = remittance_json_data($submission->data[79]['value'][0], $submission->data[73]['value'][0], $submission->data[107]['value'][0], 2, FALSE);
 if ($rs['hst'] || $rs['pst'] || $rs['gst']) {
   if ($rs['hst']) {
     $tax_prefix = 'HST';
@@ -149,7 +146,7 @@ switch($submission->data[79][value][0]){
     break;
 }
 
-?>
+ ?>
 <h2><?php print $title;?><br>
 Environmental Handling Charge Payment Schedule<br>
 Remittance Form</h2>
@@ -158,7 +155,7 @@ Remittance Form</h2>
 <table cellspacing="0" class="remit-table" style="margin:0 10px;width:500px;border-collapse:collaspe">
 <thead>
 	<tr>
-		<td style="text-align:left" valign="top" colspan="2">
+		<td style="text-align:left" valign="top" colspan="5">
 			<strong><?php print $company_name?></strong><br>
 			<?php print $user->profile_contact_name;?><br>
 			<?php print $user->profile_phone;?><br>
@@ -167,140 +164,274 @@ Remittance Form</h2>
 		<td valign="top">%username</td>
 	</tr>
 	<tr>
-		<td colspan="1">Period: <?php print $submission->data[73][value][0];?><br/>
+		<td colspan="4">Period: <?php print $submission->data[73][value][0];?><br/>
 		to <?php print $submission->data[107][value][0];?></td>
 		<td colspan="2">Payment by: <?php print $submission->data[116][value][0];?></td>
 	</tr>
 </thead>
 <thead>
 	<tr style="padding-top:5px">
-	<th>Oil</th>
-	<th>Litres Sold</th>
+	<th colspan="3">Antifreeze Liquid</th>
+	<th colspan="2">Litres Sold</th>
 	<th>Remittance</th>
 	</tr>
 </thead>
 <tbody>
 	<tr>
-		<th></th>
-		<td><?php print $submission->data[2][value][0];?></td>
+		<th colspan="3">Concentrate</th>
+		<td colspan="2"><?php print $submission->data[2][value][0];?></td>
 		<td><?php print $submission->data[10][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">Premix</th>
+		<td colspan="2"><?php print $submission->data[139][value][0];?></td>
+		<td><?php print $submission->data[141][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="4">&nbsp;</th>
+		<td></td>
+		<td></td>
 	</tr>
 </tbody>
 
 <thead>
 	<tr style="padding-top:5px">
-	<th>Oil Container Size</th>
-	<th>Units Sold (in litres)</th>
+	<th colspan="3">Antifreeze Containers</th>
+	<th colspan="2">Units Sold (in litres)</th>
 	<th>Remittance</th>
 	</tr>
 </thead>
 <tbody>
 	<tr>
-		<th>500 ml</th>
-		<td><?php print cleannum($submission->data[8][value][0]) * 0.5;?></td>
+		<th colspan="3">150 ml</th>
+		<td colspan="2"><?php print cleannum($submission->data[8][value][0]) * 0.15;?></td>
 		<td><?php print $submission->data[16][value][0];?></td>
 	</tr>
 	<tr>
-		<th>947 ml</th>
-		<td><?php print cleannum($submission->data[119][value][0]) * 0.947;?></td>
-		<td><?php print $submission->data[121][value][0];?></td>
-	</tr>
-	<tr>
-		<th>1 Litre</th>
-		<td><?php print cleannum($submission->data[80][value][0]) * 1;?></td>
+		<th colspan="3">1 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[80][value][0]) * 1;?></td>
 		<td><?php print $submission->data[82][value][0];?></td>
 	</tr>
 	<tr>
-		<th>3.788 Litre</th>
-		<td><?php print cleannum($submission->data[123][value][0]) * 3.788;?></td>
+		<th colspan="3">1.5 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[143][value][0]) * 1.5;?></td>
+		<td><?php print $submission->data[158][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">1.89 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[119][value][0]) * 1.89;?></td>
+		<td><?php print $submission->data[121][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">2 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[160][value][0]) * 2;?></td>
+		<td><?php print $submission->data[162][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">3.78 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.78;?></td>
 		<td><?php print $submission->data[125][value][0];?></td>
 	</tr>
 	<tr>
-		<th>4 Litre</th>
-		<td><?php print cleannum($submission->data[83][value][0]) * 4;?></td>
+		<th colspan="3">4 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[83][value][0]) * 4;?></td>
 		<td><?php print $submission->data[85][value][0];?></td>
 	</tr>
 	<tr>
-		<th>5 Litre</th>
-		<td><?php print cleannum($submission->data[127][value][0]) * 5;?></td>
+		<th colspan="3">5 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[127][value][0]) * 5;?></td>
 		<td><?php print $submission->data[129][value][0];?></td>
 	</tr>
 	<tr>
-		<th>10 Litre</th>
-		<td><?php print cleannum($submission->data[86][value][0]) * 10;?></td>
+		<th colspan="3">7.56 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[154][value][0]) * 7.56;?></td>
+		<td><?php print $submission->data[156][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">9.46 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[151][value][0]) * 9.46;?></td>
+		<td><?php print $submission->data[153][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">10 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[86][value][0]) * 10;?></td>
 		<td><?php print $submission->data[88][value][0];?></td>
 	</tr>
 	<tr>
-		<th>18.942 Litre</th>
-		<td><?php print cleannum($submission->data[89][value][0]) * 18.942;?></td>
+		<th colspan="3">15 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[148][value][0]) * 15;?></td>
+		<td><?php print $submission->data[150][value][0];?></td>
+	</tr>
+	<tr>
+		<th colspan="3">18.942 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[89][value][0]) * 18.942;?></td>
 		<td><?php print $submission->data[91][value][0];?></td>
 	</tr>
 	<tr>
-		<th>20 Litre</th>
-		<td><?php print cleannum($submission->data[92][value][0]) * 20;?></td>
+		<th colspan="3">20 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[92][value][0]) * 20;?></td>
 		<td><?php print $submission->data[94][value][0];?></td>
 	</tr>
 	<tr>
-		<th>Other Sizes</th>
-		<td><?php print $in_litres;?></td>
+		<th colspan="3">Other Sizes <?php //print $submission->data[96][value][0];?></th>
+		<td colspan="2"><?php print $in_litres;?></td>
 		<td><?php print money_format('%!i',$other_totals);?></td>
 	</tr>
 </tbody>
 
-<thead>
-	<tr style="padding-top:5px">
-	<th>Filters</th>
-	<th>Units Sold</th>
-	<th>Remittance</th>
-	</tr>
+<!-- <thead>
+  <tr style="padding-top:5px">
+  <th>Filters</th>
+  <th>Units Sold</th>
+  <th>Remittance</th>
+  </tr>
 </thead>
 <tbody>
-	<tr>
-		<?php
-		$filter_small_qty =  $submission->data[4][value][0];
-		$filter_small_val = $submission->data[13][value][0];
-		if ($submission->data[6][value][0]) {
-			$qty_sum = (int)str_replace(',', '', $filter_small_qty) + (int)str_replace(',', '', $submission->data[6][value][0]);
-			$qty_val = (float)str_replace(',', '', $filter_small_val) + (float)str_replace(',', '', $submission->data[15][value][0]);
-			$filter_small_qty = number_format($qty_sum);
-			$filter_small_val = money_format('%!i', $qty_val);
-		}
-		?>
-		<th>Under 8 inches (203mm) and all sump type filter</th>
-		<td><?php print $filter_small_qty;?></td>
-		<td><?php print $filter_small_val;?></td>
-	</tr>
-	<tr>
-		<th>8 inches (203mm) and over</th>
-		<td><?php print $submission->data[5][value][0];?></td>
-		<td><?php print $submission->data[14][value][0];?></td>
-	</tr>
-</tbody>
+  <tr>
+    <th>Under 8 inches (203mm)</th>
+    <td><?php print $submission->data[4][value][0];?></td>
+    <td><?php print $submission->data[13][value][0];?></td>
+  </tr>
+  <tr>
+    <th>8 inches (203mm) and over</th>
+    <td><?php print $submission->data[5][value][0];?></td>
+    <td><?php print $submission->data[14][value][0];?></td>
+  </tr>
+  <tr>
+    <th>Sump type</th>
+    <td><?php print $submission->data[6][value][0];?></td>
+    <td><?php print $submission->data[15][value][0];?></td>
+  </tr>
+</tbody> -->
+
+
+<?php
+// Wee need to get the tree differently as we don't have the renderable array available.
+$page = 1;
+$oem_tree = array();
+_webform_components_tree_build($node->webform['components'], $oem_tree, 191, $page);
+
+$display_oem = FALSE;
+$rows = array();
+if (!empty($oem_tree)) {
+$categories = $oem_tree['children'];
+foreach ($categories as $category) {
+
+$row = array();
+$row['name'] = $category['name'];
+
+foreach ($category['children'] as $field) {
+switch ($field['form_key']){
+case $category['form_key'] . '_oil':
+if (isset($submission->data[$field['cid']])){
+$display_oem = TRUE;
+$row['oil'] = $submission->data[$field['cid']]['value'][0];
+$totals['oil'] += $submission->data[$field['cid']]['value'][0];
+}
+break;
+
+case $category['form_key'] . '_coolant':
+if (isset($submission->data[$field['cid']])){
+$display_oem = TRUE;
+$row['coolant'] = $submission->data[$field['cid']]['value'][0];
+$totals['coolant'] += $submission->data[$field['cid']]['value'][0];
+}
+break;
+
+case $category['form_key'] . '_filter_small':
+if (isset($submission->data[$field['cid']])){
+$display_oem = TRUE;
+$row['filter_small'] = $submission->data[$field['cid']]['value'][0];
+$totals['filter_small'] += $submission->data[$field['cid']]['value'][0];
+}
+break;
+
+case $category['form_key'] . '_filter_large':
+if (isset($submission->data[$field['cid']])){
+$display_oem = TRUE;
+$row['filter_large'] = $submission->data[$field['cid']]['value'][0];
+$totals['filter_large'] += $submission->data[$field['cid']]['value'][0];
+}
+break;
+
+case $category['form_key'] . '_total':
+if (isset($submission->data[$field['cid']])){
+$display_oem = TRUE;
+$row['total'] = $submission->data[$field['cid']]['value'][0];
+$totals['total'] += $submission->data[$field['cid']]['value'][0];
+}
+break;
+
+default:
+continue;
+break;
+}
+}
+$rows[] = $row;
+}
+
+}
+
+?>
+<?php if ($display_oem): ?>
+  <thead>
+  <tr>
+    <th>OEM</th>
+    <th>Oil (l)</th>
+    <th>Coolant (l)</th>
+    <th>Small Filters</th>
+    <th>Large Filters</th>
+    <th>Remittance</th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php foreach($rows as $line): ?>
+    <tr>
+      <th><?php print $line['name']; ?></th>
+      <td><?php print $line['oil']; ?></td>
+      <td><?php print $line['coolant']; ?></td>
+      <td><?php print $line['filter_small']; ?></td>
+      <td><?php print $line['filter_large']; ?></td>
+      <td><?php print $line['total']; ?></td>
+    </tr>
+  <?php endforeach; ?>
+  <tr class="sub-total">
+    <th style="text-align: right;">Subtotal</th>
+    <td><?php print $totals['oil']; ?></td>
+    <td><?php print $totals['coolant']; ?></td>
+    <td><?php print $totals['filter_small']; ?></td>
+    <td><?php print $totals['filter_large']; ?></td>
+    <td><?php print number_format($totals['total'],2); ?></td>
+  </tr>
+  <tr><td colspan="6">&nbsp;</td></tr>
+  </tbody>
+<?php endif; ?>
+
 <tfoot>
 	<tr>
-		<td colspan="2">Subtotal</td>
+		<td colspan="5">Subtotal</td>
 		<td><?php print $submission->data[68][value][0];?></td>
 	</tr>
 <?php if($submission->data[135][value][0] > 0):?>
 	<tr>
-		<td colspan="2">Tax applicable sales</td>
+		<td colspan="5">Tax applicable sales</td>
 		<td><?php print $submission->data[135][value][0];?></td>
 	</tr>
 <?php endif;?>
 	<tr>
-		<td colspan="2"><?php print $taxreg;?></td>
+		<td colspan="5"><?php print $taxreg;?></td>
 		<td><?php print $submission->data[69][value][0];?></td>
 	</tr>
 	<tr>
-		<td colspan="2">Interest and admin charges</td>
+		<td colspan="5">Interest and admin charges</td>
 		<td><?php print $submission->data[136][value][0];?></td>
 	</tr>
 	<tr>
-		<td colspan="2">Total</td>
+		<td colspan="5">Total</td>
 		<td><?php print $submission->data[72][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">Comments:<br><span style="font-weight:normal"><?php print $submission->data[137][value][0];?></span></th>
+		<th colspan="6">Comments:<br><span style="font-weight:normal"><?php print $submission->data[137][value][0];?></span></th>
 	</tr>
 </tfoot>
 </table>

@@ -1,30 +1,26 @@
 <?php
-// $Id: webform-mail.tpl.php,v 1.3.2.3 2010/08/30 20:22:15 quicksketch Exp $
+// $Id: webform-submission.tpl.php,v 1.1.2.1 2010/08/30 17:01:54 quicksketch Exp $
 
 /**
  * @file
- * Customize the e-mails sent by Webform after successful submission.
- *
- * This file may be renamed "webform-mail-[nid].tpl.php" to target a
- * specific webform e-mail on your site. Or you can leave it
- * "webform-mail.tpl.php" to affect all webform e-mails on your site.
+ * Customize the display of a webform submission.
  *
  * Available variables:
  * - $node: The node object for this webform.
- * - $submission: The webform submission.
- * - $email: The entire e-mail configuration settings.
- * - $user: The current user submitting the form.
- * - $ip_address: The IP address of the user submitting the form.
- *
- * The $email['email'] variable can be used to send different e-mails to different users
- * when using the "default" e-mail template.
+ * - $submission: The Webform submission array.
+ * - $email: If sending this submission in an e-mail, the e-mail configuration
+ *   options.
+ * - $format: The format of the submission being printed, either "html" or
+ *   "text".
+ * - $renderable: The renderable submission array, used to print out individual
+ *   parts of the submission, just like a $form array.
  */
-
 
 $bulk_rate = $submission->data[41][value][0];
 
 //setlocale(LC_MONETARY, 'en_US');
 setlocale(LC_MONETARY, 'en_US.UTF-8');
+
 
 //calculate the other sizes
 //base this from the stored "rate" for 1L containers
@@ -51,14 +47,14 @@ foreach($gitems as $item){
 }
 $glycol_in_litres = $glycol_other_totals / $glycol_ctr_rate;
 
-//the user stuff
-global $user;
-profile_load_profile($user);
 
-$company_name = $user->profile_company_name;
+//the user stuff
+//global $user;
+profile_load_profile($submission);
+
+$company_name = $submission->profile_company_name;
 
 // the association stuff
-
 $tax_prefix = 'GST';
 // Get the rate sheet
 $rs = remittance_json_data($submission->data[79]['value'][0], $submission->data[73]['value'][0], $submission->data[107]['value'][0], 3, FALSE);
@@ -66,7 +62,7 @@ if ($rs['hst'] || $rs['pst'] || $rs['gst']) {
   if ($rs['hst']) {
     $tax_prefix = 'HST';
   }
-  else if($user->profile_pst_applicable && !$rs['hst']) {
+  else if($submission->profile_pst_applicable && !$rs['hst']) {
     $tax_prefix = 'GST + PST';
   }
 }
@@ -102,30 +98,27 @@ switch($submission->data[79][value][0]){
     break;
 }
 
- ?>
-<h2><?php print $title;?><br>
-Environmental Handling Charge Payment Schedule<br>
-Remittance Form</h2>
+?>
 
-<p>
-<table cellspacing="0" class="remit-table" style="margin:0 10px;width:500px;border-collapse:collaspe">
+<div class="table-ctr">
+<table cellspacing="0" class="remit-table">
 <thead>
 	<tr>
 		<td style="text-align:left" valign="top" colspan="5">
 			<strong><?php print $company_name?></strong><br>
-			<?php print $user->profile_contact_name;?><br>
-			<?php print $user->profile_phone;?><br>
-			<?php print $user->mail;?>
+			<?php print $submission->profile_contact_name;?><br>
+			<?php print $submission->profile_phone;?><br>
+			<?php print $submission->data[109][value][0];?>
 		</td>
-		<td valign="top">%username</td>
+		<td valign="top"><?php print $submission->name;?></td>
 	</tr>
-	<tr>
-		<td colspan="5">Period: <?php print $submission->data[73][value][0];?><br/>
-		to <?php print $submission->data[107][value][0];?></td>
-		<td colspan="1">Payment by: <?php print $submission->data[116][value][0];?></td>
+	<tr><td colspan="6">&nbsp;</td></tr>
+	<tr valign="top">
+		<td colspan="5" style="padding-bottom:20px">Period:<br/><strong><?php print $submission->data[73][value][0];?>
+		to <?php print $submission->data[107][value][0];?></strong></td>
+		<td colspan="1" style="padding-bottom:20px">Payment by:<br /><strong><?php print $submission->data[116][value][0];?></strong></td>
 	</tr>
 </thead>
-
 <thead>
 	<tr style="padding-top:5px">
 	<th colspan="3">Oil</th>
@@ -170,8 +163,8 @@ Remittance Form</h2>
 		<td><?php print $submission->data[82][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">3.788 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.788;?></td>
+		<th colspan="3">3.78 Litre</th>
+		<td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.78;?></td>
 		<td><?php print $submission->data[125][value][0];?></td>
 	</tr>
 	<tr>
@@ -246,84 +239,6 @@ Remittance Form</h2>
 	</tr>
 </tbody>
 
-<thead>
-	<tr style="padding-top:5px">
-	<th colspan="3">Antifreeze Liquid</th>
-	<th colspan="2">Litres Sold</th>
-	<th>Remittance</th>
-	</tr>
-</thead>
-<tbody>
-	<tr>
-		<th colspan="3">Concentrate</th>
-		<td colspan="2"><?php print $submission->data[178][value][0];?></td>
-		<td><?php print $submission->data[180][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">Premix</th>
-		<td colspan="2"><?php print $submission->data[183][value][0];?></td>
-		<td><?php print $submission->data[185][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="6">&nbsp;</th>
-	</tr>
-</tbody>
-
-<thead>
-	<tr style="padding-top:5px">
-	<th colspan="3">Antifreeze Containers</th>
-	<th colspan="2">Units Sold (in litres)</th>
-	<th>Remittance</th>
-	</tr>
-</thead>
-<tbody>
-	<tr>
-		<th colspan="3">1 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[141][value][0]) * 1;?></td>
-		<td><?php print $submission->data[143][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">1.5 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[145][value][0]) * 1.5;?></td>
-		<td><?php print $submission->data[147][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">1.89 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[149][value][0]) * 1.89;?></td>
-		<td><?php print $submission->data[151][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">3.78 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[153][value][0]) * 3.78;?></td>
-		<td><?php print $submission->data[155][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">4 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[157][value][0]) * 4;?></td>
-		<td><?php print $submission->data[159][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">5 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[161][value][0]) * 5;?></td>
-		<td><?php print $submission->data[163][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">9.46 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[165][value][0]) * 9.46;?></td>
-		<td><?php print $submission->data[167][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">18.9 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[169][value][0]) * 18.9;?></td>
-		<td><?php print $submission->data[171][value][0];?></td>
-	</tr>
-	<tr>
-		<th colspan="3">Other Sizes  <!-- sizes: <?php print $submission->data[187][value][0] . " quantity:" . $submission->data[190][value][0];?> --></th>
-		<td colspan="2"><?php print $glycol_in_litres;?></td>
-		<td><?php print money_format('%!i',$glycol_other_totals);?></td>
-	</tr>
-</tbody>
-
 <?php
 // Check if we have OEM values set
 $totals = array(
@@ -334,16 +249,10 @@ $totals = array(
   'total' => 0,
 );
 
-
-// Wee need to get the tree differently as we don't have the renderable array available.
-$page = 1;
-$oem_tree = array();
-_webform_components_tree_build($node->webform['components'], $oem_tree, 191, $page);
-
 $display_oem = FALSE;
 $rows = array();
-if (!empty($oem_tree)) {
-  $categories = $oem_tree['children'];
+if (isset($renderable['oem'])) {
+  $categories = $renderable['oem']['#webform_component']['children'];
   foreach ($categories as $category) {
 
     $row = array();
@@ -404,35 +313,35 @@ if (!empty($oem_tree)) {
 ?>
 <?php if ($display_oem): ?>
   <thead>
-  <tr>
-    <th>OEM</th>
-    <th>Oil (l)</th>
-    <th>Coolant (l)</th>
-    <th>Small Filters</th>
-    <th>Large Filters</th>
-    <th>Remittance</th>
-  </tr>
+    <tr>
+      <th>OEM</th>
+      <th>Oil (l)</th>
+      <th>Coolant (l)</th>
+      <th>Small Filters</th>
+      <th>Large Filters</th>
+      <th>Remittance</th>
+    </tr>
   </thead>
   <tbody>
-  <?php foreach($rows as $line): ?>
-    <tr>
-      <th><?php print $line['name']; ?></th>
-      <td><?php print $line['oil']; ?></td>
-      <td><?php print $line['coolant']; ?></td>
-      <td><?php print $line['filter_small']; ?></td>
-      <td><?php print $line['filter_large']; ?></td>
-      <td><?php print $line['total']; ?></td>
+    <?php foreach($rows as $line): ?>
+      <tr>
+        <th><?php print $line['name']; ?></th>
+        <td><?php print $line['oil']; ?></td>
+        <td><?php print $line['coolant']; ?></td>
+        <td><?php print $line['filter_small']; ?></td>
+        <td><?php print $line['filter_large']; ?></td>
+        <td><?php print $line['total']; ?></td>
+      </tr>
+    <?php endforeach; ?>
+    <tr class="sub-total">
+      <th style="text-align: right;">Subtotal</th>
+      <td><?php print $totals['oil']; ?></td>
+      <td><?php print $totals['coolant']; ?></td>
+      <td><?php print $totals['filter_small']; ?></td>
+      <td><?php print $totals['filter_large']; ?></td>
+      <td><?php print number_format($totals['total'],2); ?></td>
     </tr>
-  <?php endforeach; ?>
-  <tr class="sub-total">
-    <th style="text-align: right;">Subtotal</th>
-    <td><?php print $totals['oil']; ?></td>
-    <td><?php print $totals['coolant']; ?></td>
-    <td><?php print $totals['filter_small']; ?></td>
-    <td><?php print $totals['filter_large']; ?></td>
-    <td><?php print number_format($totals['total'],2); ?></td>
-  </tr>
-  <tr><td colspan="6">&nbsp;</td></tr>
+    <tr><td colspan="6">&nbsp;</td></tr>
   </tbody>
 <?php endif; ?>
 
@@ -465,12 +374,4 @@ if (!empty($oem_tree)) {
 	</tr>
 </tfoot>
 </table>
-
-<p style="margin:10px">If paying by cheque, please remit to:<br>
-	<address style="padding:10px"><?php print $remitto;?><br>
-	<?php print $assphone;?><address>
-	<?php print $moreinfo;?>
-</p>
-
-
-<p style="margin:10px"><a href="%submission_url">view online</a></p>
+</div>

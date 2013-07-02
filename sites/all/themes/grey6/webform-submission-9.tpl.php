@@ -57,7 +57,7 @@ $company_name = $submission->profile_company_name;
 // the association stuff
 $tax_prefix = 'GST';
 // Get the rate sheet
-$rs = remittance_json_data($submission->data[79]['value'][0], $submission->data[73]['value'][0], $submission->data[107]['value'][0], FALSE);
+$rs = remittance_json_data($submission->data[79]['value'][0], $submission->data[73]['value'][0], $submission->data[107]['value'][0], 3, FALSE);
 if ($rs['hst'] || $rs['pst'] || $rs['gst']) {
   if ($rs['hst']) {
     $tax_prefix = 'HST';
