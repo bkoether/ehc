@@ -13,9 +13,9 @@ function remittance_menu() {
     'type' => MENU_NORMAL_ITEM,
    );
 
-  $items['json/resource-sheet/%/%/%'] = array(
+  $items['json/resource-sheet/%/%/%/%'] = array(
   	'page callback' => 'remittance_json_data',
-  	'page arguments' => array(2,3,4),
+  	'page arguments' => array(2,3,4,5),
   	'access callback' => TRUE,
   	'type' => MENU_CALLBACK,
   );
@@ -23,7 +23,7 @@ function remittance_menu() {
   return $items;
 }
 
-function remittance_json_data($province, $start_date, $end_date, $json = TRUE) {
+function remittance_json_data($province, $start_date, $end_date, $level, $json = TRUE) {
 	$start_ts = strtotime($start_date);
 	$end_ts = strtotime($end_date);
 
@@ -56,12 +56,12 @@ function remittance_json_data($province, $start_date, $end_date, $json = TRUE) {
 		);
     if (isset($sheet->field_oem_utility)) {
       $charges['oem'] = array(
-        'automotive' => remittance_prepare_oem($sheet->field_oem_automotive[0]['value'], $charges),
-        'electrical' => remittance_prepare_oem($sheet->field_oem_electrical[0]['value'], $charges),
-        'forestry' => remittance_prepare_oem($sheet->field_oem_forestry[0]['value'], $charges),
-        'construction' => remittance_prepare_oem($sheet->field_oem_construction[0]['value'], $charges),
-        'agricultural' => remittance_prepare_oem($sheet->field_oem_agricultural[0]['value'], $charges),
-        'utility' => remittance_prepare_oem($sheet->field_oem_utility[0]['value'], $charges),
+        'automotive' => remittance_prepare_oem($sheet->field_oem_automotive[0]['value'], $charges, $level),
+        'electrical' => remittance_prepare_oem($sheet->field_oem_electrical[0]['value'], $charges, $level),
+        'forestry' => remittance_prepare_oem($sheet->field_oem_forestry[0]['value'], $charges, $level),
+        'construction' => remittance_prepare_oem($sheet->field_oem_construction[0]['value'], $charges, $level),
+        'agricultural' => remittance_prepare_oem($sheet->field_oem_agricultural[0]['value'], $charges, $level),
+        'utility' => remittance_prepare_oem($sheet->field_oem_utility[0]['value'], $charges, $level),
       );
     }
 	}
@@ -84,8 +84,22 @@ function remittance_json_data($province, $start_date, $end_date, $json = TRUE) {
 
 /**
  * Prepares the OEM data for easier use on the remittance forms.
+ *
+ * @param string $data
+ *    Serialized array of the rate sheet oem tables.
+ *
+ * @param array $charges
+ *    The default charges as entered on the rate sheet.
+ *
+ * @param int $level
+ *    The level indicates what data should be used in order to omit oil or glycol.
+ *    1 - Only use Oil and Oil Filter
+ *    2 - Only use Glycol
+ *    3 - Use combined values
+ *
+ * @return array
  */
-function remittance_prepare_oem($data, $charges) {
+function remittance_prepare_oem($data, $charges, $level = 3) {
   $table = unserialize($data);
   $header = array();
   $rows = array();
@@ -108,10 +122,10 @@ function remittance_prepare_oem($data, $charges) {
     foreach ($rows as $rid => $row) {
       if(empty($row[0])) {continue;}
       $return[$rid]['title'] = $row[0];
-      $return[$rid]['oil'] = empty($row[1]) ? 0 : $row[1];
-      $return[$rid]['coolant'] = empty($row[2]) ? 0 : $row[2];
-      $return[$rid]['filter_s'] = empty($row[3]) ? 0 : $row[3];
-      $return[$rid]['filter_l'] = empty($row[4]) ? 0 : $row[4];
+      $return[$rid]['oil'] = empty($row[1]) || $level == 2 ? 0 : $row[1];
+      $return[$rid]['coolant'] = empty($row[2]) || $level == 1 ? 0 : $row[2];
+      $return[$rid]['filter_s'] = empty($row[3]) || $level == 2 ? 0 : $row[3];
+      $return[$rid]['filter_l'] = empty($row[4]) || $level == 2 ? 0 : $row[4];
       $return[$rid]['rate'] = empty($row[5]) ? _remittance_calculate_rate($return[$rid], $charges) : $row[5];
       $return[$rid]['info'] = empty($row[6]) ? "" : $row[6];
     }

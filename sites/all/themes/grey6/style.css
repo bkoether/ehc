@@ -450,7 +450,7 @@ display: inline;
   font-size:11px;
   margin-left:0;
   font-family: Verdana, Helvetica, sans-serif;
-  width: 175px;
+  width: 197px;
   background-image:none !important;
   border:0px !important;background-color:#e2ddd7 !important;
 }
@@ -485,7 +485,7 @@ display: inline;
 .total-remittance{
 	float:right;
 	margin-right:9px;
-	width:80px;
+	width:70px;
 }
 
 .new-item-span{
@@ -881,6 +881,7 @@ background-color:#e8e4df;
 	background:url('icons.png') no-repeat -1095px 0 #E2DDD7;
 }
 #node-8 .content #webform-component-containers,
+#node-21 .content #webform-component-containers,
 #webform-component-glycol-containers {
 	background:url('icons.png') no-repeat -2195px 0 #e2ddd7;
 }

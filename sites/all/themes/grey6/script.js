@@ -37,7 +37,8 @@ Drupal.behaviors.submitCheck = function(context){
 	$('.node #edit-submit').click(function(){
 		var n = $(".node input:checked, .node input:radio:checked").length;
 		if(n == 3){
-      var fid = $('form.webform-client-form').attr('id');
+      var form = $('form.webform-client-form');
+      var fid = $(form).attr('id') + '_' + currentUser + '_' + currentVersion;
       localStorage.removeItem(fid + '_rs');
       localStorage.removeItem(fid + '_values');
       localStorage.removeItem(fid + '_html');

@@ -33,14 +33,16 @@ $provinces = array(
   // NOTE: When major changes happen increment the currentVersion number in order to avoid
   // conflicts with what is in local storage.
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '2';
-
+  var currentVersion = '3';
 
   var currentRates;
+  var oemLevel;
 
 	var fieldsArray = [];
 	// Fields for oil values standalone and combined form
-	<?php if ($nid == 3 || $nid == 9): ?>
+	<?php if ($nid == 3 || $nid == 9 || $nid == 20): ?>
+    oemLevel = 1;
+
 		//oil liquid
 		fieldsArray.push( 'edit-submitted-oils-oil-fieldset-total-litres' );
 		//filters
@@ -61,6 +63,8 @@ $provinces = array(
 
 	// Glycol combined form
 	<?php if ($nid == 9): ?>
+    oemLevel = 3;
+
 		//glycol liquid
 		fieldsArray.push( 'edit-submitted-glycol-concentrate-fieldset-concentrate-total-litres' );
 		fieldsArray.push( 'edit-submitted-glycol-premix-fieldset-premix-total-litres' );
@@ -76,7 +80,9 @@ $provinces = array(
 	<?php endif; ?>
 
 	// Glycol standalone
-	<?php if ($nid == 8): ?>
+	<?php if ($nid == 8 || $nid == 21): ?>
+    oemLevel = 2;
+
 		fieldsArray.push( 'edit-submitted-liquid-concentrate-fieldset-concentrate-total-litres' );
 		fieldsArray.push( 'edit-submitted-liquid-premix-fieldset-premix-total-litres' );
 		fieldsArray.push( 'edit-submitted-containers-size-wrapper-150-ml-150-ml' );
@@ -125,8 +131,9 @@ $provinces = array(
 
 
     // Load rates
-		var url = location.protocol + '//' + location.host + Drupal.settings.basePath + 'json/resource-sheet/' + currentProvince + '/' + start + '/' + end;
-		$.get(url, function(data) {
+		var url = location.protocol + '//' + location.host + Drupal.settings.basePath + 'json/resource-sheet/' + currentProvince + '/' + start + '/' + end + '/' + oemLevel;
+		
+    $.get(url, function(data) {
 			currentRates = JSON.parse(data);
 			if (currentRates.error) {
 				$('#webform-component-end-date').nextAll().hide();
@@ -143,7 +150,7 @@ $provinces = array(
         Drupal.customSizes.attach();
 
 				// Oil Values
-				<?php if ($nid == 3 || $nid == 9): ?>
+				<?php if ($nid == 3 || $nid == 9 || $nid == 20): ?>
 					//oil
 					$("#" + fieldsArray[0] + "-rate").val(currentRates.oil).niceRates();
 					//filters
@@ -196,7 +203,7 @@ $provinces = array(
 				<?php endif; ?>
 
 				// Antifreeze standalone values
-				<?php if ($nid == 8): ?>
+				<?php if ($nid == 8 || $nid == 21): ?>
 					//concentrate
 					$("#" + fieldsArray[0] + "-rate").val(currentRates.glycol_concentrate).niceRates();
 					//premix
@@ -241,14 +248,19 @@ $provinces = array(
 				}
 
         // Add OEMs only for the combined form.
-        <?php if ($nid == 9): ?>
+        <?php if ($nid == 9 || $nid == 21 || $nid == 20): ?>
           // Check if there are values in the construction array. If not, hide the form elements.
           if (Object.keys(currentRates.oem.automotive).length > 0){ //typeof currentRates.oem.automotive[1].rate !== 'undefined'){ // &&  currentRates.oem.automotive[1].rate.length > 0) {
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
             collapseFields.oil('open');
-            collapseFields.glycol('closed');
+            <?php if ($nid == 21) : ?>
+              collapseFields.glycol('open');
+            <?php else: ?>
+              collapseFields.glycol('closed');
+            <?php endif; ?>
+
             collapseFields.oem('closed');
 
           }
@@ -300,7 +312,7 @@ $provinces = array(
       $('.rh-oem-field').blur(function(){
         $(this).val( Math.round( $(this).cleannum().val() ) );
         oemFields.calcLine($(this));
-        $(this).digits();
+//        $(this).digits();
       });
     },
 
@@ -329,7 +341,7 @@ $provinces = array(
         var lineId = $(this).attr('data-oem-cat-id');
         var line = currentRates.oem[oemCat][lineId]['title'] + '|';
 
-        var lineCount = $(this).val();
+        var lineCount = $(this).cleannum().val();
         var lineOil =  lineCount * currentRates.oem[oemCat][lineId]['oil'];
         var lineCoolant = lineCount * currentRates.oem[oemCat][lineId]['coolant'];
         var lineSmallFilter = lineCount * currentRates.oem[oemCat][lineId]['filter_s'];
@@ -344,6 +356,8 @@ $provinces = array(
         smallFilterTotal = smallFilterTotal + lineSmallFilter;
         largeFilterTotal = largeFilterTotal + lineLargeFilter;
         remittanceTotal = numberToFixed(parseFloat(remittanceTotal) + lineTotal, 2);
+
+        $(this).digits();
       });
 
       $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-oil').val(oilTotal);
@@ -388,10 +402,16 @@ $provinces = array(
 
     glycol: function(currentClass){
       if(!$('#field-toggle-glycol').length){
-        $('#webform-component-glycol').before('<h2 id="field-toggle-glycol" class="field-toggle ' + currentClass + '">Antifreeze<span>&ndash;</span></h2>');
+        if ($('#webform-component-glycol').length > 0) {
+          $('#webform-component-glycol').before('<h2 id="field-toggle-glycol" class="field-toggle ' + currentClass + '">Antifreeze<span>&ndash;</span></h2>');
+        }
+        else {
+          $('#webform-component-liquid').before('<h2 id="field-toggle-glycol" class="field-toggle ' + currentClass + '">Antifreeze<span>&ndash;</span></h2>');
+        }
+
       }
       var indicator = $('#field-toggle-glycol span');
-      var targets = $('#webform-component-glycol, #webform-component-glycol-containers, #webform-component--another-antifreeze-size');
+      var targets = $('#webform-component-glycol, #webform-component-glycol-containers, #webform-component--another-antifreeze-size, #webform-component-liquid, #webform-client-form-21 #webform-component-containers, #webform-client-form-21 #webform-component--another-size');
       if (currentClass != 'open') {
         collapseFields.showHide('close', targets, indicator);
         $('#field-toggle-glycol').removeClass('open');
