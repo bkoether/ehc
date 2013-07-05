@@ -1034,14 +1034,27 @@ dd.profile-profile_company_name {
 }
 
 /* Previous Remittance View*/
-.view-remittance-history table{
-    width: 90%;
-    margin: 0 5%;
+.view-remittance-history table,
+.view-submissions table{
+    width: 96%;
+    margin: 12px;
 }
-.view-remittance-history caption{
+.view-remittance-history caption,
+.view-submissions caption{
     font-weight: bold;
     font-size: 14px;
-    margin: 10px 0 0;
+    margin: 10px 20px;
+    text-align: left;
+}
+
+tr.even, tr.odd {
+  background-color: none;
+  vertical-align: top;
+}
+
+tr.even td, tr.odd td {
+  padding:3px;
+  vertical-align: top;
 }
 
 /* Collapsible Areas */
