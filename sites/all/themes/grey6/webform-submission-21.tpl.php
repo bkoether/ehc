@@ -342,7 +342,7 @@ if (isset($renderable['oem'])) {
     $rows[] = $row;
   }
 }
-var_dump($rows);
+//var_dump($rows);
 ?>
 <?php if ($display_oem): ?>
   <thead>
