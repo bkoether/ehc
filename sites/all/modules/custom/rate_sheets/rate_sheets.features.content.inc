@@ -488,7 +488,7 @@ function rate_sheets_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Agricultural Equipment',
-      'weight' => '13',
+      'weight' => '14',
       'description' => '',
       'type' => 'tablefield',
       'module' => 'tablefield',
@@ -696,7 +696,90 @@ function rate_sheets_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Construction Equipment',
-      'weight' => '14',
+      'weight' => '15',
+      'description' => '',
+      'type' => 'tablefield',
+      'module' => 'tablefield',
+    ),
+  );
+
+  // Exported field: field_oem_electrical
+  $fields['rate_sheet-field_oem_electrical'] = array(
+    'field_name' => 'field_oem_electrical',
+    'type_name' => 'rate_sheet',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '2' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '3' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'tablefield',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'tablefield',
+    'active' => '1',
+    'cell_processing' => '0',
+    'count_cols' => '',
+    'count_rows' => '',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'tablefield' => array(
+            'cell_0_0' => 'Description',
+            'cell_0_1' => 'Oil (l)',
+            'cell_0_2' => 'Coolant (l)',
+            'cell_0_3' => 'Filters (s)',
+            'cell_0_4' => 'Filters (l)',
+            'cell_0_5' => 'Total $',
+            'cell_0_6' => 'Add. Info',
+            'cell_1_0' => '',
+            'cell_1_1' => '',
+            'cell_1_2' => '',
+            'cell_1_3' => '',
+            'cell_1_4' => '',
+            'cell_1_5' => '',
+            'cell_1_6' => '',
+            'cell_2_0' => '',
+            'cell_2_1' => '',
+            'cell_2_2' => '',
+            'cell_2_3' => '',
+            'cell_2_4' => '',
+            'cell_2_5' => '',
+            'cell_2_6' => '',
+            'count_cols' => '7',
+            'count_rows' => '3',
+            'rebuild' => 'Rebuild Table',
+          ),
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Electrical Equipment',
+      'weight' => '12',
       'description' => '',
       'type' => 'tablefield',
       'module' => 'tablefield',
@@ -793,7 +876,7 @@ function rate_sheets_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Forestry Equipment',
-      'weight' => '15',
+      'weight' => '16',
       'description' => '',
       'type' => 'tablefield',
       'module' => 'tablefield',
@@ -876,7 +959,7 @@ function rate_sheets_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Riding Mowers & Utility Vehicles',
-      'weight' => '12',
+      'weight' => '13',
       'description' => '',
       'type' => 'tablefield',
       'module' => 'tablefield',
@@ -1135,6 +1218,68 @@ function rate_sheets_content_default_fields() {
     ),
   );
 
+  // Exported field: field_oil_non_hdpe
+  $fields['rate_sheet-field_oil_non_hdpe'] = array(
+    'field_name' => 'field_oil_non_hdpe',
+    'type_name' => 'rate_sheet',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '2' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '3' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'number_float',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'number',
+    'active' => '1',
+    'prefix' => '',
+    'suffix' => '',
+    'min' => '',
+    'max' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_oil_non_hdpe][0][value',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Non-HDPE Container Rate',
+      'weight' => '4',
+      'description' => 'Enter the combined value for a 1 litre Non-HDPE container (base rate + surcharge).',
+      'type' => 'number',
+      'module' => 'number',
+    ),
+  );
+
   // Exported field: field_province
   $fields['rate_sheet-field_province'] = array(
     'field_name' => 'field_province',
@@ -1347,6 +1492,7 @@ YT|Yukon',
   t('Automotive');
   t('Construction Equipment');
   t('Effective On');
+  t('Electrical Equipment');
   t('Forestry Equipment');
   t('GST Rate');
   t('Glycol Concentrate Rate');
@@ -1354,6 +1500,7 @@ YT|Yukon',
   t('Glycol Premix Rate');
   t('HST Rate');
   t('HST/GST');
+  t('Non-HDPE Container Rate');
   t('Oil Containers Rate');
   t('Oil Filter <= 8in Rate');
   t('Oil Filter > 8in Rate');

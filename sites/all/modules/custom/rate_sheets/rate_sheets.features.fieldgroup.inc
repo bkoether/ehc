@@ -98,10 +98,11 @@ function rate_sheets_fieldgroup_default_groups() {
     'weight' => '1',
     'fields' => array(
       '0' => 'field_oem_automotive',
-      '1' => 'field_oem_utility',
-      '2' => 'field_oem_agricultural',
-      '3' => 'field_oem_construction',
-      '4' => 'field_oem_forestry',
+      '1' => 'field_oem_electrical',
+      '2' => 'field_oem_utility',
+      '3' => 'field_oem_agricultural',
+      '4' => 'field_oem_construction',
+      '5' => 'field_oem_forestry',
     ),
   );
 
@@ -152,6 +153,7 @@ function rate_sheets_fieldgroup_default_groups() {
       '1' => 'field_oil_containers',
       '2' => 'field_oil_filter_small',
       '3' => 'field_oil_filter_large',
+      '4' => 'field_oil_non_hdpe',
     ),
   );
 

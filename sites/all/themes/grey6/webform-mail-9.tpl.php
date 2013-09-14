@@ -51,6 +51,22 @@ foreach($gitems as $item){
 }
 $glycol_in_litres = $glycol_other_totals / $glycol_ctr_rate;
 
+// Calculate Non-HDPE custom sizes
+$hdpe_other_totals = 0;
+$hdpe_other_litres = 0;
+$hdpe_items = explode(';', $submission->data[254]['value'][0]);
+foreach ($hdpe_items as $line) {
+  $hdpe_other_totals += $line;
+}
+if ($hdpe_other_totals) {
+  $hdpe_sizes = explode(';', $submission->data[251]['value'][0]);
+  $hdpe_qty = explode(';', $submission->data[252]['value'][0]);
+  foreach ($hdpe_sizes as $id => $size) {
+    $hdpe_other_litres += $size * $hdpe_qty[$id];
+  }
+}
+
+
 //the user stuff
 global $user;
 profile_load_profile($user);
@@ -245,6 +261,38 @@ Remittance Form</h2>
 		<td>&nbsp;</td>
 	</tr>
 </tbody>
+
+<?php if ($submission->data[243]['value'][0] || $submission->data[247]['value'][0]): ?>
+  <thead>
+  <tr style="padding-top:5px">
+    <th colspan="3">Non-HDPE Container</th>
+    <th colspan="2">Units Sold (in litres)</th>
+    <th>Remittance</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th colspan="3">0.946 Litre</th>
+    <td colspan="2"><?php print cleannum($submission->data[243]['value'][0]) * 0.946;?></td>
+    <td><?php print $submission->data[245][value][0];?></td>
+  </tr>
+  <tr>
+    <th colspan="3">22.7 Litre</th>
+    <td colspan="2"><?php print cleannum($submission->data[247]['value'][0]) * 22.7;?></td>
+    <td><?php print $submission->data[249][value][0];?></td>
+  </tr>
+  <tr>
+    <th colspan="3">Other Sizes</th>
+    <td colspan="2"><?php print $hdpe_other_litres;?></td>
+    <td><?php print money_format('%!i',$hdpe_other_totals);?></td>
+  </tr>
+  <tr>
+    <th colspan="3">&nbsp;</th>
+    <td colspan="2"></td>
+    <td></td>
+  </tr>
+  </tbody>
+<?php endif; ?>
 
 <thead>
 	<tr style="padding-top:5px">

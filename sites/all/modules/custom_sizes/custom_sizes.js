@@ -21,7 +21,6 @@ Drupal.customSizes = {
           sizeLen = sizeArr.length;
           for(var i=0; i<sizeLen; i++){
             //add each custom size
-            //console.log(sizeArr[i], 'oil');
             add_field_item(sizeArr[i], 'oil');
           }
         }
@@ -42,6 +41,23 @@ Drupal.customSizes = {
           }
         }
       }
+
+      //if you are on a glycol form
+      if($("#webform-component-non-hdpe-containers").length > 0){
+        //get the custom glycol sizes
+        var gsizes = Drupal.settings.custom_sizes.prev_sizes_hdpe;
+        //explode on the ;'s
+        if(gsizes){
+          sizeArr = gsizes.split(';');
+          sizeLen = sizeArr.length;
+          for(var i=0; i<sizeLen; i++){
+            //add each custom size
+            //console.log(sizeArr[i], 'glycol');
+            add_field_item(sizeArr[i], 'hdpe');
+          }
+        }
+      }
+
       $(body).addClass('cs_processed');
     }
   }

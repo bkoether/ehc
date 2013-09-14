@@ -605,6 +605,9 @@ sup{
 #edit-submitted-filters-filters--8-fieldset-greater-than-8-inches,
 #edit-submitted-filters-filters-sump-fieldset-sump-type,
 
+#edit-submitted-non-hdpe-containers-hdpe-wrapper-946ml-0946-litre,
+#edit-submitted-non-hdpe-containers-hdpe-wrapper-227l-227-litre,
+
 #edit-submitted-liquid-concentrate-fieldset-concentrate-total-litres,
 #edit-submitted-liquid-premix-fieldset-premix-total-litres,
 #edit-submitted-containers-size-wrapper-150-ml-150-ml,
@@ -656,6 +659,9 @@ sup{
 #edit-submitted-filters-filters-8-fieldset-less-than-8-inches-remittance,
 #edit-submitted-filters-filters--8-fieldset-greater-than-8-inches-remittance,
 #edit-submitted-filters-filters-sump-fieldset-sump-type-remittance,
+
+#edit-submitted-non-hdpe-containers-hdpe-wrapper-946ml-0946-litre-remittance,
+#edit-submitted-non-hdpe-containers-hdpe-wrapper-227l-227-litre-remittance,
 
 #edit-submitted-liquid-concentrate-fieldset-concentrate-total-litres-remittance,
 #edit-submitted-liquid-premix-fieldset-premix-total-litres-remittance,
@@ -854,7 +860,8 @@ background-color:#e8e4df;
 
 
 #webform-component--another-size,
-#webform-component--another-antifreeze-size {
+#webform-component--another-antifreeze-size,
+#webform-component--another-non-hdpe-size{
   background-color:#e2ddd7;
 	padding-bottom:3px;
   margin-top: -11px;

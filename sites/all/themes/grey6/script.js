@@ -188,6 +188,15 @@ function do_hidden_update(type) {
 		rateField = $("#edit-submitted-custom-size-rate-glycol");
 		totalField = $("#edit-submitted-custom-size-remittance-glycol");
 	}
+  else if(type == 'hdpe'){
+    //the parent container
+    parentCtr = $("#webform-component-non-hdpe-containers");
+    //the fields
+    customSizeField = $("#edit-submitted-hdpe-custom-size");
+    containersField = $("#edit-submitted-hdpe-custom-size-number-of-cans---bottles");
+    rateField = $("#edit-submitted-hdpe-custom-size-rate");
+    totalField = $("#edit-submitted-hdpe-custom-size-remittance");
+  }
 
 	var customField = $(".custom-size-fieldset").length;
 
@@ -293,11 +302,16 @@ function add_field(type){
 	var qt = "'";
 	var html = '<div id="custom-div-new-' + customField + '" class="add-new-fieldset"><fieldset class="webform-component-fieldset-custom-set"><input type="text" name="liter-size-' + customField + '" id="custom-field-' + customField + '-size" class="liter-size-input-input" /><span class="add-new-item-desc">Add numerical values in litres only (i.e. "15", "0.5").</span><input onclick="add_field_run(' + customField + ', ' + qt + type + qt + ');" type="button" value="add" class="add-new-item-button"/></fieldset></div>';
 
-	if(type == 'glycol'){
-		$("#webform-component-glycol-containers").append(html);
-	}else{
-		$("#webform-component-containers").append(html);
-	}
+  if(type == 'glycol'){
+    $("#webform-component-glycol-containers").append(html);
+  }
+  else if (type == 'hdpe') {
+    $("#webform-component-non-hdpe-containers").append(html);
+  }
+  else {
+    $("#webform-component-containers").append(html);
+  }
+
 	// $("#webform-component-containers---another-size").before(html);
 	$("#custom-field-" + customField + "-size").focus();
 	Drupal.attachBehaviors($(".node"));
@@ -348,12 +362,18 @@ function add_field_item(user_input, type) {
 
     // var currentProvince = $("#edit-submitted-province-select-province").val();
     // var currentPArray = pRates[currentProvince];
-	// oil is default
-  	var computed_input = user_input * Drupal.settings.currentRates.oil_containers;
-	//glycol
+
+
+  // oil is default
+  var computed_input = user_input * Drupal.settings.currentRates.oil_containers;
+
+  //glycol
 	if(type == 'glycol'){
 		computed_input = user_input * Drupal.settings.currentRates.glycol_containers;
 	}
+  else if (type == 'hdpe') {
+    computed_input = user_input * Drupal.settings.currentRates.non_hdpe_container;
+  }
 
 
 
@@ -363,7 +383,11 @@ function add_field_item(user_input, type) {
 
 	if(type == 'glycol'){
 		$("#webform-component-glycol-containers").append(html);
-	}else{
+	}
+  else if (type == 'hdpe') {
+    $("#webform-component-non-hdpe-containers").append(html);
+  }
+  else {
 		$("#webform-component-containers").append(html);
 	}
 
@@ -388,6 +412,9 @@ function add_field_item(user_input, type) {
 			if(type == 'glycol'){
 				ratePer = currentPArray[10] * Drupal.settings.currentRates.glycol_containers;
 			}
+      else if (type == 'hdpe') {
+        ratePer = currentPArray[10] * Drupal.settings.currentRates.glycol_containers;
+      }
 			$("#custom-field-" + customField + "-rate").val(ratePer).niceRates();
 		}
 	});
@@ -586,8 +613,18 @@ function getFormState() {
 //    console.log(formValues[field]);
     $('#' + field).val(formValues[field]);
   }
-  // We need to make sure the custom size feature is not triggered twice
+  // We need to make sure the custom size feature is not triggered twice,
+  // yet the custom fields need to be pushed in the fieldsArray for correct calculation.
   $('body').addClass('cs_processed');
+  $('.custom-size-fieldset').each(function(){
+    var id = $(this).attr('id');
+    var csId = id.substring(11);
+    fieldsArray.push( 'custom-field-' + csId );
+  });
+//  for (var i = 0; i < csCount; i++) {
+//    fieldsArray.push( 'custom-field-' + i );
+//  }
+
   $('body').addClass('oem_processed');
   Drupal.attachBehaviors();
 }

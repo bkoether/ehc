@@ -4,7 +4,7 @@
  *
  * $nid
  * - 3: EHC Remittance
- * - 8: Antifreeze Remittance
+ * - 8 or 21: Antifreeze Remittance
  * - 9: Oil and Antifreeze Remittance
  */
 $nid = arg(1);
@@ -33,7 +33,7 @@ $provinces = array(
   // NOTE: When major changes happen increment the currentVersion number in order to avoid
   // conflicts with what is in local storage.
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '3';
+  var currentVersion = '4';
 
   var currentRates;
   var oemLevel;
@@ -64,6 +64,10 @@ $provinces = array(
 	// Glycol combined form
 	<?php if ($nid == 9): ?>
     oemLevel = 3;
+
+    // Non-HDPE Containers
+    fieldsArray.push( 'edit-submitted-non-hdpe-containers-hdpe-wrapper-946ml-0946-litre' );
+    fieldsArray.push( 'edit-submitted-non-hdpe-containers-hdpe-wrapper-227l-227-litre' );
 
 		//glycol liquid
 		fieldsArray.push( 'edit-submitted-glycol-concentrate-fieldset-concentrate-total-litres' );
@@ -132,7 +136,7 @@ $provinces = array(
 
     // Load rates
 		var url = location.protocol + '//' + location.host + Drupal.settings.basePath + 'json/resource-sheet/' + currentProvince + '/' + start + '/' + end + '/' + oemLevel;
-		
+
     $.get(url, function(data) {
 			currentRates = JSON.parse(data);
 			if (currentRates.error) {
@@ -177,25 +181,29 @@ $provinces = array(
 
 				// Antifreeze combined form
 				<?php if ($nid == 9): ?>
+          // non-HDPE containers
+
+          $("#" + fieldsArray[13] + "-rate").val(currentRates.non_hdpe_container * 0.946).niceRates();
+          $("#" + fieldsArray[14] + "-rate").val(currentRates.non_hdpe_container * 22.7).niceRates();
 					//concentrate
-					$("#" + fieldsArray[13] + "-rate").val(currentRates.glycol_concentrate).niceRates();
+					$("#" + fieldsArray[15] + "-rate").val(currentRates.glycol_concentrate).niceRates();
 					//premix
-					$("#" + fieldsArray[14] + "-rate").val(currentRates.glycol_premix).niceRates();
+					$("#" + fieldsArray[16] + "-rate").val(currentRates.glycol_premix).niceRates();
 					//containers
-					var start = 15;
+					var start = 17;
 					//containers
-					while (22 >= start) {
+					while (24 >= start) {
 						//get the glycol container rate from the provincial rates array
 						var value = currentRates.glycol_containers;
 						//multiply by the rate
-						if (start == 15) { value = value * 1; }
-						if (start == 16) { value = value * 1.5; }
-						if (start == 17) { value = value * 1.89; }
-						if (start == 18) { value = value * 3.78; }
-						if (start == 19) { value = value * 4; }
-						if (start == 20) { value = value * 5; }
-						if (start == 21) { value = value * 9.46; }
-						if (start == 22) { value = value * 18.9; }
+						if (start == 17) { value = value * 1; }
+						if (start == 18) { value = value * 1.5; }
+						if (start == 19) { value = value * 1.89; }
+						if (start == 20) { value = value * 3.78; }
+						if (start == 21) { value = value * 4; }
+						if (start == 22) { value = value * 5; }
+						if (start == 23) { value = value * 9.46; }
+						if (start == 24) { value = value * 18.9; }
 						//push into form
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
@@ -260,13 +268,17 @@ $provinces = array(
             <?php else: ?>
               collapseFields.glycol('closed');
             <?php endif; ?>
-
             collapseFields.oem('closed');
-
           }
           else {
             $('#webform-component-oem').hide();
+          }
+        <?php endif; ?>
 
+        // Remove Non-HDPE fields if they are not set in the rate sheet
+        <?php if ($nid == 9): ?>
+          if (currentRates.non_hdpe_container == 0) {
+            $('#webform-component-non-hdpe-containers, #webform-component--another-non-hdpe-size').remove();
           }
         <?php endif; ?>
       }
@@ -376,7 +388,14 @@ $provinces = array(
         $('#webform-component-oils').before('<h2 id="field-toggle-oil" class="field-toggle ' + currentClass + '">Oil<span>&ndash;</span></h2>');
       }
 
-      var targets = $('#webform-component-oils, #webform-component-containers, #webform-component--another-size, #webform-component-filters');
+      var targets = $(
+        '#webform-component-oils, ' +
+        '#webform-component-containers, ' +
+        '#webform-component--another-size, ' +
+        '#webform-component-filters, ' +
+        '#webform-component-non-hdpe-containers, ' +
+        '#webform-component--another-non-hdpe-size'
+      );
       var indicator = $('#field-toggle-oil span');
 
       if (currentClass != 'open') {
@@ -411,7 +430,14 @@ $provinces = array(
 
       }
       var indicator = $('#field-toggle-glycol span');
-      var targets = $('#webform-component-glycol, #webform-component-glycol-containers, #webform-component--another-antifreeze-size, #webform-component-liquid, #webform-client-form-21 #webform-component-containers, #webform-client-form-21 #webform-component--another-size');
+      var targets = $(
+        '#webform-component-glycol, ' +
+        '#webform-component-glycol-containers, ' +
+        '#webform-component--another-antifreeze-size, ' +
+        '#webform-component-liquid, ' +
+        '#webform-client-form-21 #webform-component-containers, ' +
+        '#webform-client-form-21 #webform-component--another-size'
+      );
       if (currentClass != 'open') {
         collapseFields.showHide('close', targets, indicator);
         $('#field-toggle-glycol').removeClass('open');
