@@ -76,7 +76,7 @@ switch($submission->data[79][value][0]){
     $title = 		"Saskatchewan Association for Resource Recovery Corp.";
     $remitto = 	"Make cheque payable to: KPMG in trust for SARRC<br><strong>KPMG</strong><br>500 – 475 Second Avenue South<br>Saskatoon, SK S7K 1P4";
     $taxreg = 	$tax_prefix . " (#89176 3542 RT)";
-    $assphone = "ph: 1 (306) 934-6200 fx: 1 (306) 934-6233 email: <a href='mailto:lglubis@kpmg.ca'>lglubis@kpmg.ca</a>";
+    $assphone = "ph: 1 (306) 934-6200 fx: 1 (306) 934-6233 email: <a href='mailto:krwhite@kpmg.ca'>krwhite@kpmg.ca</a>";
     break;
   case 'MB':
     $title = 		'Manitoba Association for Resource Recovery Corp.';
