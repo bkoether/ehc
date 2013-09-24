@@ -869,7 +869,8 @@ background-color:#e8e4df;
   }
 
 #webform-component--another-size p,
-#webform-component--another-antifreeze-size p {
+#webform-component--another-antifreeze-size p,
+#webform-component--another-non-hdpe-size p {
 	margin-top:0;
 	border-bottom:0;
 }
@@ -891,6 +892,10 @@ background-color:#e8e4df;
 #node-21 .content #webform-component-containers,
 #webform-component-glycol-containers {
 	background:url('icons.png') no-repeat -2195px 0 #e2ddd7;
+}
+
+.content #webform-component-non-hdpe-containers {
+  background:url('icons.png') no-repeat -2749px 3px #E2DDD7;
 }
 
 
@@ -1066,7 +1071,7 @@ tr.even td, tr.odd td {
 
 /* Collapsible Areas */
 #center h2.field-toggle{
-    margin: 0px 0px 2px 0px;
+    margin: 0px 0px 3px 0px;
     background-color: #E2DDD7;
     color: #908b87;
     clear: both;
