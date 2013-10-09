@@ -307,6 +307,14 @@ Remittance Form</h2>
 
 <?php
 // Wee need to get the tree differently as we don't have the renderable array available.
+$totals = array(
+  'oil' => 0,
+  'coolant' => 0,
+  'filter_small' => 0,
+  'filter_large' => 0,
+  'total' => 0,
+);
+
 $page = 1;
 $oem_tree = array();
 _webform_components_tree_build($node->webform['components'], $oem_tree, 191, $page);
@@ -314,62 +322,61 @@ _webform_components_tree_build($node->webform['components'], $oem_tree, 191, $pa
 $display_oem = FALSE;
 $rows = array();
 if (!empty($oem_tree)) {
-$categories = $oem_tree['children'];
-foreach ($categories as $category) {
+  $categories = $oem_tree['children'];
+  foreach ($categories as $category) {
 
-$row = array();
-$row['name'] = $category['name'];
+    $row = array();
+    $row['name'] = $category['name'];
 
-foreach ($category['children'] as $field) {
-switch ($field['form_key']){
-case $category['form_key'] . '_oil':
-if (isset($submission->data[$field['cid']])){
-$display_oem = TRUE;
-$row['oil'] = $submission->data[$field['cid']]['value'][0];
-$totals['oil'] += $submission->data[$field['cid']]['value'][0];
-}
-break;
+    foreach ($category['children'] as $field) {
+      switch ($field['form_key']){
+        case $category['form_key'] . '_oil':
+          if (isset($submission->data[$field['cid']])){
+            $display_oem = TRUE;
+            $row['oil'] = $submission->data[$field['cid']]['value'][0];
+            $totals['oil'] += $submission->data[$field['cid']]['value'][0];
+          }
+          break;
 
-case $category['form_key'] . '_coolant':
-if (isset($submission->data[$field['cid']])){
-$display_oem = TRUE;
-$row['coolant'] = $submission->data[$field['cid']]['value'][0];
-$totals['coolant'] += $submission->data[$field['cid']]['value'][0];
-}
-break;
+        case $category['form_key'] . '_coolant':
+          if (isset($submission->data[$field['cid']])){
+            $display_oem = TRUE;
+            $row['coolant'] = $submission->data[$field['cid']]['value'][0];
+            $totals['coolant'] += $submission->data[$field['cid']]['value'][0];
+          }
+          break;
 
-case $category['form_key'] . '_filter_small':
-if (isset($submission->data[$field['cid']])){
-$display_oem = TRUE;
-$row['filter_small'] = $submission->data[$field['cid']]['value'][0];
-$totals['filter_small'] += $submission->data[$field['cid']]['value'][0];
-}
-break;
+        case $category['form_key'] . '_filter_small':
+          if (isset($submission->data[$field['cid']])){
+            $display_oem = TRUE;
+            $row['filter_small'] = $submission->data[$field['cid']]['value'][0];
+            $totals['filter_small'] += $submission->data[$field['cid']]['value'][0];
+          }
+          break;
 
-case $category['form_key'] . '_filter_large':
-if (isset($submission->data[$field['cid']])){
-$display_oem = TRUE;
-$row['filter_large'] = $submission->data[$field['cid']]['value'][0];
-$totals['filter_large'] += $submission->data[$field['cid']]['value'][0];
-}
-break;
+        case $category['form_key'] . '_filter_large':
+          if (isset($submission->data[$field['cid']])){
+            $display_oem = TRUE;
+            $row['filter_large'] = $submission->data[$field['cid']]['value'][0];
+            $totals['filter_large'] += $submission->data[$field['cid']]['value'][0];
+          }
+          break;
 
-case $category['form_key'] . '_total':
-if (isset($submission->data[$field['cid']])){
-$display_oem = TRUE;
-$row['total'] = $submission->data[$field['cid']]['value'][0];
-$totals['total'] += $submission->data[$field['cid']]['value'][0];
-}
-break;
+        case $category['form_key'] . '_total':
+          if (isset($submission->data[$field['cid']])){
+            $display_oem = TRUE;
+            $row['total'] = $submission->data[$field['cid']]['value'][0];
+            $totals['total'] += str_replace(',', '', $row['total']);
+          }
+          break;
 
-default:
-continue;
-break;
-}
-}
-$rows[] = $row;
-}
-
+        default:
+          continue;
+          break;
+      }
+    }
+    $rows[] = $row;
+  }
 }
 
 ?>

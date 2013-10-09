@@ -309,7 +309,7 @@ if (!empty($oem_tree)) {
           if (isset($submission->data[$field['cid']])){
             $display_oem = TRUE;
             $row['total'] = $submission->data[$field['cid']]['value'][0];
-            $totals['total'] += $submission->data[$field['cid']]['value'][0];
+            $totals['total'] += str_replace(',', '', $row['total']);
           }
           break;
 

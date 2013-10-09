@@ -358,7 +358,8 @@ $provinces = array(
         var lineCoolant = lineCount * currentRates.oem[oemCat][lineId]['coolant'];
         var lineSmallFilter = lineCount * currentRates.oem[oemCat][lineId]['filter_s'];
         var lineLargeFilter = lineCount * currentRates.oem[oemCat][lineId]['filter_l'];
-        var lineTotal = parseFloat($('#rh-oem-field-' + oemCat + '-' + lineId + '-remittance').val());
+        var lineTotal = $('#rh-oem-field-' + oemCat + '-' + lineId + '-remittance').cleannum().val();
+//        var lineTotal = parseFloat($('#rh-oem-field-' + oemCat + '-' + lineId + '-remittance').val());
 
         line = line + 'Qty:' + lineCount + '|Oil:' + lineOil + '|Coolant:' + lineCoolant + '|Small Filter:' + lineSmallFilter + '|Large Filter:' + lineLargeFilter + '|Total:' + lineTotal;
         lines = lines + line + "\n";
@@ -367,7 +368,7 @@ $provinces = array(
         coolantTotal = coolantTotal + lineCoolant;
         smallFilterTotal = smallFilterTotal + lineSmallFilter;
         largeFilterTotal = largeFilterTotal + lineLargeFilter;
-        remittanceTotal = numberToFixed(parseFloat(remittanceTotal) + lineTotal, 2);
+        remittanceTotal = parseFloat(remittanceTotal) + parseFloat(lineTotal);
 
         $(this).digits();
       });
@@ -376,7 +377,8 @@ $provinces = array(
       $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-coolant').val(coolantTotal);
       $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-filter-small').val(smallFilterTotal);
       $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-filter-large').val(largeFilterTotal);
-      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-total').val(remittanceTotal).digits();
+      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-total').val(remittanceTotal.toFixed(2)).digits();
+//      $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-total').val(remittanceTotal).digits();
       $('#edit-submitted-oem-oem-' + oemCat + '-oem-' + oemCat + '-lines').val(lines);
     }
   }
