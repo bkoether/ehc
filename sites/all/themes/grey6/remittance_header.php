@@ -33,7 +33,7 @@ $provinces = array(
   // NOTE: When major changes happen increment the currentVersion number in order to avoid
   // conflicts with what is in local storage.
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '4';
+  var currentVersion = '5';
 
   var currentRates;
   var oemLevel;
