@@ -6,6 +6,52 @@
 function rate_sheets_fieldgroup_default_groups() {
   $groups = array();
 
+  // Exported group: group_def
+  $groups['rate_sheet-group_def'] = array(
+    'group_type' => 'standard',
+    'type_name' => 'rate_sheet',
+    'group_name' => 'group_def',
+    'label' => 'Diesel Exhaust Fluid',
+    'settings' => array(
+      'form' => array(
+        'style' => 'fieldset_collapsible',
+        'description' => '',
+      ),
+      'display' => array(
+        'description' => '',
+        'teaser' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'full' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        '4' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        '2' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        '3' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'token' => array(
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '0',
+    'fields' => array(
+      '0' => 'field_def_rate',
+    ),
+  );
+
   // Exported group: group_glycol
   $groups['rate_sheet-group_glycol'] = array(
     'group_type' => 'standard',
@@ -47,7 +93,7 @@ function rate_sheets_fieldgroup_default_groups() {
         ),
       ),
     ),
-    'weight' => '0',
+    'weight' => '1',
     'fields' => array(
       '0' => 'field_glycol_concentrate',
       '1' => 'field_glycol_premix',
@@ -95,7 +141,7 @@ function rate_sheets_fieldgroup_default_groups() {
         'label' => 'above',
       ),
     ),
-    'weight' => '1',
+    'weight' => '2',
     'fields' => array(
       '0' => 'field_oem_automotive',
       '1' => 'field_oem_electrical',
@@ -209,6 +255,7 @@ function rate_sheets_fieldgroup_default_groups() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Diesel Exhaust Fluid');
   t('Glycol');
   t('OEM');
   t('Oil');

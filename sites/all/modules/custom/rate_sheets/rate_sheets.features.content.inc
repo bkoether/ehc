@@ -6,6 +6,68 @@
 function rate_sheets_content_default_fields() {
   $fields = array();
 
+  // Exported field: field_def_rate
+  $fields['rate_sheet-field_def_rate'] = array(
+    'field_name' => 'field_def_rate',
+    'type_name' => 'rate_sheet',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '2' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '3' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'number_float',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'number',
+    'active' => '1',
+    'prefix' => '',
+    'suffix' => '',
+    'min' => '',
+    'max' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_def_rate][0][value',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'DEF Rate',
+      'weight' => '19',
+      'description' => '',
+      'type' => 'number',
+      'module' => 'number',
+    ),
+  );
+
   // Exported field: field_glycol_concentrate
   $fields['rate_sheet-field_glycol_concentrate'] = array(
     'field_name' => 'field_glycol_concentrate',
@@ -1491,6 +1553,7 @@ YT|Yukon',
   t('Agricultural Equipment');
   t('Automotive');
   t('Construction Equipment');
+  t('DEF Rate');
   t('Effective On');
   t('Electrical Equipment');
   t('Forestry Equipment');

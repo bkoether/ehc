@@ -33,11 +33,11 @@ function rate_sheets_strongarm() {
   $strongarm->name = 'content_extra_weights_rate_sheet';
   $strongarm->value = array(
     'title' => '-5',
-    'revision_information' => '3',
-    'author' => '4',
-    'options' => '5',
-    'menu' => '2',
-    'path' => '6',
+    'revision_information' => '4',
+    'author' => '5',
+    'options' => '6',
+    'menu' => '3',
+    'path' => '7',
   );
   $export['content_extra_weights_rate_sheet'] = $strongarm;
 
