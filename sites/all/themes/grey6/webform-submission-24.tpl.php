@@ -390,7 +390,7 @@ if (isset($renderable['oem'])) {
   $oil_rate = floatval($submission->data[41]['value'][0]);
   $gly_rate = floatval($submission->data[179]['value'][0]);
   $fsm_rate = floatval($submission->data[42]['value'][0]);
-  $flg_rate = floatval($submission->data[5]['value'][0]);
+  $flg_rate = floatval($submission->data[43]['value'][0]);
 
   $categories = $renderable['oem']['#webform_component']['children'];
   foreach ($categories as $category) {

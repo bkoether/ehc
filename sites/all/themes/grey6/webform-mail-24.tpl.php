@@ -399,7 +399,7 @@ if (!empty($oem_tree)) {
   $oil_rate = floatval($submission->data[41]['value'][0]);
   $gly_rate = floatval($submission->data[179]['value'][0]);
   $fsm_rate = floatval($submission->data[42]['value'][0]);
-  $flg_rate = floatval($submission->data[5]['value'][0]);
+  $flg_rate = floatval($submission->data[43]['value'][0]);
 
   $categories = $oem_tree['children'];
   foreach ($categories as $category) {
