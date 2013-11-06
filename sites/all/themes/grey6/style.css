@@ -636,7 +636,11 @@ sup{
 #edit-submitted-glycol-containers-antifreeze-wrapper-4000-ml-4000-ml,
 #edit-submitted-glycol-containers-antifreeze-wrapper-5000-ml-5000-ml,
 #edit-submitted-glycol-containers-antifreeze-wrapper-9460ml-9460-ml,
-#edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml
+#edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml,
+
+#edit-submitted-def-containers-def-size-wrapper-378-def-378-l,
+#edit-submitted-def-containers-def-size-wrapper-757-l-def-757-liter,
+#edit-submitted-def-containers-def-size-wrapper-946-def-946-liter
 {
 	width:123px;
 	padding-right:3px;
@@ -861,7 +865,8 @@ background-color:#e8e4df;
 
 #webform-component--another-size,
 #webform-component--another-antifreeze-size,
-#webform-component--another-non-hdpe-size{
+#webform-component--another-non-hdpe-size,
+#webform-component--another-def-size{
   background-color:#e2ddd7;
 	padding-bottom:3px;
   margin-top: -11px;
@@ -870,7 +875,8 @@ background-color:#e8e4df;
 
 #webform-component--another-size p,
 #webform-component--another-antifreeze-size p,
-#webform-component--another-non-hdpe-size p {
+#webform-component--another-non-hdpe-size p,
+#webform-component--another-def-size p{
 	margin-top:0;
 	border-bottom:0;
 }
@@ -896,6 +902,9 @@ background-color:#e8e4df;
 
 .content #webform-component-non-hdpe-containers {
   background:url('icons.png') no-repeat -2749px 3px #E2DDD7;
+}
+.content #webform-component-def-containers {
+    background:url('icons.png') no-repeat -3300px 3px #E2DDD7;
 }
 
 

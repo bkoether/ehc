@@ -62,6 +62,21 @@ switch($type){
       drupal_add_js(array('custom_sizes' => array('prev_sizes_hdpe' => $sizes )), 'setting');
     }
     break;
+  case 'def':
+    $query = db_query("SELECT d.data
+		  FROM {webform_submitted_data} d
+		  INNER JOIN {webform_submissions} s
+		    ON s.sid = d.sid
+		  WHERE d.cid = '274' AND s.uid = %d
+			ORDER BY d.sid DESC
+			LIMIT 1",
+      $uid);
+    $result = db_fetch_object($query);
+    if(count($result) != 0) {
+      $sizes = substr($result->data, 0, -1);
+      drupal_add_js(array('custom_sizes' => array('prev_sizes_def' => $sizes )), 'setting');
+    }
+    break;
 }
 
 	if($sizes){
@@ -87,6 +102,7 @@ function custom_sizes_preprocess_node(&$vars) {
   $vars['previous_sizes'] = _custom_sizes_get_previous($user->uid, 'oil');
 	$vars['previous_sizes_glycol'] = _custom_sizes_get_previous($user->uid, 'glycol');
   $vars['previous_sizes_hdpe'] = _custom_sizes_get_previous($user->uid, 'hdpe');
+  $vars['previous_sizes_def'] = _custom_sizes_get_previous($user->uid, 'def');
 }
 
 

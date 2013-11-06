@@ -54,6 +54,7 @@ function remittance_json_data($province, $start_date, $end_date, $level, $json =
 			'glycol_premix' => (float) $sheet->field_glycol_premix[0]['value'],
 			'glycol_containers' => (float) $sheet->field_glycol_containers[0]['value'],
       'non_hdpe_container' => (float) $sheet->field_oil_non_hdpe[0]['value'],
+      'def_container' => (float) $sheet->field_def_rate[0]['value'],
     );
     if (isset($sheet->field_oem_utility)) {
       $charges['oem'] = array(

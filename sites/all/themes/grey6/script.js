@@ -197,8 +197,18 @@ function do_hidden_update(type) {
     rateField = $("#edit-submitted-hdpe-custom-size-rate");
     totalField = $("#edit-submitted-hdpe-custom-size-remittance");
   }
+  else if(type == 'def'){
+    //the parent container
+    parentCtr = $("#webform-component-def-containers");
+    //the fields
+    customSizeField = $("#edit-submitted-def-custom-size");
+    containersField = $("#edit-submitted-def-custom-size-number-of-cans---bottles");
+    rateField = $("#edit-submitted-def-custom-size-rate");
+    totalField = $("#edit-submitted-def-custom-size-remittance");
+  }
 
-	var customField = $(".custom-size-fieldset").length;
+
+  var customField = $(".custom-size-fieldset").length;
 
 	/* Cycle through all the 4 custom field entries and create a delimited string and then insert into hidden form values */
 	var sizes = "";
@@ -308,6 +318,9 @@ function add_field(type){
   else if (type == 'hdpe') {
     $("#webform-component-non-hdpe-containers").append(html);
   }
+  else if (type == 'def') {
+    $("#webform-component-def-containers").append(html);
+  }
   else {
     $("#webform-component-containers").append(html);
   }
@@ -374,6 +387,9 @@ function add_field_item(user_input, type) {
   else if (type == 'hdpe') {
     computed_input = user_input * Drupal.settings.currentRates.non_hdpe_container;
   }
+  else if (type == 'def') {
+    computed_input = user_input * Drupal.settings.currentRates.def_container;
+  }
 
 
 
@@ -386,6 +402,9 @@ function add_field_item(user_input, type) {
 	}
   else if (type == 'hdpe') {
     $("#webform-component-non-hdpe-containers").append(html);
+  }
+  else if (type == 'def') {
+    $("#webform-component-def-containers").append(html);
   }
   else {
 		$("#webform-component-containers").append(html);
@@ -415,35 +434,65 @@ function add_field_item(user_input, type) {
       else if (type == 'hdpe') {
         ratePer = currentPArray[10] * Drupal.settings.currentRates.glycol_containers;
       }
+      else if (type == 'hdpe') {
+        ratePer = currentPArray[10] * Drupal.settings.currentRates.glycol_containers;
+      }
 			$("#custom-field-" + customField + "-rate").val(ratePer).niceRates();
 		}
 	});
 
+  $("#custom-field-" + customField + "-entries").attr('data-cf-id', customField);
+  $("#custom-field-" + customField + "-entries").attr('data-type', type);
 	$("#custom-field-" + customField + "-entries").change( function () {
-		$(this).cleannum();
-		var num = parseFloat($(this).attr('value'));
-		var rate = parseFloat($("#custom-field-" + customField + "-rate").attr('value'));
-		var total = num * rate;
-
-		//add commas
-		$(this).digits();
-
-
-		if (check_decimals(total, 2, 9999)) {
-			total = roundNumber(total, 2);
-		}
-
-		total = numberToFixed(total, 2);
-
-		$("#custom-field-" + customField + "-remittance").val(total);
-
-		do_hidden_update(type);
-    saveFormState();
+      custom_field_calc($(this));
+//		$(this).cleannum();
+//		var num = parseFloat($(this).attr('value'));
+//		var rate = parseFloat($("#custom-field-" + customField + "-rate").attr('value'));
+//		var total = num * rate;
+//
+//		//add commas
+//		$(this).digits();
+//
+//
+//		if (check_decimals(total, 2, 9999)) {
+//			total = roundNumber(total, 2);
+//		}
+//
+//		total = numberToFixed(total, 2);
+//
+//		$("#custom-field-" + customField + "-remittance").val(total);
+//
+//		do_hidden_update(type);
+//    saveFormState();
 	});
 
 
 
 	return false;
+}
+
+function custom_field_calc(field) {
+  var customField = $(field).attr('data-cf-id');
+  var type = $(field).attr('data-type');
+  $(field).cleannum();
+  var num = parseFloat($(field).attr('value'));
+  var rate = parseFloat($("#custom-field-" + customField + "-rate").attr('value'));
+  var total = num * rate;
+
+  //add commas
+  $(field).digits();
+
+
+  if (check_decimals(total, 2, 9999)) {
+    total = roundNumber(total, 2);
+  }
+
+  total = numberToFixed(total, 2);
+
+  $("#custom-field-" + customField + "-remittance").val(total);
+
+  do_hidden_update(type);
+  saveFormState();
 }
 
 /**
@@ -627,6 +676,11 @@ function getFormState() {
 
   $('body').addClass('oem_processed');
   Drupal.attachBehaviors();
+
+  //  Attach calculations for custom fields.
+  $('.number-of-entries').change(function(){
+    custom_field_calc($(this));
+  });
 }
 /**
  * So Console.log doesn't screw up IE anymore

@@ -116,6 +116,10 @@ $provinces = array(
 		fieldsArray.push( 'edit-submitted-glycol-containers-antifreeze-wrapper-5000-ml-5000-ml' );
 		fieldsArray.push( 'edit-submitted-glycol-containers-antifreeze-wrapper-9460ml-9460-ml' );
 		fieldsArray.push( 'edit-submitted-glycol-containers-antifreeze-wrapper-18900-ml-18900-ml' );
+
+    fieldsArray.push( 'edit-submitted-def-containers-def-size-wrapper-378-def-378-l' );
+    fieldsArray.push( 'edit-submitted-def-containers-def-size-wrapper-757-l-def-757-liter' );
+    fieldsArray.push( 'edit-submitted-def-containers-def-size-wrapper-946-def-946-liter' );
 	<?php endif; ?>
 
 	// Glycol standalone
@@ -268,7 +272,11 @@ $provinces = array(
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
-				<?php endif; ?>
+          $("#" + fieldsArray[25] + "-rate").val(currentRates.def_container * 3.78).niceRates();
+          $("#" + fieldsArray[26] + "-rate").val(currentRates.def_container * 7.57).niceRates();
+          $("#" + fieldsArray[27] + "-rate").val(currentRates.def_container * 9.46).niceRates();
+
+        <?php endif; ?>
 
 				// Antifreeze standalone values
 				<?php if ($form_type == 'antifreeze_oem'): ?>
@@ -330,13 +338,18 @@ $provinces = array(
         <?php endif; ?>
 
         // Remove Non-HDPE fields if they are not set in the rate sheet
-        <?php
-         // @todo: Check with Andrew
-//         if ($nid == 9): ?>
-          if (currentRates.non_hdpe_container == 0 || formType != 'combined') {
-            $('#webform-component-non-hdpe-containers, #webform-component--another-non-hdpe-size').remove();
-          }
-        <?php // endif; ?>
+        if (currentRates.non_hdpe_container == 0 || formType != 'combined') {
+          $('#webform-component-non-hdpe-containers, #webform-component--another-non-hdpe-size').remove();
+        }
+
+        // Remove DEF field if they are not set. Otherwise create the drop-down.
+        if (currentRates.def_container == 0 || formType != 'combined') {
+          $('#webform-component-def-containers, #webform-component--another-def-size').remove();
+        }
+        else {
+          collapseFields.def('closed');
+        }
+
       }
 		}, "json");
 	}
@@ -535,6 +548,37 @@ $provinces = array(
         }
 
         $(this).toggleClass('open');
+      });
+    },
+
+    def: function(currentClass) {
+      if(!$('#field-toggle-def').length){
+        $('#webform-component-def-containers').before('<h2 id="field-toggle-def" class="field-toggle ' + currentClass + '">Diesel Exhaust Fluid<span>&ndash;</span></h2>');
+      }
+
+      var targets = $(
+        '#webform-component-def-containers, ' +
+        '#webform-component--another-def-size'
+      );
+      var indicator = $('#field-toggle-def span');
+
+      if (currentClass != 'open') {
+        collapseFields.showHide('close', targets, indicator);
+        $('#field-toggle-def').removeClass('open');
+      }
+      else {
+        collapseFields.showHide('open', targets, indicator);
+        $('#field-toggle-def').addClass('open');
+      }
+
+      $('#field-toggle-def').click(function(){
+        if ($(this).hasClass('open')) {
+          collapseFields.showHide('close', targets, indicator);
+        }
+        else {
+          collapseFields.showHide('open', targets, indicator);
+        }
+        $(this).toggleClass('open')
       });
     },
 

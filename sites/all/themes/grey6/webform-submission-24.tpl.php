@@ -63,6 +63,21 @@ if ($hdpe_other_totals) {
   }
 }
 
+// Calculate DEF custom sizes
+$def_other_totals = 0;
+$def_other_litres = 0;
+$def_items = explode(';', $submission->data[273]['value'][0]);
+foreach ($def_items as $line) {
+  $def_other_totals += $line;
+}
+if ($def_other_totals) {
+  $def_sizes = explode(';', $submission->data[274]['value'][0]);
+  $def_qty = explode(';', $submission->data[271]['value'][0]);
+  foreach ($def_sizes as $id => $size) {
+    $def_other_litres += $size * $hdpe_qty[$id];
+  }
+}
+
 //the user stuff
 //global $user;
 profile_load_profile($submission);
@@ -117,23 +132,23 @@ switch($submission->data[79][value][0]){
 
 <div class="table-ctr">
 <table cellspacing="0" class="remit-table">
-<thead>
-	<tr>
-		<td style="text-align:left" valign="top" colspan="5">
-			<strong><?php print $company_name?></strong><br>
-			<?php print $submission->profile_contact_name;?><br>
-			<?php print $submission->profile_phone;?><br>
-			<?php print $submission->data[109][value][0];?>
-		</td>
-		<td valign="top"><?php print $submission->name;?></td>
-	</tr>
-	<tr><td colspan="6">&nbsp;</td></tr>
-	<tr valign="top">
-		<td colspan="5" style="padding-bottom:20px">Period:<br/><strong><?php print $submission->data[73][value][0];?>
-		to <?php print $submission->data[107][value][0];?></strong></td>
-		<td colspan="1" style="padding-bottom:20px">Payment by:<br /><strong><?php print $submission->data[116][value][0];?></strong></td>
-	</tr>
-</thead>
+  <thead>
+    <tr>
+      <td style="text-align:left" valign="top" colspan="5">
+        <strong><?php print $company_name?></strong><br>
+        <?php print $submission->profile_contact_name;?><br>
+        <?php print $submission->profile_phone;?><br>
+        <?php print $submission->data[109][value][0];?>
+      </td>
+      <td valign="top"><?php print $submission->name;?></td>
+    </tr>
+    <tr><td colspan="6">&nbsp;</td></tr>
+    <tr valign="top">
+      <td colspan="5" style="padding-bottom:20px">Period:<br/><strong><?php print $submission->data[73][value][0];?>
+      to <?php print $submission->data[107][value][0];?></strong></td>
+      <td colspan="1" style="padding-bottom:20px">Payment by:<br /><strong><?php print $submission->data[116][value][0];?></strong></td>
+    </tr>
+  </thead>
 
 <?php if ($form_type == 'combined' || $form_type == 'oil' || $form_type == 'oil_oem'): ?>
   <thead>
@@ -256,7 +271,11 @@ switch($submission->data[79][value][0]){
     </tr>
   </tbody>
 
-  <?php if ($submission->data[243]['value'][0] || $submission->data[247]['value'][0]): ?>
+
+  <?php // Check for Non-HDPE values
+  if ($submission->data[243]['value'][0] ||
+      $submission->data[247]['value'][0] ||
+      $hdpe_other_litres > 0): ?>
     <thead>
       <tr style="padding-top:5px">
         <th colspan="3">Non-HDPE Container</th>
@@ -287,6 +306,52 @@ switch($submission->data[79][value][0]){
       </tr>
     </tbody>
   <?php endif; ?>
+
+  <?php
+  if ($submission->data[259]['value'][0] ||
+    $submission->data[263]['value'][0] ||
+    $submission->data[267]['value'][0] ||
+    $def_other_litres > 0): ?>
+    <thead>
+      <tr style="padding-top:5px">
+        <th colspan="3">Diesel Exhaust Fluids</th>
+        <th colspan="2">Units Sold (in litres)</th>
+        <th>Remittance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="3">3.78 Litre</th>
+        <td colspan="2"><?php print cleannum($submission->data[259]['value'][0]) * 3.78;?></td>
+        <td><?php print $submission->data[261][value][0];?></td>
+      </tr>
+      <tr>
+        <th colspan="3">7.57 Litre</th>
+        <td colspan="2"><?php print cleannum($submission->data[263]['value'][0]) * 7.57;?></td>
+        <td><?php print $submission->data[265][value][0];?></td>
+      </tr>
+      <tr>
+        <th colspan="3">9.46 Litre</th>
+        <td colspan="2"><?php print cleannum($submission->data[267]['value'][0]) * 9.46;?></td>
+        <td><?php print $submission->data[269][value][0];?></td>
+      </tr>
+
+      <tr>
+        <th colspan="3">Other Sizes</th>
+        <td colspan="2"><?php print $def_other_litres;?></td>
+        <td><?php print money_format('%!i',$def_other_totals);?></td>
+      </tr>
+      <tr>
+        <th colspan="3">&nbsp;</th>
+        <td colspan="2"></td>
+        <td></td>
+      </tr>
+    </tbody>
+
+
+  <?php endif; ?>
+
+
 <?php endif; ?>
 
 <?php if ($form_type == 'combined' || $form_type == 'antifreeze_oem'): ?>
@@ -450,7 +515,9 @@ if (isset($renderable['oem'])) {
 
 }
 ?>
-
+</table>
+<div style="page-break-before: always;"></div>
+<table cellspacing="0" class="remit-table">
 <?php if ($form_type != 'oil' && $display_oem): ?>
   <thead>
     <tr>
