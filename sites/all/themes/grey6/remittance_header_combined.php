@@ -23,24 +23,6 @@ if (!isset($_GET['type'])) {
 
 $nid = arg(1);
 $form_type = $_GET['type'];
-switch ($form_type) {
-  case 'oil':
-    drupal_set_title(t('EHC Remittance'));
-    break;
-
-  case 'oil_oem':
-    drupal_set_title(t('Oil & OEM EHC Remittance'));
-    break;
-
-  case 'antifreeze_oem':
-    drupal_set_title(t('Antifreeze & OEM EHC Remittance'));
-    break;
-
-  default:
-    drupal_set_title(t('Oil and Antifreeze Remittance'));
-    break;
-}
-
 profile_load_profile($user);
 
 $provinces = array(
@@ -68,7 +50,7 @@ $provinces = array(
   var formType = '<?php echo $form_type; ?>';
 
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '<?php echo $form_type; ?>_5';
+  var currentVersion = '<?php echo $form_type; ?>_6';
 
   var currentRates;
   var oemLevel;
@@ -324,9 +306,9 @@ $provinces = array(
             // Create the fields if this is a new form
             oemFields.init($('body').hasClass('oem_processed'));
             oemFields.attachListener();
-            collapseFields.oil('open');
+            collapseFields.oil('closed');
             <?php if ($form_type == 'antifreeze_oem') : ?>
-              collapseFields.glycol('open');
+              collapseFields.glycol('closed');
             <?php else: ?>
               collapseFields.glycol('closed');
             <?php endif; ?>
