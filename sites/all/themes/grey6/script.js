@@ -30,6 +30,11 @@ Drupal.behaviors.indexSet = function(context){
 
 }
 
+Drupal.behaviors.noLocalStorage = function(context) {
+  if(!window.goLocal){
+    $('#block-block-4').remove();
+  }
+}
 
 //disable form submit
 Drupal.behaviors.submitCheck = function(context){
@@ -139,7 +144,7 @@ $('#webform-component-containers input, #webform-component-filters input, #webfo
  * Check if there are values for an unsaved form.
  */
 Drupal.behaviors.checkSavedForm = function(context) {
-  if (!$('body').hasClass('saved-form-processed')) {
+  if (!$('body').hasClass('saved-form-processed') && window.goLocal) {
     $('body').addClass('saved-form-processed');
     var fid = $('form.webform-client-form').attr('id');
     fid = fid  + '_' + window.currentUser + '_' + window.currentVersion;
@@ -634,15 +639,19 @@ function saveFormState() {
   $('[name^="custom-field"], [name^="submitted"], input[name^="rh-oem"], .custom-size-fieldset input[name^="total"]').each(function(){
     sel[this.id] = $(this).val();
   });
+  //adding a check for localstorage security
+  if(window.goLocal){
 
-  localStorage.setItem(fid + '_values', JSON.stringify(sel));
+    localStorage.setItem(fid + '_values', JSON.stringify(sel));
 
-  // Save the rate sheet
-  localStorage.setItem(fid + '_rs', JSON.stringify(currentRates));
+    // Save the rate sheet
+    localStorage.setItem(fid + '_rs', JSON.stringify(currentRates));
 
-  // Save the html
-  var htm = $(form).html();
-  localStorage.setItem(fid + '_html', JSON.stringify(htm));
+    // Save the html
+    var htm = $(form).html();
+    localStorage.setItem(fid + '_html', JSON.stringify(htm));
+  }
+  
 }
 
 function getFormState() {
@@ -724,3 +733,18 @@ if(typeof window.localStorage == 'undefined') {
     clear       : function() { return this._data = {}; }
   };
 }
+
+
+//test for security set too high
+//
+var mod = 'test';
+var goLocal = false;
+try {
+  localStorage.setItem(mod, mod);
+  localStorage.removeItem(mod);
+  window.goLocal = true;
+} catch(e) {
+  window.goLocal = false;
+}
+
+
