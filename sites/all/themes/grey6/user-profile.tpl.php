@@ -55,21 +55,24 @@ profile_load_profile($user);
 </div>
 
 <?php
+
+	$cachebreak = "?nocache=" . time();
+
 switch($user->profile_province){
 	
 	case 'British Columbia':
-		$thebutton = '<button onclick="location.href=\'/oil-and-antifreeze-remittance\'">Begin an Oil, Antifreeze and OEM EHC Remittance</button>';
+		$thebutton = '<button onclick="location.href=\'/oil-and-antifreeze-remittance' . $cachebreak . '\'">Begin an Oil, Antifreeze and OEM EHC Remittance</button>';
 		break;
 	case 'Alberta':
-		$thebutton = '<button onclick="location.href=\'/ehc-remittance-0\'">Begin an Oil and OEM EHC Remittance</button>';
+		$thebutton = '<button onclick="location.href=\'/ehc-remittance-0' . $cachebreak . '\'">Begin an Oil and OEM EHC Remittance</button>';
 		break;
 	case 'Saskatchewan':
 	default:
-		$thebutton = '<button onclick="location.href=\'/ehc-remittance\'">Begin an EHC Remittance</button>';
+		$thebutton = '<button onclick="location.href=\'/ehc-remittance' . $cachebreak . '\'">Begin an EHC Remittance</button>';
 		break;
 	case 'Manitoba':
-		$thebutton  = '<button onclick="location.href=\'/ehc-remittance-0\'">Begin an Oil and OEM EHC Remittance</button></p><p style="margin:12px;">';
-		$thebutton .= '<button onclick="location.href=\'/antifreeze-remittance-0\'">Begin an Antifreeze and OEM EHC Remittance</button>';
+		$thebutton  = '<button onclick="location.href=\'/ehc-remittance-0' . $cachebreak . '\'">Begin an Oil and OEM EHC Remittance</button></p><p style="margin:12px;">';
+		$thebutton .= '<button onclick="location.href=\'/antifreeze-remittance-0' . $cachebreak . '\'">Begin an Antifreeze and OEM EHC Remittance</button>';
 		break;
 	
 }
