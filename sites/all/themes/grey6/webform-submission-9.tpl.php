@@ -48,9 +48,6 @@ foreach($gitems as $item){
 $glycol_in_litres = $glycol_other_totals / $glycol_ctr_rate;
 
 // Calculate Non-HDPE custom sizes
-dpm($submission->data[254]);
-dpm($submission->data[251]);
-dpm($submission->data[252]);
 $hdpe_other_totals = 0;
 $hdpe_other_litres = 0;
 $hdpe_items = explode(';', $submission->data[254]['value'][0]);
