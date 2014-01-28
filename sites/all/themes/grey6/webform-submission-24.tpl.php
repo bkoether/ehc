@@ -53,13 +53,13 @@ $hdpe_other_totals = 0;
 $hdpe_other_litres = 0;
 $hdpe_items = explode(';', $submission->data[254]['value'][0]);
 foreach ($hdpe_items as $line) {
-  $hdpe_other_totals += $line;
+  $hdpe_other_totals += cleannum($line);
 }
 if ($hdpe_other_totals) {
   $hdpe_sizes = explode(';', $submission->data[251]['value'][0]);
   $hdpe_qty = explode(';', $submission->data[252]['value'][0]);
   foreach ($hdpe_sizes as $id => $size) {
-    $hdpe_other_litres += $size * $hdpe_qty[$id];
+    $hdpe_other_litres += $size * cleannum($hdpe_qty[$id]);
   }
 }
 
@@ -68,13 +68,13 @@ $def_other_totals = 0;
 $def_other_litres = 0;
 $def_items = explode(';', $submission->data[273]['value'][0]);
 foreach ($def_items as $line) {
-  $def_other_totals += $line;
+  $def_other_totals += cleannum($line);
 }
 if ($def_other_totals) {
   $def_sizes = explode(';', $submission->data[274]['value'][0]);
   $def_qty = explode(';', $submission->data[271]['value'][0]);
   foreach ($def_sizes as $id => $size) {
-    $def_other_litres += $size * $hdpe_qty[$id];
+    $def_other_litres += $size * cleannum($hdpe_qty[$id]);
   }
 }
 
