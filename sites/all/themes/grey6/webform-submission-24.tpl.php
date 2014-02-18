@@ -273,9 +273,9 @@ switch($submission->data[79][value][0]){
 
 
   <?php // Check for Non-HDPE values
-  if ($submission->data[243]['value'][0] ||
-      $submission->data[247]['value'][0] ||
-      $hdpe_other_litres > 0): ?>
+  //if ($submission->data[243]['value'][0] ||
+  //    $submission->data[247]['value'][0] ||
+  //    $hdpe_other_litres > 0): ?>
     <thead>
       <tr style="padding-top:5px">
         <th colspan="3">Non-HDPE Container</th>
@@ -305,7 +305,7 @@ switch($submission->data[79][value][0]){
         <td></td>
       </tr>
     </tbody>
-  <?php endif; ?>
+  <?php //endif; ?>
 
   <?php
   if ($submission->data[259]['value'][0] ||
