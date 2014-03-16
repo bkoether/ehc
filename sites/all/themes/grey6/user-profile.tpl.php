@@ -70,7 +70,8 @@ switch($user->profile_province){
 		break;
 	case 'Saskatchewan':
 	default:
-		$thebutton = '<button onclick="location.href=\'/environmental-handling-charge-ehc-form?type=oil' . $cachebreak . '\'">Begin an EHC Remittance</button>';
+		$thebutton  = '<strong>Use the new combined form for EHC Remittance</strong><br>';
+		$thebutton .= '<button onclick="location.href=\'/environmental-handling-charge-ehc-form?type=combined' . $cachebreak . '\'">Begin an EHC Remittance</button>';
 		break;
 	case 'Manitoba':
 		$thebutton  = '<button onclick="location.href=\'/environmental-handling-charge-ehc-form?type=oil_oem' . $cachebreak . '\'">Begin an Oil and OEM EHC Remittance</button></p><p style="margin:12px;">';
