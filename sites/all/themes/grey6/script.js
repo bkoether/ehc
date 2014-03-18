@@ -222,7 +222,7 @@ function do_hidden_update(type) {
 	var remits = "";
 
 	parentCtr.find(".liter-size-input").each( function () {
-		sizes += $(this).val().replace(' Litre','') + ";";
+		sizes += $(this).val().replace(' Litres','') + ";";
 		customSizeField.val(sizes);
 	});
 	parentCtr.find(".number-of-entries").each( function () {
@@ -400,7 +400,7 @@ function add_field_item(user_input, type) {
 
 	var qt = "'";
 
-	var html = '<fieldset id="custom-div-' + customField + '" class="custom-size-fieldset webform-component-fieldset"><a href="#" onclick="return !remove_field(' + customField + ', ' + qt + type + qt + ')" class="customDel" title="click to remove the ' + user_input + ' Liter size">x</a><input readonly="readonly" type="text" value="' + user_input +' Litre" name="liter-size-' + customField + '" id="custom-field-' + customField + '-size" class="liter-size-input" /><input onblur="blur(' + qt + customField + qt + ')" type="text" value="" name="custom-field-' + customField + '-entries" id="custom-field-' + customField + '-entries" class="number-of-entries" /><input value="' + computed_input +'" readonly="readonly" type="text" readonly name="each-' + customField + '-rate" id="custom-field-' + customField + '-rate" class="each-rate" /><div style="display:inline;margin:1px 5px 2px 0"><span class="field-suffix">/ea</span></div><input value="0.00" readonly="readonly" type="text" readonly name="total-' + customField + '-remittance" id="custom-field-' + customField + '-remittance" class="total-remittance" /></fieldset>';
+	var html = '<fieldset id="custom-div-' + customField + '" class="custom-size-fieldset webform-component-fieldset"><a href="#" onclick="return !remove_field(' + customField + ', ' + qt + type + qt + ')" class="customDel" title="click to remove the ' + user_input + ' Litre size">x</a><input readonly="readonly" type="text" value="' + user_input +' Litres" name="liter-size-' + customField + '" id="custom-field-' + customField + '-size" class="liter-size-input" /><input onblur="blur(' + qt + customField + qt + ')" type="text" value="" name="custom-field-' + customField + '-entries" id="custom-field-' + customField + '-entries" class="number-of-entries" /><input value="' + computed_input +'" readonly="readonly" type="text" readonly name="each-' + customField + '-rate" id="custom-field-' + customField + '-rate" class="each-rate" /><div style="display:inline;margin:1px 5px 2px 0"><span class="field-suffix">/ea</span></div><input value="0.00" readonly="readonly" type="text" readonly name="total-' + customField + '-remittance" id="custom-field-' + customField + '-remittance" class="total-remittance" /></fieldset>';
 
 	if(type == 'glycol'){
 		$("#webform-component-glycol-containers").append(html);

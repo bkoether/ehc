@@ -89,16 +89,16 @@ $provinces = array(
 					if (start == 2) { value = value * 0.15; }
 					if (start == 3) { value = value * 1; }
 					if (start == 4) { value = value * 1.5; }
-					if (start == 5) { value = value * 1.89; }
+					if (start == 5) { value = value * 1.89271; }
 					if (start == 6) { value = value * 2; }
-					if (start == 7) { value = value * 3.788; }
+					if (start == 7) { value = value * 3.78541; }
 					if (start == 8) { value = value * 4; }
 					if (start == 9) { value = value * 5; }
 					if (start == 10) { value = value * 7.56; }
-					if (start == 11) { value = value * 9.46; }
+					if (start == 11) { value = value * 9.46353; }
 					if (start == 12) { value = value * 10; }
 					if (start == 13) { value = value * 15; }
-					if (start == 14) { value = value * 18.942; }
+					if (start == 14) { value = value * 18.9271; }
 					if (start == 15) { value = value * 20; }
 					$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 					start++;

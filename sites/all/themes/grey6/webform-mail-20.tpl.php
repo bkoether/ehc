@@ -170,32 +170,32 @@ Remittance Form</h2>
 		<td><?php print $submission->data[82][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">3.788 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.788;?></td>
+		<th colspan="3">3.788 Litres</th>
+		<td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.78541;?></td>
 		<td><?php print $submission->data[125][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">4 Litre</th>
+		<th colspan="3">4 Litres</th>
 		<td colspan="2"><?php print cleannum($submission->data[83][value][0]) * 4;?></td>
 		<td><?php print $submission->data[85][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">5 Litre</th>
+		<th colspan="3">5 Litres</th>
 		<td colspan="2"><?php print cleannum($submission->data[127][value][0]) * 5;?></td>
 		<td><?php print $submission->data[129][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">10 Litre</th>
+		<th colspan="3">10 Litres</th>
 		<td colspan="2"><?php print cleannum($submission->data[86][value][0]) * 10;?></td>
 		<td><?php print $submission->data[88][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">18.942 Litre</th>
-		<td colspan="2"><?php print cleannum($submission->data[89][value][0]) * 18.942;?></td>
+		<th colspan="3">18.927 Litres</th>
+		<td colspan="2"><?php print cleannum($submission->data[89][value][0]) * 18.9271;?></td>
 		<td><?php print $submission->data[91][value][0];?></td>
 	</tr>
 	<tr>
-		<th colspan="3">20 Litre</th>
+		<th colspan="3">20 Litres</th>
 		<td colspan="2"><?php print cleannum($submission->data[92][value][0]) * 20;?></td>
 		<td><?php print $submission->data[94][value][0];?></td>
 	</tr>

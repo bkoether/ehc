@@ -186,7 +186,7 @@ switch($submission->data[79][value][0]){
     </tr>
     <tr>
       <th colspan="3">946 ml</th>
-      <td colspan="2"><?php print cleannum($submission->data[119][value][0]) * 0.946;?></td>
+      <td colspan="2"><?php print cleannum($submission->data[119][value][0]) * 0.946353;?></td>
       <td><?php print $submission->data[121][value][0];?></td>
     </tr>
     <tr>
@@ -195,32 +195,32 @@ switch($submission->data[79][value][0]){
       <td><?php print $submission->data[82][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">3.78 Litre</th>
-      <td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.78;?></td>
+      <th colspan="3">3.785 Litres</th>
+      <td colspan="2"><?php print cleannum($submission->data[123][value][0]) * 3.78541;?></td>
       <td><?php print $submission->data[125][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">4 Litre</th>
+      <th colspan="3">4 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[83][value][0]) * 4;?></td>
       <td><?php print $submission->data[85][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">5 Litre</th>
+      <th colspan="3">5 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[127][value][0]) * 5;?></td>
       <td><?php print $submission->data[129][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">10 Litre</th>
+      <th colspan="3">10 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[86][value][0]) * 10;?></td>
       <td><?php print $submission->data[88][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">18.942 Litre</th>
-      <td colspan="2"><?php print cleannum($submission->data[89][value][0]) * 18.942;?></td>
+      <th colspan="3">18.927 Litres</th>
+      <td colspan="2"><?php print cleannum($submission->data[89][value][0]) * 18.9271;?></td>
       <td><?php print $submission->data[91][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">20 Litre</th>
+      <th colspan="3">20 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[92][value][0]) * 20;?></td>
       <td><?php print $submission->data[94][value][0];?></td>
     </tr>
@@ -285,12 +285,12 @@ switch($submission->data[79][value][0]){
     </thead>
     <tbody>
       <tr>
-        <th colspan="3">0.946 Litre</th>
-        <td colspan="2"><?php print cleannum($submission->data[243]['value'][0]) * 0.946;?></td>
+        <th colspan="3">946 ml</th>
+        <td colspan="2"><?php print cleannum($submission->data[243]['value'][0]) * 0.946353;?></td>
         <td><?php print $submission->data[245][value][0];?></td>
       </tr>
       <tr>
-        <th colspan="3">22.7 Litre</th>
+        <th colspan="3">22.7 Litres</th>
         <td colspan="2"><?php print cleannum($submission->data[247]['value'][0]) * 22.7;?></td>
         <td><?php print $submission->data[249][value][0];?></td>
       </tr>
@@ -321,18 +321,18 @@ switch($submission->data[79][value][0]){
     </thead>
     <tbody>
       <tr>
-        <th colspan="3">3.78 Litre</th>
-        <td colspan="2"><?php print cleannum($submission->data[259]['value'][0]) * 3.78;?></td>
+        <th colspan="3">3.78 Litres</th>
+        <td colspan="2"><?php print cleannum($submission->data[259]['value'][0]) * 3.78541;?></td>
         <td><?php print $submission->data[261][value][0];?></td>
       </tr>
       <tr>
-        <th colspan="3">7.57 Litre</th>
+        <th colspan="3">7.57 Litres</th>
         <td colspan="2"><?php print cleannum($submission->data[263]['value'][0]) * 7.57;?></td>
         <td><?php print $submission->data[265][value][0];?></td>
       </tr>
       <tr>
-        <th colspan="3">9.46 Litre</th>
-        <td colspan="2"><?php print cleannum($submission->data[267]['value'][0]) * 9.46;?></td>
+        <th colspan="3">9.464 Litres</th>
+        <td colspan="2"><?php print cleannum($submission->data[267]['value'][0]) * 9.46353;?></td>
         <td><?php print $submission->data[269][value][0];?></td>
       </tr>
 
@@ -394,38 +394,38 @@ switch($submission->data[79][value][0]){
       <td><?php print $submission->data[143][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">1.5 Litre</th>
+      <th colspan="3">1.5 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[145][value][0]) * 1.5;?></td>
       <td><?php print $submission->data[147][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">1.89 Litre</th>
-      <td colspan="2"><?php print cleannum($submission->data[149][value][0]) * 1.89;?></td>
+      <th colspan="3">1.893 Litres</th>
+      <td colspan="2"><?php print cleannum($submission->data[149][value][0]) * 1.89271;?></td>
       <td><?php print $submission->data[151][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">3.78 Litre</th>
-      <td colspan="2"><?php print cleannum($submission->data[153][value][0]) * 3.78;?></td>
+      <th colspan="3">3.78 Litres</th>
+      <td colspan="2"><?php print cleannum($submission->data[153][value][0]) * 3.78541;?></td>
       <td><?php print $submission->data[155][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">4 Litre</th>
+      <th colspan="3">4 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[157][value][0]) * 4;?></td>
       <td><?php print $submission->data[159][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">5 Litre</th>
+      <th colspan="3">5 Litres</th>
       <td colspan="2"><?php print cleannum($submission->data[161][value][0]) * 5;?></td>
       <td><?php print $submission->data[163][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">9.46 Litre</th>
-      <td colspan="2"><?php print cleannum($submission->data[165][value][0]) * 9.46;?></td>
+      <th colspan="3">9.464 Litres</th>
+      <td colspan="2"><?php print cleannum($submission->data[165][value][0]) * 9.46353;?></td>
       <td><?php print $submission->data[167][value][0];?></td>
     </tr>
     <tr>
-      <th colspan="3">18.942 Litre</th>
-      <td colspan="2"><?php print cleannum($submission->data[169][value][0]) * 18.942;?></td>
+      <th colspan="3">18.927 Litres</th>
+      <td colspan="2"><?php print cleannum($submission->data[169][value][0]) * 18.9271;?></td>
       <td><?php print $submission->data[171][value][0];?></td>
     </tr>
     <tr>

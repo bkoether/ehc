@@ -214,10 +214,10 @@ $provinces = array(
 						if (start == 4) { value = value * 0.5; }
 						if (start == 6) { value = value * 4; }
 						if (start == 7) { value = value * 10; }
-						if (start == 8) { value = value * 18.942; }
+						if (start == 8) { value = value * 18.9271; }
 						if (start == 9) { value = value * 20; }
-						if (start == 10) { value = value * 0.946; }
-						if (start == 11) { value = value * 3.788; }
+						if (start == 10) { value = value * 0.946353; }
+						if (start == 11) { value = value * 3.78541; }
 						if (start == 12) { value = value * 5; }
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
@@ -229,7 +229,7 @@ $provinces = array(
 				<?php if ($form_type == 'combined'): ?>
           // non-HDPE containers
 
-          $("#" + fieldsArray[13] + "-rate").val(currentRates.non_hdpe_container * 0.946).niceRates();
+          $("#" + fieldsArray[13] + "-rate").val(currentRates.non_hdpe_container * 0.946353).niceRates();
           $("#" + fieldsArray[14] + "-rate").val(currentRates.non_hdpe_container * 22.7).niceRates();
 					//concentrate
 					$("#" + fieldsArray[15] + "-rate").val(currentRates.glycol_concentrate).niceRates();
@@ -244,19 +244,19 @@ $provinces = array(
 						//multiply by the rate
 						if (start == 17) { value = value * 1; }
 						if (start == 18) { value = value * 1.5; }
-						if (start == 19) { value = value * 1.89; }
-						if (start == 20) { value = value * 3.78; }
+						if (start == 19) { value = value * 1.89271; }
+						if (start == 20) { value = value * 3.78541; }
 						if (start == 21) { value = value * 4; }
 						if (start == 22) { value = value * 5; }
-						if (start == 23) { value = value * 9.46; }
-						if (start == 24) { value = value * 18.9; }
+						if (start == 23) { value = value * 9.46353; }
+						if (start == 24) { value = value * 18.9271; }
 						//push into form
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
-          $("#" + fieldsArray[25] + "-rate").val(currentRates.def_container * 3.78).niceRates();
+          $("#" + fieldsArray[25] + "-rate").val(currentRates.def_container * 3.78541).niceRates();
           $("#" + fieldsArray[26] + "-rate").val(currentRates.def_container * 7.57).niceRates();
-          $("#" + fieldsArray[27] + "-rate").val(currentRates.def_container * 9.46).niceRates();
+          $("#" + fieldsArray[27] + "-rate").val(currentRates.def_container * 9.46353).niceRates();
 
         <?php endif; ?>
 
@@ -273,12 +273,12 @@ $provinces = array(
 						var value = currentRates.glycol_containers;
 						if (start == 2) { value = value * 1; }
 						if (start == 3) { value = value * 1.5; }
-						if (start == 4) { value = value * 1.89; }
-						if (start == 5) { value = value * 3.788; }
+						if (start == 4) { value = value * 1.89271; }
+						if (start == 5) { value = value * 3.78541; }
 						if (start == 6) { value = value * 4; }
 						if (start == 7) { value = value * 5; }
-						if (start == 8) { value = value * 9.46; }
-						if (start == 9) { value = value * 18.942; }
+						if (start == 8) { value = value * 9.46353; }
+						if (start == 9) { value = value * 18.9271; }
 						$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 						start++;
 					}
@@ -587,7 +587,7 @@ $provinces = array(
 
     ret += '<label for="rh-oem-field-' + id + '">' + vals.title + '</label>';
 //    ret += '<input readonly="readonly" class="readonly label" type="text" value="' + vals.title + '">';
-    ret += '<span class="info">&nbsp;<span style="display: none;" class="tt">Oil: '+vals.oil+' Litre, Coolant: '+vals.coolant+' Litre, Small Filter: '+vals.filter_s+', Large Filter: '+vals.filter_l+'<br>'+vals.info+'</span></span>';
+    ret += '<span class="info">&nbsp;<span style="display: none;" class="tt">Oil: '+vals.oil+' Litres, Coolant: '+vals.coolant+' Litres, Small Filter: '+vals.filter_s+', Large Filter: '+vals.filter_l+'<br>'+vals.info+'</span></span>';
     ret += '<input value="" data-oem-cat="' + cat + '" data-oem-cat-id="' + count + '" class="rh-oem-field rh-oem-fields-' + cat + '" name="rh-oem-field-' + id + '" id="rh-oem-field-' + id + '">';
     ret += '<span class="field-suffix" style="width: 87px;">$'+vals.rate+'/ea</span>';
     ret += '<input value="0.00" readonly="readonly" type="text" name="rh-oem-field-' + id + '-remittance" id="rh-oem-field-' + id + '-remittance" class="readonly total-remittance">';

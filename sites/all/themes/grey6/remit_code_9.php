@@ -101,10 +101,10 @@ $provinces = array(
 					if (start == 4) { value = value * 0.5; }
 					if (start == 6) { value = value * 4; }
 					if (start == 7) { value = value * 10; }
-					if (start == 8) { value = value * 18.942; }
+					if (start == 8) { value = value * 18.9271; }
 					if (start == 9) { value = value * 20; }
 					if (start == 10) { value = value * 0.947; }
-					if (start == 11) { value = value * 3.788; }
+					if (start == 11) { value = value * 3.78541; }
 					if (start == 12) { value = value * 5; }
 					$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 
@@ -123,12 +123,12 @@ $provinces = array(
 					//multiply by the rate
 					if (start == 15) { value = value * 1; }
 					if (start == 16) { value = value * 1.5; }
-					if (start == 17) { value = value * 1.89; }
-					if (start == 18) { value = value * 3.78; }
+					if (start == 17) { value = value * 1.89271; }
+					if (start == 18) { value = value * 3.78541; }
 					if (start == 19) { value = value * 4; }
 					if (start == 20) { value = value * 5; }
-					if (start == 21) { value = value * 9.46; }
-					if (start == 22) { value = value * 18.9; }
+					if (start == 21) { value = value * 9.46353; }
+					if (start == 22) { value = value * 18.9271; }
 					//push into form
 					$("#" + fieldsArray[start] + "-rate").val(value).niceRates();
 					start++;
