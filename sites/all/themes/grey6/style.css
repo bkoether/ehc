@@ -585,7 +585,9 @@ sup{
   margin-bottom: 1px;
 }
 
-.node .form-text{width:75px;}
+.node .form-text{
+  width:70px; 
+}
 
 #edit-submitted-oils-total-litres,
 #edit-submitted-filters-less-than-8-inches,
