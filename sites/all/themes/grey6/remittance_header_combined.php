@@ -255,7 +255,7 @@ $provinces = array(
 						start++;
 					}
           $("#" + fieldsArray[25] + "-rate").val(currentRates.def_container * 3.78541).niceRates();
-          $("#" + fieldsArray[26] + "-rate").val(currentRates.def_container * 7.57).niceRates();
+          $("#" + fieldsArray[26] + "-rate").val(currentRates.def_container * 7.571).niceRates();
           $("#" + fieldsArray[27] + "-rate").val(currentRates.def_container * 9.46353).niceRates();
 
         <?php endif; ?>
