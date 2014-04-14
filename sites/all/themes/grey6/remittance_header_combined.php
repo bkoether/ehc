@@ -50,7 +50,7 @@ $provinces = array(
   var formType = '<?php echo $form_type; ?>';
 
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '<?php echo $form_type; ?>_6';
+  var currentVersion = '<?php echo $form_type; ?>_7';
 
   var currentRates;
   var oemLevel;
@@ -460,6 +460,7 @@ $provinces = array(
         $('#field-toggle-oil').addClass('open');
       }
 
+      $('#field-toggle-oil').unbind();
       $('#field-toggle-oil').click(function(){
         if ($(this).hasClass('open')) {
           collapseFields.showHide('close', targets, indicator);
@@ -496,6 +497,7 @@ $provinces = array(
         $('#field-toggle-glycol').removeClass('open');
       }
 
+      $('#field-toggle-glycol').unbind();
       $('#field-toggle-glycol').click(function(){
         if ($(this).hasClass('open')) {
           collapseFields.showHide('close', targets, indicator);
@@ -521,6 +523,7 @@ $provinces = array(
         $('#field-toggle-oem').removeClass('open');
       }
 
+      $('#field-toggle-oem').unbind();
       $('#field-toggle-oem').click(function(){
         if ($(this).hasClass('open')) {
           collapseFields.showHide('close', targets, indicator);
@@ -553,6 +556,7 @@ $provinces = array(
         $('#field-toggle-def').addClass('open');
       }
 
+      $('#field-toggle-def').unbind();
       $('#field-toggle-def').click(function(){
         if ($(this).hasClass('open')) {
           collapseFields.showHide('close', targets, indicator);
@@ -566,11 +570,11 @@ $provinces = array(
 
     showHide: function(op, targets, indicator){
       if (op == 'open'){
-        $(targets).slideDown();
+        $(targets).stop(false, true).slideDown();
         $(indicator).html('&ndash;');
       }
       else {
-        $(targets).slideUp();
+        $(targets).stop(false, true).slideUp();
         $(indicator).html('+');
       }
     }
