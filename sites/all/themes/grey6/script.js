@@ -748,3 +748,11 @@ try {
 }
 
 
+// kill the enter key
+// 
+$("webform-client-form-24").keypress(function(e) {
+    if (e.which == "13") { 
+        e.preventDefault(); 
+    }       
+});
+
