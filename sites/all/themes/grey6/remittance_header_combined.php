@@ -352,8 +352,8 @@ $provinces = array(
         for (var i in currentCat) {
           if (currentCat[i].rate.length > 0) {
 
+            fieldsArray.push( 'rh-oem-field-' + cat + '-' + i );
             if (!skipHtml){
-              fieldsArray.push( 'rh-oem-field-' + cat + '-' + i );
               $(container).append(Drupal.theme('oemLine', currentCat[i], cat, i));
             }
           }
