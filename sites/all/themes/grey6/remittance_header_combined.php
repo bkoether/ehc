@@ -50,7 +50,7 @@ $provinces = array(
   var formType = '<?php echo $form_type; ?>';
 
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '<?php echo $form_type; ?>_9';
+  var currentVersion = '<?php echo $form_type; ?>_10';
 
   var currentRates;
   var oemLevel;
@@ -353,7 +353,7 @@ $provinces = array(
           if (currentCat[i].rate.length > 0) {
 
             var oemLineId = 'rh-oem-field-' + cat + '-' + i;
-            if (fieldsArray.indexOf(oemLineId) == -1) {
+            if ($.inArray(oemLineId, fieldsArray) == -1) {
               fieldsArray.push(oemLineId);
             }
 
