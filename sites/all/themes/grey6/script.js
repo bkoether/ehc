@@ -651,7 +651,7 @@ function saveFormState() {
     var htm = $(form).html();
     localStorage.setItem(fid + '_html', JSON.stringify(htm));
   }
-  
+
 }
 
 function getFormState() {
@@ -723,6 +723,8 @@ if (typeof console == "undefined") {
     };
 }
 
+
+
 // Get around browsers that don't support localStorage
 if(typeof window.localStorage == 'undefined') {
   window.localStorage = {
@@ -749,10 +751,10 @@ try {
 
 
 // kill the enter key
-// 
+//
 $("webform-client-form-24").keypress(function(e) {
-    if (e.which == "13") { 
-        e.preventDefault(); 
-    }       
+    if (e.which == "13") {
+        e.preventDefault();
+    }
 });
 

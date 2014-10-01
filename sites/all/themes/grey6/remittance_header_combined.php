@@ -50,7 +50,11 @@ $provinces = array(
   var formType = '<?php echo $form_type; ?>';
 
   var currentUser = <?php echo $user->uid; ?>;
+<<<<<<< HEAD
   var currentVersion = '<?php echo $form_type; ?>_11';
+=======
+  var currentVersion = '<?php echo $form_type; ?>_10';
+>>>>>>> b1a78f6a6511e3c50d60832a60e840e73ba2d31b
 
   var currentRates;
   var oemLevel;
