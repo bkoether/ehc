@@ -50,7 +50,7 @@ $provinces = array(
   var formType = '<?php echo $form_type; ?>';
 
   var currentUser = <?php echo $user->uid; ?>;
-  var currentVersion = '<?php echo $form_type; ?>_7';
+  var currentVersion = '<?php echo $form_type; ?>_11';
 
   var currentRates;
   var oemLevel;
@@ -76,15 +76,17 @@ $provinces = array(
 		fieldsArray.push( 'edit-submitted-containers-size-wrapper-0947-l-0947-liter' );
 		fieldsArray.push( 'edit-submitted-containers-size-wrapper-3788-l-3788-liter' );
 		fieldsArray.push( 'edit-submitted-containers-size-wrapper-5-l-5-liter' );
+
+
+    // Non-HDPE Containers
+    fieldsArray.push( 'edit-submitted-non-hdpe-containers-hdpe-wrapper-946ml-0946-litre' );
+    fieldsArray.push( 'edit-submitted-non-hdpe-containers-hdpe-wrapper-227l-227-litre' );
+       
 	<?php endif; ?>
 
 	// Glycol combined form
 	<?php if ($form_type == 'combined'): ?>
     oemLevel = 3;
-
-    // Non-HDPE Containers
-    fieldsArray.push( 'edit-submitted-non-hdpe-containers-hdpe-wrapper-946ml-0946-litre' );
-    fieldsArray.push( 'edit-submitted-non-hdpe-containers-hdpe-wrapper-227l-227-litre' );
 
 		//glycol liquid
 		fieldsArray.push( 'edit-submitted-glycol-concentrate-fieldset-concentrate-total-litres' );
@@ -207,6 +209,10 @@ $provinces = array(
 					$("#" + fieldsArray[1] + "-rate").val(currentRates.oil_filter_small).niceRates();
 					$("#" + fieldsArray[2] + "-rate").val(currentRates.oil_filter_large).niceRates();
 					$("#" + fieldsArray[3] + "-rate").val(currentRates.oil_filter_small).niceRates();
+          // non-HDPE containers
+          $("#" + fieldsArray[13] + "-rate").val(currentRates.non_hdpe_container * 0.946353).niceRates();
+          $("#" + fieldsArray[14] + "-rate").val(currentRates.non_hdpe_container * 22.7).niceRates();
+
 					var start = 4;
 					var currentOilContainer = currentRates.oil_containers;
 					while (12 >= start) {
@@ -227,10 +233,7 @@ $provinces = array(
 
 				// Antifreeze combined form
 				<?php if ($form_type == 'combined'): ?>
-          // non-HDPE containers
 
-          $("#" + fieldsArray[13] + "-rate").val(currentRates.non_hdpe_container * 0.946353).niceRates();
-          $("#" + fieldsArray[14] + "-rate").val(currentRates.non_hdpe_container * 22.7).niceRates();
 					//concentrate
 					$("#" + fieldsArray[15] + "-rate").val(currentRates.glycol_concentrate).niceRates();
 					//premix
@@ -320,12 +323,12 @@ $provinces = array(
         <?php endif; ?>
 
         // Remove Non-HDPE fields if they are not set in the rate sheet
-        if (currentRates.non_hdpe_container == 0 || formType != 'combined') {
+        if (currentRates.non_hdpe_container == 0) {
           $('#webform-component-non-hdpe-containers, #webform-component--another-non-hdpe-size').remove();
         }
 
         // Remove DEF field if they are not set. Otherwise create the drop-down.
-        if (currentRates.def_container == 0 || formType != 'combined') {
+        if (currentRates.def_container == 0) {
           $('#webform-component-def-containers, #webform-component--another-def-size').remove();
         }
         else {
@@ -351,7 +354,12 @@ $provinces = array(
         var container = $('#webform-component-oem--oem-' + cat);
         for (var i in currentCat) {
           if (currentCat[i].rate.length > 0) {
-            fieldsArray.push( 'rh-oem-field-' + cat + '-' + i );
+
+            var oemLineId = 'rh-oem-field-' + cat + '-' + i;
+            if ($.inArray(oemLineId, fieldsArray) == -1) {
+              fieldsArray.push(oemLineId);
+            }
+
             if (!skipHtml){
               $(container).append(Drupal.theme('oemLine', currentCat[i], cat, i));
             }
